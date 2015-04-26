@@ -1,7 +1,0 @@
-SHOW_VAR=1
-EQUAL=2
-VARIABLE=3
-INT=4
-WS=5
-'drukuj'=1
-'='=2
