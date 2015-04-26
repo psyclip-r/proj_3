@@ -16,7 +16,7 @@ public class ProstyJezykParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1;
+		T__0=1, WS=2;
 	public static final int
 		RULE_prog = 0;
 	public static final String[] ruleNames = {
@@ -27,6 +27,7 @@ public class ProstyJezykParser extends Parser {
 		null, "'dupa'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
+		null, null, "WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -119,7 +120,7 @@ public class ProstyJezykParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\3\7\4\2\t\2\3\2\3"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\4\7\4\2\t\2\3\2\3"+
 		"\2\3\2\2\2\3\2\2\2\5\2\4\3\2\2\2\4\5\7\3\2\2\5\3\3\2\2\2\2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
