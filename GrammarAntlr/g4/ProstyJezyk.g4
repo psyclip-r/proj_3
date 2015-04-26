@@ -1,14 +1,16 @@
 grammar ProstyJezyk;
 
-prog : print ;
+prog : ( start? NEWLINE )* ;
 
-start : assigne + print;
+start : assign #assign_action | print #print_action ;
 
-assigne : VARIABLE + EQUAL + INT;
+assign : VARIABLE + EQUAL + INT;
 
-print : SHOW_VAR + INT #wypisz;
+print : SHOW_VAR + value ;
 
-SHOW_VAR : 'drukuj';
+value : INT | VARIABLE ;
+
+SHOW_VAR : 'wyswietl';
 
 EQUAL : '=' ;
 
@@ -17,7 +19,7 @@ VARIABLE : ('a'..'z'|'A'..'Z')+ ;
 INT:   '0'..'9'+ ;
 
 
-
+NEWLINE : '\r'? '\n' ;
 
 fragment ESC :   '\\' (["\\/bfnrt] | UNICODE) ;
 fragment UNICODE : 'u' HEX HEX HEX HEX ;
@@ -33,3 +35,4 @@ fragment COMMENT
 : '/*'.*'*/' /*single comment*/
 | '//'~('\r' | '\n')* /* multiple comment*/
 ;
+
