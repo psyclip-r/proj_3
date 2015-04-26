@@ -27,7 +27,8 @@ public class LLVMactionsPJ extends ProstyJezykBaseListener{
 
 
     @Override public void exitPrint_action(@NotNull ProstyJezykParser.Print_actionContext ctx) {
-        System.out.println(value);
+        //System.out.println(value);
+        LLVMGeneratorPJ.printInteger(value);
     }
 
     @Override public void exitValue(@NotNull ProstyJezykParser.ValueContext ctx) {
