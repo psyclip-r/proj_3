@@ -1,4 +1,4 @@
-// Generated from C:/Users/Kuba/IdeaProjects/proj_3/GrammarAntlr/g4\PLwypisz.g4 by ANTLR 4.5
+// Generated from /home/kuba/IdeaProjects/proj_3/GrammarAntlr/g4/PLwypisz.g4 by ANTLR 4.5
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 

@@ -1,4 +1,4 @@
-// Generated from C:/Users/Kuba/IdeaProjects/proj_3/GrammarAntlr/g4\PLwypisz.g4 by ANTLR 4.5
+// Generated from /home/kuba/IdeaProjects/proj_3/GrammarAntlr/g4/PLwypisz.g4 by ANTLR 4.5
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -162,6 +162,24 @@ public class PLwypiszParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class AssignContext extends StatContext {
+		public TerminalNode ID() { return getToken(PLwypiszParser.ID, 0); }
+		public TerminalNode STRING() { return getToken(PLwypiszParser.STRING, 0); }
+		public AssignContext(StatContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof PLwypiszListener ) ((PLwypiszListener)listener).enterAssign(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof PLwypiszListener ) ((PLwypiszListener)listener).exitAssign(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PLwypiszVisitor ) return ((PLwypiszVisitor<? extends T>)visitor).visitAssign(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class PrintContext extends StatContext {
 		public TerminalNode PRINT() { return getToken(PLwypiszParser.PRINT, 0); }
 		public ValueContext value() {
@@ -179,24 +197,6 @@ public class PLwypiszParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof PLwypiszVisitor ) return ((PLwypiszVisitor<? extends T>)visitor).visitPrint(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class AssignContext extends StatContext {
-		public TerminalNode ID() { return getToken(PLwypiszParser.ID, 0); }
-		public TerminalNode STRING() { return getToken(PLwypiszParser.STRING, 0); }
-		public AssignContext(StatContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PLwypiszListener ) ((PLwypiszListener)listener).enterAssign(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PLwypiszListener ) ((PLwypiszListener)listener).exitAssign(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PLwypiszVisitor ) return ((PLwypiszVisitor<? extends T>)visitor).visitAssign(this);
 			else return visitor.visitChildren(this);
 		}
 	}
