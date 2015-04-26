@@ -23,6 +23,42 @@ public class ProstyJezykBaseListener implements ProstyJezykListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitProg(@NotNull ProstyJezykParser.ProgContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStart(@NotNull ProstyJezykParser.StartContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStart(@NotNull ProstyJezykParser.StartContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAssigne(@NotNull ProstyJezykParser.AssigneContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAssigne(@NotNull ProstyJezykParser.AssigneContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPrint(@NotNull ProstyJezykParser.PrintContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPrint(@NotNull ProstyJezykParser.PrintContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
