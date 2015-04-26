@@ -2,11 +2,11 @@ grammar ProstyJezyk;
 
 prog : ( start? NEWLINE )* ;
 
-start : assign #assign_action | print #print_action ;
+start : VARIABLE '=' INT #assign_action | SHOW_VAR value #print_action ;
 
-assign : VARIABLE + EQUAL + INT;
+// assign : VARIABLE + '=' + INT;
 
-print : SHOW_VAR + value ;
+// print : SHOW_VAR + value ;
 
 value : INT | VARIABLE ;
 
@@ -14,7 +14,7 @@ SHOW_VAR : 'wyswietl';
 
 EQUAL : '=' ;
 
-VARIABLE : ('a'..'z'|'A'..'Z')+ ;
+VARIABLE : 'a'..'z'+ ;
 
 INT:   '0'..'9'+ ;
 

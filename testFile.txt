@@ -1,10 +1,8 @@
-x = 4
-//dupa
-x = 3
-/*
-
-asdasd
-
-*/
-wyswietl x
-wyswietl 3
+i = 5
+wyswietl i
+i = 12
+i = 32
+d = 54
+wyswietl i
+wyswietl 12
+wyswietl d

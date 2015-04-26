@@ -20,7 +20,7 @@ public class MainPJ {
 
         ParseTreeWalker walker = new ParseTreeWalker();
 
-        walker.walk(new LLVMactions(), tree);
+        walker.walk(new LLVMactionsPJ(), tree);
 
     }
 

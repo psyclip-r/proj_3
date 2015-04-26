@@ -1,6 +1,6 @@
-x = 4
+x = 1
 //dupa
-x = 3
+x = 2
 /*
 
 asdasd

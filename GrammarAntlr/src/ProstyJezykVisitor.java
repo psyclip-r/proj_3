@@ -31,18 +31,6 @@ public interface ProstyJezykVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPrint_action(@NotNull ProstyJezykParser.Print_actionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ProstyJezykParser#assign}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAssign(@NotNull ProstyJezykParser.AssignContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ProstyJezykParser#print}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPrint(@NotNull ProstyJezykParser.PrintContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link ProstyJezykParser#value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
