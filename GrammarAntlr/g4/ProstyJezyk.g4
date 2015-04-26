@@ -1,0 +1,3 @@
+grammar ProstyJezyk;
+
+prog : 'dupa' ;
