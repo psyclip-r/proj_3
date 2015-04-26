@@ -29,9 +29,10 @@ public interface ProstyJezykVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAssigne(@NotNull ProstyJezykParser.AssigneContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ProstyJezykParser#print}.
+	 * Visit a parse tree produced by the {@code wypisz}
+	 * labeled alternative in {@link ProstyJezykParser#print}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitPrint(@NotNull ProstyJezykParser.PrintContext ctx);
+	T visitWypisz(@NotNull ProstyJezykParser.WypiszContext ctx);
 }

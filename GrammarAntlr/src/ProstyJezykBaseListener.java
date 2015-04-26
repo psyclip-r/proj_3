@@ -52,13 +52,13 @@ public class ProstyJezykBaseListener implements ProstyJezykListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPrint(@NotNull ProstyJezykParser.PrintContext ctx) { }
+	@Override public void enterWypisz(@NotNull ProstyJezykParser.WypiszContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPrint(@NotNull ProstyJezykParser.PrintContext ctx) { }
+	@Override public void exitWypisz(@NotNull ProstyJezykParser.WypiszContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

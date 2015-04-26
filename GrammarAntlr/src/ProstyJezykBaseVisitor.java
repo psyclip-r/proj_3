@@ -38,5 +38,5 @@ public class ProstyJezykBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitPrint(@NotNull ProstyJezykParser.PrintContext ctx) { return visitChildren(ctx); }
+	@Override public T visitWypisz(@NotNull ProstyJezykParser.WypiszContext ctx) { return visitChildren(ctx); }
 }

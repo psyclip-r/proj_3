@@ -79,8 +79,8 @@ public class ProstyJezykParser extends Parser {
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 	public static class ProgContext extends ParserRuleContext {
-		public StartContext start() {
-			return getRuleContext(StartContext.class,0);
+		public PrintContext print() {
+			return getRuleContext(PrintContext.class,0);
 		}
 		public ProgContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -108,7 +108,7 @@ public class ProstyJezykParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(8); 
-			start();
+			print();
 			}
 		}
 		catch (RecognitionException re) {
@@ -267,26 +267,34 @@ public class ProstyJezykParser extends Parser {
 	}
 
 	public static class PrintContext extends ParserRuleContext {
-		public TerminalNode VARIABLE() { return getToken(ProstyJezykParser.VARIABLE, 0); }
-		public List<TerminalNode> SHOW_VAR() { return getTokens(ProstyJezykParser.SHOW_VAR); }
-		public TerminalNode SHOW_VAR(int i) {
-			return getToken(ProstyJezykParser.SHOW_VAR, i);
-		}
 		public PrintContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_print; }
+	 
+		public PrintContext() { }
+		public void copyFrom(PrintContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class WypiszContext extends PrintContext {
+		public TerminalNode INT() { return getToken(ProstyJezykParser.INT, 0); }
+		public List<TerminalNode> SHOW_VAR() { return getTokens(ProstyJezykParser.SHOW_VAR); }
+		public TerminalNode SHOW_VAR(int i) {
+			return getToken(ProstyJezykParser.SHOW_VAR, i);
+		}
+		public WypiszContext(PrintContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ProstyJezykListener ) ((ProstyJezykListener)listener).enterPrint(this);
+			if ( listener instanceof ProstyJezykListener ) ((ProstyJezykListener)listener).enterWypisz(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ProstyJezykListener ) ((ProstyJezykListener)listener).exitPrint(this);
+			if ( listener instanceof ProstyJezykListener ) ((ProstyJezykListener)listener).exitWypisz(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProstyJezykVisitor ) return ((ProstyJezykVisitor<? extends T>)visitor).visitPrint(this);
+			if ( visitor instanceof ProstyJezykVisitor ) return ((ProstyJezykVisitor<? extends T>)visitor).visitWypisz(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -296,6 +304,7 @@ public class ProstyJezykParser extends Parser {
 		enterRule(_localctx, 6, RULE_print);
 		int _la;
 		try {
+			_localctx = new WypiszContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(30); 
@@ -313,7 +322,7 @@ public class ProstyJezykParser extends Parser {
 				_la = _input.LA(1);
 			} while ( _la==SHOW_VAR );
 			setState(34); 
-			match(VARIABLE);
+			match(INT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -332,13 +341,13 @@ public class ProstyJezykParser extends Parser {
 		"\3\4\4\t\4\4\5\t\5\3\2\3\2\3\3\6\3\16\n\3\r\3\16\3\17\3\3\3\3\3\4\6\4"+
 		"\25\n\4\r\4\16\4\26\3\4\6\4\32\n\4\r\4\16\4\33\3\4\3\4\3\5\6\5!\n\5\r"+
 		"\5\16\5\"\3\5\3\5\3\5\2\2\6\2\4\6\b\2\2&\2\n\3\2\2\2\4\r\3\2\2\2\6\24"+
-		"\3\2\2\2\b \3\2\2\2\n\13\5\4\3\2\13\3\3\2\2\2\f\16\5\6\4\2\r\f\3\2\2\2"+
+		"\3\2\2\2\b \3\2\2\2\n\13\5\b\5\2\13\3\3\2\2\2\f\16\5\6\4\2\r\f\3\2\2\2"+
 		"\16\17\3\2\2\2\17\r\3\2\2\2\17\20\3\2\2\2\20\21\3\2\2\2\21\22\5\b\5\2"+
 		"\22\5\3\2\2\2\23\25\7\5\2\2\24\23\3\2\2\2\25\26\3\2\2\2\26\24\3\2\2\2"+
 		"\26\27\3\2\2\2\27\31\3\2\2\2\30\32\7\4\2\2\31\30\3\2\2\2\32\33\3\2\2\2"+
 		"\33\31\3\2\2\2\33\34\3\2\2\2\34\35\3\2\2\2\35\36\7\6\2\2\36\7\3\2\2\2"+
 		"\37!\7\3\2\2 \37\3\2\2\2!\"\3\2\2\2\" \3\2\2\2\"#\3\2\2\2#$\3\2\2\2$%"+
-		"\7\5\2\2%\t\3\2\2\2\6\17\26\33\"";
+		"\7\6\2\2%\t\3\2\2\2\6\17\26\33\"";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

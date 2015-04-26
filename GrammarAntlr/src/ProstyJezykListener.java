@@ -38,13 +38,15 @@ public interface ProstyJezykListener extends ParseTreeListener {
 	 */
 	void exitAssigne(@NotNull ProstyJezykParser.AssigneContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ProstyJezykParser#print}.
+	 * Enter a parse tree produced by the {@code wypisz}
+	 * labeled alternative in {@link ProstyJezykParser#print}.
 	 * @param ctx the parse tree
 	 */
-	void enterPrint(@NotNull ProstyJezykParser.PrintContext ctx);
+	void enterWypisz(@NotNull ProstyJezykParser.WypiszContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ProstyJezykParser#print}.
+	 * Exit a parse tree produced by the {@code wypisz}
+	 * labeled alternative in {@link ProstyJezykParser#print}.
 	 * @param ctx the parse tree
 	 */
-	void exitPrint(@NotNull ProstyJezykParser.PrintContext ctx);
+	void exitWypisz(@NotNull ProstyJezykParser.WypiszContext ctx);
 }

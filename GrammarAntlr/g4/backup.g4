@@ -1,12 +1,12 @@
 grammar ProstyJezyk;
 
-prog : print ;
+prog : start ;
 
 start : assigne + print;
 
 assigne : VARIABLE + EQUAL + INT;
 
-print : SHOW_VAR + INT #wypisz;
+print : SHOW_VAR + VARIABLE;
 
 SHOW_VAR : 'drukuj';
 

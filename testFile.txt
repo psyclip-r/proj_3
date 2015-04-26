@@ -1,3 +1,1 @@
-x = 5
-// duopaaaa
-drukuj x
+drukuj 4
