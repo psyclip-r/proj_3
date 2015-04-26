@@ -1,37 +1,45 @@
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.HashMap;
 
-public class LLVMactions extends PLwypiszBaseListener {
+/**
+ * Created by kuba on 26.04.15.
+ */
+public class LLVMactions extends ProstyJezykBaseListener{
 
-    HashMap<String, String> memory = new HashMap<String, String>();
-    String value;
+    HashMap<String, Integer> memory = new HashMap<String, Integer>();
+    Integer value;
 
-    @Override
-    public void exitAssign(PLwypiszParser.AssignContext ctx) { 
-       String tmp = ctx.STRING().getText(); 
-       tmp = tmp.substring(1, tmp.length()-1);
-       memory.put(ctx.ID().getText(), tmp);    
+    @Override public void enterProg(@NotNull ProstyJezykParser.ProgContext ctx) {
+        LLVMGenerator.enterProg();
     }
 
-    @Override 
-    public void exitProg(PLwypiszParser.ProgContext ctx) { 
-       System.out.println( LLVMGenerator.generate() );
+    @Override public void exitProg(@NotNull ProstyJezykParser.ProgContext ctx) {
+        LLVMGenerator.exitProg();
     }
 
-    @Override 
-    public void exitValue(PLwypiszParser.ValueContext ctx) {
-       if( ctx.ID() != null ){
-          value = memory.get(ctx.ID().getText());
-       } 
-       if( ctx.STRING() != null ){
-          String tmp = ctx.STRING().getText(); 
-          value = tmp.substring(1, tmp.length()-1);
-       } 
+
+    @Override public void exitAssign_action(@NotNull ProstyJezykParser.Assign_actionContext ctx) {
+        Integer tmp = Integer.valueOf( ctx.INT().getText() );
+        memory.put(ctx.VARIABLE().getText(), tmp);
+        //System.out.println(ctx.VARIABLE().getText() + " = " + tmp);
     }
 
-    @Override
-    public void exitPrint(PLwypiszParser.PrintContext ctx) { 
-       LLVMGenerator.print(value);
-    } 
+
+    @Override public void exitPrint_action(@NotNull ProstyJezykParser.Print_actionContext ctx) {
+        //System.out.println(value);
+        LLVMGenerator.printInteger(value);
+    }
+
+    @Override public void exitValue(@NotNull ProstyJezykParser.ValueContext ctx) {
+        if( ctx.VARIABLE() != null ){
+            value = memory.get(ctx.VARIABLE().getText());
+        }
+        if( ctx.INT() != null ){
+            Integer tmp = Integer.valueOf (ctx.INT().getText() );
+            value = tmp;
+        }
+    }
+
 
 }

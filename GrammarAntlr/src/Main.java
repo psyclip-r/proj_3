@@ -1,24 +1,27 @@
-// Intro to ANTLR+LLVM
-// sawickib, 2014-04-26
+import org.antlr.v4.runtime.ANTLRFileStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.*;
-
+/**
+ * Created by kuba on 26.04.15.
+ */
 public class Main {
     public static void main(String[] args) throws Exception {
         ANTLRFileStream input = new ANTLRFileStream(args[0]);
-
-        PLwypiszLexer lexer = new PLwypiszLexer(input);
-
+        ProstyJezykLexer lexer = new ProstyJezykLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
-        PLwypiszParser parser = new PLwypiszParser(tokens);
 
-        ParseTree tree = parser.prog(); 
+        ProstyJezykParser parser = new ProstyJezykParser(tokens);
+
+        ParseTree tree = parser.prog();
 
         //System.out.println(tree.toStringTree(parser));
 
         ParseTreeWalker walker = new ParseTreeWalker();
+
         walker.walk(new LLVMactions(), tree);
 
     }
+
 }

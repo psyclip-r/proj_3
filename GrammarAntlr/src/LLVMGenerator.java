@@ -1,27 +1,48 @@
+/**
+ * Created by kuba on 26.04.15.
+ */
+public class LLVMGenerator {
+    static int num_of_number;
+    static String declaration = "";
+    static String print = "";
+    public LLVMGenerator(){
+        num_of_number = 0;
+    }
 
-class LLVMGenerator{
-   
-   static String header_text = "";
-   static String main_text = "";
-   static int str_i = 0;
 
-   static void print(String text){
-      int str_len = text.length();
-      String str_type = "["+(str_len+2)+" x i8]";  
-      header_text += "@str"+str_i+" = constant"+str_type+" c\""+text+"\\0A\\00\"\n";
-      main_text += "%strp"+str_i+" = getelementptr "+str_type+"* @str"+str_i+", i32 0, i32 0\n";
-      main_text += "call i32 (i8*, ...)* @printf(i8* %strp"+str_i+")\n";
-      str_i++;
-   }
 
-   static String generate(){
-      String text;
-      text = "declare i32 @printf(i8*, ...)\n";
-      text += header_text;
-      text += "define i32 @main() nounwind{\n";
-      text += main_text;
-      text += "ret i32 0 }\n";
-      return text;
-   }
+
+    static void printInteger(int number){
+        String tmp = "%num_" + num_of_number + " = alloca i32, align 4 \n" +
+                "store i32 " + number + ", i32* %num_" + num_of_number + ", align 4 \n";
+        declaration += tmp;
+        tmp = "%l_" + num_of_number + " = load i32* %num_" + num_of_number + ", align 4 \n";
+        print += tmp;
+        tmp = "%p_" + num_of_number + " = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @.str, i32 0, i32 0), i32 %l_" + num_of_number + ") \n";
+        print += tmp;
+        num_of_number++;
+    }
+
+
+    static void enterProg(){
+        String text = "@.str = private unnamed_addr constant [4 x i8] c\"%d\\0A\\00\", align 1   \n" +
+                        "define i32 @main() #0 { \n";
+        System.out.println(text);
+    }
+
+    static void exitProg(){
+        System.out.println(declaration);
+        System.out.println(print);
+        String text = "ret i32 0 \n} \n" +
+                "declare i32 @printf(i8*, ...) #1\n";
+        System.out.println(text);
+    }
+
+    static void print(String text){
+
+    }
+
+
+
 
 }
