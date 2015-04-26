@@ -1,0 +1,8 @@
+SHOW_VAR=1
+EQUAL=2
+VARIABLE=3
+INT=4
+NEWLINE=5
+WS=6
+'wyswietl'=1
+'='=2
