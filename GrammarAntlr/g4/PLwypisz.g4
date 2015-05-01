@@ -1,5 +1,7 @@
 grammar PLwypisz;
 
+
+
 prog: ( stat? NEWLINE )*
     ;
 
