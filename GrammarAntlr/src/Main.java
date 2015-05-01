@@ -9,6 +9,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 public class Main {
     public static void main(String[] args) throws Exception {
         ANTLRFileStream input = new ANTLRFileStream(args[0]);
+
         ProstyJezykLexer lexer = new ProstyJezykLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
 

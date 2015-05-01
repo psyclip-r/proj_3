@@ -1,4 +1,4 @@
-grammar Expr;
+grammar json;
 
 // tutaj definicja produkcji
 // zaczynamy od pojedynczego obiektu
@@ -6,15 +6,15 @@ grammar Expr;
 prog : object ;
 
 object : ( START_OBJ key_val (COMMA key_val)* END_OBJ ) | ( START_OBJ END_OBJ );
-// obiekt -> para klucz-wartoœæ [0..*]
+// obiekt -> para klucz-wartoï¿½ï¿½ [0..*]
 // obiekt jest w { }
-// za epsilon s³u¿y nam ()* - nie mo¿emy w antlr zrobiæ epsilona
-// wiêc robimy to tak jak widaæ
-// dodatkowo mo¿e byæ pusty obiekt
+// za epsilon sï¿½uï¿½y nam ()* - nie moï¿½emy w antlr zrobiï¿½ epsilona
+// wiï¿½c robimy to tak jak widaï¿½
+// dodatkowo moï¿½e byï¿½ pusty obiekt
 
 key_val : STRING COLON val ;
-// para klucz-wartoœæ jest zawsze oddzielona dwukropkiem
-// wartoœci¹ mo¿e byæ napis, liczba, inny obiekt, tablica, itp.
+// para klucz-wartoï¿½ï¿½ jest zawsze oddzielona dwukropkiem
+// wartoï¿½ciï¿½ moï¿½e byï¿½ napis, liczba, inny obiekt, tablica, itp.
 
 val :
     STRING |
@@ -25,16 +25,16 @@ val :
     FALSE  |
     NULL
     ;
-// wartoœci to string, number, inny obiekt, tablica, true, false i null
-// wartoœæ zawsze musi byæ niepusta, tzn. nie dopiszczalny
+// wartoï¿½ci to string, number, inny obiekt, tablica, true, false i null
+// wartoï¿½ï¿½ zawsze musi byï¿½ niepusta, tzn. nie dopiszczalny
 // jest zapis { "imie" : }
 
 array : ( OP_BRACKET val (COMMA val)* CLO_BRACKET ) | (OP_BRACKET CLO_BRACKET) ;
-// w tablicy mo¿emy mieæ wartoœci [0..*],  które z kolei mog¹ byæ obiektami - {...}
+// w tablicy moï¿½emy mieï¿½ wartoï¿½ci [0..*],  ktï¿½re z kolei mogï¿½ byï¿½ obiektami - {...}
 // tablicami - [...], napisami, itp. (to co wymieione w def. val)
-// tablica te¿ mo¿e byæ pusta
-// w odró¿nieny od obiektów w tablicy nie przechowujemy
-// par klucz-wartoœæ tylko same wartoœci
+// tablica teï¿½ moï¿½e byï¿½ pusta
+// w odrï¿½nieny od obiektï¿½w w tablicy nie przechowujemy
+// par klucz-wartoï¿½ï¿½ tylko same wartoï¿½ci
 
 // tutaj definiujemy co to jest STRING i NUMBER
 // czyli symbole terminalne
@@ -42,7 +42,7 @@ STRING :  QUOTES (ESC | ~["\\])* QUOTES ;
 NUMBER :  [0-9]+  ;
 
 // tutaj definicja kolejnych symboli terminalnych
-// ¿eby kod ³adniej wygl¹da³
+// ï¿½eby kod ï¿½adniej wyglï¿½daï¿½
 OP_BRACKET : '[' ;
 CLO_BRACKET :']' ;
 COLON: ':' ;

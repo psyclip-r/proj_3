@@ -8,7 +8,7 @@ start : VARIABLE '=' INT #assign_action | SHOW_VAR value #print_action ;
 
 // print : SHOW_VAR + value ;
 
-value : INT | VARIABLE ;
+value : INT | REAL | VARIABLE ;
 
 SHOW_VAR : 'wyswietl';
 
@@ -18,12 +18,9 @@ VARIABLE : 'a'..'z'+ ;
 
 INT:   '0'..'9'+ ;
 
+REAL: '0'..'9'+ '.' '0'..'9'+;
 
 NEWLINE : '\r'? '\n' ;
-
-
-
-
 
 
 fragment ESC :   '\\' (["\\/bfnrt] | UNICODE) ;

@@ -3,9 +3,7 @@ x = 1
 x = 2
 z = 213
 /*
-
-asdasd
-
+asdad
 */
 wyswietl x
 wyswietl 3
