@@ -6,3 +6,8 @@ d = 54
 wyswietl i
 wyswietl 12
 wyswietl d
+d = 1
+wyswietl d
+a = 11
+wyswietl a
+a = 13

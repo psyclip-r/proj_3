@@ -23,13 +23,14 @@ public class LLVMGenerator {
         num_of_number++;
     }
 
-
+    // na poczatku musimy ustawic pare rzeczy zawsze tak samo
     static void enterProg(){
         String text = "@.str = private unnamed_addr constant [4 x i8] c\"%d\\0A\\00\", align 1   \n" +
                         "define i32 @main() #0 { \n";
         System.out.println(text);
     }
 
+    // na koneic ustawiamy pare rzeczy zawsze tak samo
     static void exitProg(){
         System.out.println(declaration);
         System.out.println(print);
