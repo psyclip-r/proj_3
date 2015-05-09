@@ -28,6 +28,36 @@ public interface ProstyJezykListener extends ParseTreeListener {
 	 */
 	void exitStart(@NotNull ProstyJezykParser.StartContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ProstyJezykParser#function}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunction(@NotNull ProstyJezykParser.FunctionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProstyJezykParser#function}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunction(@NotNull ProstyJezykParser.FunctionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ProstyJezykParser#funct_arg}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunct_arg(@NotNull ProstyJezykParser.Funct_argContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProstyJezykParser#funct_arg}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunct_arg(@NotNull ProstyJezykParser.Funct_argContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ProstyJezykParser#funct_body}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunct_body(@NotNull ProstyJezykParser.Funct_bodyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProstyJezykParser#funct_body}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunct_body(@NotNull ProstyJezykParser.Funct_bodyContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ProstyJezykParser#value}.
 	 * @param ctx the parse tree
 	 */

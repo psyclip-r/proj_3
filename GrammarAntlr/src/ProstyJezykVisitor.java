@@ -23,6 +23,24 @@ public interface ProstyJezykVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStart(@NotNull ProstyJezykParser.StartContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ProstyJezykParser#function}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunction(@NotNull ProstyJezykParser.FunctionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProstyJezykParser#funct_arg}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunct_arg(@NotNull ProstyJezykParser.Funct_argContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProstyJezykParser#funct_body}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunct_body(@NotNull ProstyJezykParser.Funct_bodyContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ProstyJezykParser#value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
