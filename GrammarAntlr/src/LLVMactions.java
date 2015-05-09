@@ -22,6 +22,7 @@ public class LLVMactions extends ProstyJezykBaseListener{
     // ja do tablicy pod okreslona nazwa
     @Override public void exitAssign_action(@NotNull ProstyJezykParser.Assign_actionContext ctx) {
         Integer tmp = Integer.valueOf( ctx.INT().getText() );
+        // do pamieci wkladamy zmienna za pomoca tablicy klucz-wartosc, np x=3 => klucz x, wartosc 3 => x=
         memory.put(ctx.VARIABLE().getText(), tmp);
         //System.out.println(ctx.VARIABLE().getText() + " = " + tmp);
     }
