@@ -41,11 +41,65 @@ public interface ProstyJezykVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFunct_body(@NotNull ProstyJezykParser.Funct_bodyContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ProstyJezykParser#if_definition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIf_definition(@NotNull ProstyJezykParser.If_definitionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProstyJezykParser#if_condition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIf_condition(@NotNull ProstyJezykParser.If_conditionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProstyJezykParser#if_body}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIf_body(@NotNull ProstyJezykParser.If_bodyContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProstyJezykParser#else_definition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitElse_definition(@NotNull ProstyJezykParser.Else_definitionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProstyJezykParser#else_body}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitElse_body(@NotNull ProstyJezykParser.Else_bodyContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProstyJezykParser#compare_sign}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCompare_sign(@NotNull ProstyJezykParser.Compare_signContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ProstyJezykParser#value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitValue(@NotNull ProstyJezykParser.ValueContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProstyJezykParser#additionExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAdditionExp(@NotNull ProstyJezykParser.AdditionExpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProstyJezykParser#multiplyExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultiplyExp(@NotNull ProstyJezykParser.MultiplyExpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProstyJezykParser#atomExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAtomExp(@NotNull ProstyJezykParser.AtomExpContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ProstyJezykParser#array}.
 	 * @param ctx the parse tree
@@ -88,6 +142,12 @@ public interface ProstyJezykVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitT_ARRAY(@NotNull ProstyJezykParser.T_ARRAYContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProstyJezykParser#t_VOID}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitT_VOID(@NotNull ProstyJezykParser.T_VOIDContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ProstyJezykParser#f_PRINT}.
 	 * @param ctx the parse tree

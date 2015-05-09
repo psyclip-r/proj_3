@@ -2,18 +2,36 @@ grammar ProstyJezyk;
 
 prog : ( start? NEWLINE )* ;
 
-start : ( var_type NAME '=' value ) | function | (f_PRINT value)  ;
+start : ( var_type NAME '=' value ) | function | f_PRINT value | var_type NAME '=' f_READ |  if_definition  ;
 
-function : NAME funct_arg NEWLINE* funct_body;
-
+function : 'fun' var_type NAME funct_arg NEWLINE* funct_body;
 funct_arg : ( OP_BRACE var_type NAME (COMMA var_type NAME)* CLO_BRACE ) | (OP_BRACE CLO_BRACE) ;
-
 funct_body : START_FUNCT ( start? NEWLINE )* END_FUNCT;
 
-value : INT | REAL | STRING | array | NAME | array | el_in_array ;
+if_definition :  if_condition NEWLINE* if_body (else_definition else_body)?;
+if_condition : 'if' OP_BRACE value compare_sign value CLO_BRACE;
+if_body : START_FUNCT ( start? NEWLINE )* END_FUNCT;
+else_definition : 'else' ;
+else_body : START_FUNCT ( start? NEWLINE )* END_FUNCT;
 
+compare_sign :
+    LESS    |
+    MORE    |
+    EQUAL_S
+    ;
 
+LESS : '<' ;
+MORE : '>' ;
+EQUAL_S: '==' ;
 
+value : INT | REAL | STRING | array | NAME | array | el_in_array | additionExp;
+
+// tutaj startujemy
+additionExp : multiplyExp ( '+' multiplyExp | '-' multiplyExp )* ;
+
+multiplyExp : atomExp ( '*' atomExp | '/' atomExp )* ;
+
+atomExp : INT | REAL | '(' additionExp ')' ;
 
 array : ( OP_BRACKET value (COMMA value)* CLO_BRACKET ) | (OP_BRACKET CLO_BRACKET) ;
 el_in_array : NAME OP_BRACKET INT CLO_BRACKET;
@@ -23,8 +41,12 @@ NEWLINE : '\r'? '\n' ;
 var_type : t_STRING |
            t_INT    |
            t_REAL   |
-           t_ARRAY
+           t_ARRAY  |
+           t_VOID
             ;
+
+
+
 
 NAME : 'a'..'z'+ ;
 
@@ -36,9 +58,10 @@ t_STRING: 'string' ;
 t_INT : 'int' ;
 t_REAL : 'real';
 t_ARRAY : 'array';
+t_VOID : 'void';
 
 f_PRINT : 'print';
-f_READ : 'czytaj' ;
+f_READ : 'read' ;
 
 EQUAL : '=' ;
 QUOTES : '"' ;
