@@ -6,7 +6,7 @@ import java.util.HashMap;
  * Created by kuba on 26.04.15.
  */
 public class LLVMactions extends ProstyJezykBaseListener{
-
+/*
     HashMap<String, Integer> memory = new HashMap<String, Integer>();
     Integer value;
 
@@ -58,6 +58,6 @@ public class LLVMactions extends ProstyJezykBaseListener{
             value = tmp;
         }
     }
-
+*/
 
 }

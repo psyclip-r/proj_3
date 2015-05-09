@@ -1,4 +1,4 @@
-grammar ProstyJezyk;
+grammar OldProstyJezyk;
 
 prog : ( start? NEWLINE )* ;
 

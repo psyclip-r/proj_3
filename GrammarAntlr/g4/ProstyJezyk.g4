@@ -2,26 +2,41 @@ grammar ProstyJezyk;
 
 prog : ( start? NEWLINE )* ;
 
-start : VARIABLE '=' INT #assign_action | SHOW_VAR value #print_action ;
+start : ( var_type VAR_NAME '=' value ) |  f_PRINT value;
+value : INT | REAL | STRING | array | VAR_NAME | array | el_in_array ;
 
-// assign : VARIABLE + '=' + INT;
+VAR_NAME : 'a'..'z'+ ;
 
-// print : SHOW_VAR + value ;
 
-value : INT | REAL | VARIABLE ;
-
-SHOW_VAR : 'wyswietl';
-
-EQUAL : '=' ;
-
-VARIABLE : 'a'..'z'+ ;
-
-INT:   '0'..'9'+ ;
-
-REAL: '0'..'9'+ '.' '0'..'9'+;
+array : ( OP_BRACKET value (COMMA value)* CLO_BRACKET ) | (OP_BRACKET CLO_BRACKET) ;
+el_in_array : VAR_NAME OP_BRACKET INT CLO_BRACKET;
 
 NEWLINE : '\r'? '\n' ;
 
+var_type : t_STRING |
+           t_INT    |
+           t_REAL   |
+           t_ARRAY
+            ;
+
+
+INT:   '0'..'9'+ ;
+REAL: '0'..'9'+ '.' '0'..'9'+;
+STRING :  QUOTES (ESC | ~["\\])* QUOTES ;
+
+t_STRING: 'string' ;
+t_INT : 'int' ;
+t_REAL : 'real';
+t_ARRAY : 'array';
+
+f_PRINT : 'print';
+f_READ : 'czytaj' ;
+
+EQUAL : '=' ;
+QUOTES : '"' ;
+OP_BRACKET : '[' ;
+CLO_BRACKET :']' ;
+COMMA : ',' ;
 
 fragment ESC :   '\\' (["\\/bfnrt] | UNICODE) ;
 fragment UNICODE : 'u' HEX HEX HEX HEX ;
