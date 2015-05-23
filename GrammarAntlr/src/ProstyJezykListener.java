@@ -18,15 +18,77 @@ public interface ProstyJezykListener extends ParseTreeListener {
 	 */
 	void exitProg(@NotNull ProstyJezykParser.ProgContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ProstyJezykParser#start}.
+	 * Enter a parse tree produced by the {@code enter_assign}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
 	 * @param ctx the parse tree
 	 */
-	void enterStart(@NotNull ProstyJezykParser.StartContext ctx);
+	void enterEnter_assign(@NotNull ProstyJezykParser.Enter_assignContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ProstyJezykParser#start}.
+	 * Exit a parse tree produced by the {@code enter_assign}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
 	 * @param ctx the parse tree
 	 */
-	void exitStart(@NotNull ProstyJezykParser.StartContext ctx);
+	void exitEnter_assign(@NotNull ProstyJezykParser.Enter_assignContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code enter_fun}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
+	 * @param ctx the parse tree
+	 */
+	void enterEnter_fun(@NotNull ProstyJezykParser.Enter_funContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code enter_fun}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
+	 * @param ctx the parse tree
+	 */
+	void exitEnter_fun(@NotNull ProstyJezykParser.Enter_funContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code print_action}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrint_action(@NotNull ProstyJezykParser.Print_actionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code print_action}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrint_action(@NotNull ProstyJezykParser.Print_actionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code enter_read}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
+	 * @param ctx the parse tree
+	 */
+	void enterEnter_read(@NotNull ProstyJezykParser.Enter_readContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code enter_read}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
+	 * @param ctx the parse tree
+	 */
+	void exitEnter_read(@NotNull ProstyJezykParser.Enter_readContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code enter_if}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
+	 * @param ctx the parse tree
+	 */
+	void enterEnter_if(@NotNull ProstyJezykParser.Enter_ifContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code enter_if}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
+	 * @param ctx the parse tree
+	 */
+	void exitEnter_if(@NotNull ProstyJezykParser.Enter_ifContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code enter_while}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
+	 * @param ctx the parse tree
+	 */
+	void enterEnter_while(@NotNull ProstyJezykParser.Enter_whileContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code enter_while}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
+	 * @param ctx the parse tree
+	 */
+	void exitEnter_while(@NotNull ProstyJezykParser.Enter_whileContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ProstyJezykParser#function}.
 	 * @param ctx the parse tree
@@ -107,6 +169,56 @@ public interface ProstyJezykListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitElse_body(@NotNull ProstyJezykParser.Else_bodyContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ProstyJezykParser#while_definition}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhile_definition(@NotNull ProstyJezykParser.While_definitionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProstyJezykParser#while_definition}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhile_definition(@NotNull ProstyJezykParser.While_definitionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ProstyJezykParser#while_cond}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhile_cond(@NotNull ProstyJezykParser.While_condContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProstyJezykParser#while_cond}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhile_cond(@NotNull ProstyJezykParser.While_condContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ProstyJezykParser#while_body}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhile_body(@NotNull ProstyJezykParser.While_bodyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProstyJezykParser#while_body}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhile_body(@NotNull ProstyJezykParser.While_bodyContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ProstyJezykParser#compare_first}.
+	 * @param ctx the parse tree
+	 */
+	void enterCompare_first(@NotNull ProstyJezykParser.Compare_firstContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProstyJezykParser#compare_first}.
+	 * @param ctx the parse tree
+	 */
+	void exitCompare_first(@NotNull ProstyJezykParser.Compare_firstContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ProstyJezykParser#compare_second}.
+	 * @param ctx the parse tree
+	 */
+	void enterCompare_second(@NotNull ProstyJezykParser.Compare_secondContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ProstyJezykParser#compare_second}.
+	 * @param ctx the parse tree
+	 */
+	void exitCompare_second(@NotNull ProstyJezykParser.Compare_secondContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ProstyJezykParser#compare_sign}.
 	 * @param ctx the parse tree

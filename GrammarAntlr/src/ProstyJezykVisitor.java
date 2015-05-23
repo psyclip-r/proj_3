@@ -17,11 +17,47 @@ public interface ProstyJezykVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProg(@NotNull ProstyJezykParser.ProgContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ProstyJezykParser#start}.
+	 * Visit a parse tree produced by the {@code enter_assign}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStart(@NotNull ProstyJezykParser.StartContext ctx);
+	T visitEnter_assign(@NotNull ProstyJezykParser.Enter_assignContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code enter_fun}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEnter_fun(@NotNull ProstyJezykParser.Enter_funContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code print_action}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrint_action(@NotNull ProstyJezykParser.Print_actionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code enter_read}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEnter_read(@NotNull ProstyJezykParser.Enter_readContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code enter_if}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEnter_if(@NotNull ProstyJezykParser.Enter_ifContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code enter_while}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEnter_while(@NotNull ProstyJezykParser.Enter_whileContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ProstyJezykParser#function}.
 	 * @param ctx the parse tree
@@ -70,6 +106,36 @@ public interface ProstyJezykVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitElse_body(@NotNull ProstyJezykParser.Else_bodyContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProstyJezykParser#while_definition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhile_definition(@NotNull ProstyJezykParser.While_definitionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProstyJezykParser#while_cond}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhile_cond(@NotNull ProstyJezykParser.While_condContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProstyJezykParser#while_body}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhile_body(@NotNull ProstyJezykParser.While_bodyContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProstyJezykParser#compare_first}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCompare_first(@NotNull ProstyJezykParser.Compare_firstContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ProstyJezykParser#compare_second}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCompare_second(@NotNull ProstyJezykParser.Compare_secondContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link ProstyJezykParser#compare_sign}.
 	 * @param ctx the parse tree

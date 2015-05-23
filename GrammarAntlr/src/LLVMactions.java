@@ -6,7 +6,6 @@ import java.util.HashMap;
  * Created by kuba on 26.04.15.
  */
 public class LLVMactions extends ProstyJezykBaseListener{
-/*
     HashMap<String, Integer> memory = new HashMap<String, Integer>();
     Integer value;
 
@@ -18,12 +17,17 @@ public class LLVMactions extends ProstyJezykBaseListener{
         LLVMGenerator.exitProg();
     }
 
+    @Override public void exitPrint_action(@NotNull ProstyJezykParser.Print_actionContext ctx) {
+        //System.out.println(value);
+        LLVMGenerator.printInteger(value);
+    }
+
     // jak przypiszemy wartosc do zmiennej to zapisujemy
     // ja do tablicy pod okreslona nazwa
-    @Override public void exitAssign_action(@NotNull ProstyJezykParser.Assign_actionContext ctx) {
-        Integer tmp = Integer.valueOf( ctx.INT().getText() );
+    @Override public void exitEnter_assign(@NotNull ProstyJezykParser.Enter_assignContext ctx) {
+        Integer tmp = Integer.valueOf( ctx.value().INT().getText() );
         // do pamieci wkladamy zmienna za pomoca tablicy klucz-wartosc, np x=3 => klucz x, wartosc 3 => x=
-        memory.put(ctx.VARIABLE().getText(), tmp);
+        memory.put(ctx.NAME().getText(), tmp);
         //System.out.println(ctx.VARIABLE().getText() + " = " + tmp);
     }
 
@@ -33,21 +37,18 @@ public class LLVMactions extends ProstyJezykBaseListener{
     // a nastepnie umieszcza to w atrybucie value
     // stad kazde wywolanie exitPrint_action jest poprzedzone
     // wywolaniem exitValue
-    @Override public void exitPrint_action(@NotNull ProstyJezykParser.Print_actionContext ctx) {
-        //System.out.println(value);
-        LLVMGenerator.printInteger(value);
-    }
+
 
     // VALUE moze byc INT albo VARIABLE
     // jak INT to mamy do wyswietlenia liczbe - np. 32
     // a jak VARIABLE to zmienna - np. "a"
     @Override public void exitValue(@NotNull ProstyJezykParser.ValueContext ctx) {
-        if( ctx.VARIABLE() != null ){
+        if( ctx.INT() == null ){
             // jak VARIABLE to nie null, to znaczy ze mamy do czynienia ze zmienna VARIABLE
             // zadeklarowana wczesniej, dlatego ja odczytujemy i wyswietlamy,
             // zmienna mamy w pamieci
             // przyklad kodu: "wyswietl x"
-            value = memory.get(ctx.VARIABLE().getText());
+            value = memory.get(ctx.NAME().getText());
         }
         if( ctx.INT() != null ){
             // jak zmienna to INT
@@ -58,6 +59,15 @@ public class LLVMactions extends ProstyJezykBaseListener{
             value = tmp;
         }
     }
+
+/*
+
+
+
+
+
+
+
 */
 
 }
