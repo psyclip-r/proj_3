@@ -40,11 +40,23 @@ EQUAL_S: '==' ;
 value : INT | REAL | STRING | array | NAME | array | el_in_array | additionExp;
 
 // tutaj startujemy
-additionExp : multiplyExp ( '+' multiplyExp | '-' multiplyExp )* ;
+additionExp : multiplyExp ( PLUS_MINUS additionExp  )? ;
 
-multiplyExp : atomExp ( '*' atomExp | '/' atomExp )* ;
+PLUS_MINUS :
+    PLUS |
+    MINUS ;
+PLUS : '+';
+MINUS : '-';
 
-atomExp : INT | REAL | '(' additionExp ')' ;
+MUL_DIV :
+    MUL |
+    DIV ;
+DIV : '/';
+MUL : '*';
+
+multiplyExp : atomExp ( MUL_DIV multiplyExp  )? ;
+
+atomExp : NAME | INT | REAL | '(' additionExp ')' ;
 
 array : ( OP_BRACKET value (COMMA value)* CLO_BRACKET ) | (OP_BRACKET CLO_BRACKET) ;
 el_in_array : NAME OP_BRACKET INT CLO_BRACKET;

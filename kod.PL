@@ -1,5 +1,1 @@
-int x = 4
-print x
-print 44
-int x = 321
-print x
+int x = 3+4+(x+5)*4+3/4+5*5*5/5

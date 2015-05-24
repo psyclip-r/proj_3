@@ -1,6 +1,7 @@
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.HashMap;
+import java.util.Stack;
 
 /**
  * Created by kuba on 26.04.15.
@@ -9,6 +10,8 @@ public class LLVMactions extends ProstyJezykBaseListener{
     HashMap<String, Integer> int_memory = new HashMap<String, Integer>();
     HashMap<String, Double> real_memory = new HashMap<String, Double>();
     HashMap<String, String> string_memory = new HashMap<String, String>();
+    Stack stack = new Stack();
+
 
     Integer value;
 
@@ -53,6 +56,7 @@ public class LLVMactions extends ProstyJezykBaseListener{
     // jak przypiszemy wartosc do zmiennej to zapisujemy
     // ja do tablicy pod okreslona nazwa
     @Override public void exitEnter_assign(@NotNull ProstyJezykParser.Enter_assignContext ctx) {
+        /*
         if(ctx.var_type().getText().equalsIgnoreCase("int")){
             Integer tmp = Integer.valueOf( ctx.value().INT().getText() );
             int_memory.put(ctx.NAME().getText(), tmp);
@@ -68,7 +72,7 @@ public class LLVMactions extends ProstyJezykBaseListener{
         if(ctx.var_type().getText().equalsIgnoreCase("array")){
             //not yet implemented
         }
-
+    */
 
     }
 
@@ -84,6 +88,11 @@ public class LLVMactions extends ProstyJezykBaseListener{
     // jak INT to mamy do wyswietlenia liczbe - np. 32
     // a jak VARIABLE to zmienna - np. "a"
     @Override public void exitValue(@NotNull ProstyJezykParser.ValueContext ctx) {
+        System.out.println("exitValue");
+        while( ! stack.isEmpty() ){
+            System.out.println(stack.pop().toString());
+        }
+        /*
         if( ctx.INT() == null ){
             // jak VARIABLE to nie null, to znaczy ze mamy do czynienia ze zmienna VARIABLE
             // zadeklarowana wczesniej, dlatego ja odczytujemy i wyswietlamy,
@@ -99,19 +108,40 @@ public class LLVMactions extends ProstyJezykBaseListener{
             Integer tmp = Integer.valueOf (ctx.INT().getText() );
             value = tmp;
         }
-
+        */
 
 
     }
 
-/*
+    @Override public void exitAdditionExp(@NotNull ProstyJezykParser.AdditionExpContext ctx) {
+        System.out.println("exitAdditionExp");
+        //ctx.
+    }
 
+    @Override public void exitMultiplyExp(@NotNull ProstyJezykParser.MultiplyExpContext ctx) {
+        System.out.println("exitMultiplyExp");
+    }
 
+    @Override public void exitAtomExp(@NotNull ProstyJezykParser.AtomExpContext ctx) {
+        if(ctx.additionExp() != null){
+            // raczej nie rób nic
+            // wszystko zrobi additionExp, które będzie
+            // a tutaj to nic sie nie stanie :)
+        }
+        if(ctx.INT() != null){
+            Integer tmp = Integer.valueOf(ctx.INT().getText());
+            stack.push(tmp);
+        }
+        if(ctx.REAL() != null){
+            double tmp = Double.valueOf( ctx.REAL().getText() );
+            stack.push(tmp);
+        }
+        if(ctx.NAME() != null){
+            String tmp = ctx.NAME().getText();
+            stack.push(tmp);
+        }
 
-
-
-
-
-*/
+        System.out.println("exitAtomExp");
+    }
 
 }
