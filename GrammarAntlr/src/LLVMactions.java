@@ -89,9 +89,11 @@ public class LLVMactions extends ProstyJezykBaseListener{
     // a jak VARIABLE to zmienna - np. "a"
     @Override public void exitValue(@NotNull ProstyJezykParser.ValueContext ctx) {
         System.out.println("exitValue");
+
         while( ! stack.isEmpty() ){
             System.out.println(stack.pop().toString());
         }
+
         /*
         if( ctx.INT() == null ){
             // jak VARIABLE to nie null, to znaczy ze mamy do czynienia ze zmienna VARIABLE
@@ -114,12 +116,60 @@ public class LLVMactions extends ProstyJezykBaseListener{
     }
 
     @Override public void exitAdditionExp(@NotNull ProstyJezykParser.AdditionExpContext ctx) {
-        System.out.println("exitAdditionExp");
-        //ctx.
+        System.out.println("exitMultiplyExp");
+        boolean isAdd = false;
+        boolean isAddSubs = false;
+
+        if( ctx.PLUS_MINUS() != null ){
+            isAddSubs = true;
+            if( ctx.PLUS_MINUS().getSymbol().getText().equals("+") ){
+                isAdd = true;
+            }else{
+                isAdd = false;
+            }
+        }
+
+        if( isAddSubs ){
+            double tmp_2 =  Double.valueOf( stack.pop().toString() );
+            double tmp_1 =  Double.valueOf( stack.pop().toString() );
+            double result;
+            if(isAdd){
+                result = tmp_1 + tmp_2;
+                stack.push(result);
+            }else{
+                result = tmp_1 - tmp_2;
+                stack.push(result);
+            }
+        }
+
     }
 
     @Override public void exitMultiplyExp(@NotNull ProstyJezykParser.MultiplyExpContext ctx) {
         System.out.println("exitMultiplyExp");
+        boolean isDivide = false;
+        boolean isDIvMul = false;
+        if( ctx.MUL_DIV() != null ){
+            isDIvMul = true;
+            if( ctx.MUL_DIV().getSymbol().getText().equals("*") ){
+                isDivide = false;
+            }else{
+                isDivide = true;
+            }
+        }
+
+        if( isDIvMul ){
+            double tmp_2 =  Double.valueOf( stack.pop().toString() );
+            double tmp_1 =  Double.valueOf( stack.pop().toString() );
+            double result;
+            if(isDivide){
+                result = tmp_1 / tmp_2;
+                stack.push(result);
+            }else{
+                result = tmp_1 * tmp_2;
+                stack.push(result);
+            }
+        }
+
     }
 
     @Override public void exitAtomExp(@NotNull ProstyJezykParser.AtomExpContext ctx) {
