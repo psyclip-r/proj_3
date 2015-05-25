@@ -128,17 +128,31 @@ public class LLVMactions extends ProstyJezykBaseListener {
         String ID = ctx.ID().getText();
 
         if (ctx.var_type().t_INT() != null) {
-            variables.put(ID, VarType.INT);
+            if( variables.get(ID) == null ){
+                variables.put(ID, VarType.INT);
+                LLVMGenerator.declare_i32(ID);
+            }else{
+                VarType v = variables.get(ID);
+                if(v == VarType.REAL){
+                    error(ctx.getStart().getLine(), "variable has a different type ");
+                }
+            }
             //LLVMGenerator.assign_i32(ID, v.name);
-            LLVMGenerator.declare_i32(ID);
             LLVMGenerator.scanf_i32(ID);
         }
 
         if (ctx.var_type().t_REAL() != null) {
-            variables.put(ID, VarType.REAL);
+            if( variables.get(ID) == null ){
+                variables.put(ID, VarType.REAL);
+                LLVMGenerator.declare_double(ID);
+            }else{
+                VarType v = variables.get(ID);
+                if(v == VarType.INT){
+                    error(ctx.getStart().getLine(), "variable has a different type ");
+                }
+            }
             //LLVMGenerator.assign_i32(ID, v.name);
-            LLVMGenerator.declare_double(ID);
-            LLVMGenerator.scanf_i32(ID);
+            LLVMGenerator.scanf_double(ID);
         }
 
 
