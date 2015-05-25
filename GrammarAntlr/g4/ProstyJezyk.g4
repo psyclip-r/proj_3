@@ -6,7 +6,7 @@ start :
     ( ID '=' expr0 ) #assign |
     function #enter_fun |
     PRINT ID #print |
-    READ ID #read   |
+    READ var_type ID #read   |
     if_definition #enter_if |
     while_definition #enter_while ;
 
@@ -32,6 +32,8 @@ compare_sign :
     MORE    |
     EQUAL_S
     ;
+
+
 
 LESS : '<' ;
 MORE : '>' ;

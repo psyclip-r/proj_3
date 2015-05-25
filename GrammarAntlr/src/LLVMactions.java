@@ -33,10 +33,12 @@ public class LLVMactions extends ProstyJezykBaseListener {
         variables.put(ID, v.type);
         if( v.type == VarType.INT ){
             LLVMGenerator.declare_i32(ID);
+            // System.out.println("name: " + v.name);
             LLVMGenerator.assign_i32(ID, v.name);
         }
         if( v.type == VarType.REAL ){
             LLVMGenerator.declare_double(ID);
+            // System.out.println("name: " + v.name);
             LLVMGenerator.assign_double(ID, v.name);
         }
     }
@@ -48,7 +50,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
 
     @Override
     public void exitInt(ProstyJezykParser.IntContext ctx) {
-        stack.push( new Value(ctx.INT().getText(), VarType.INT) );
+        stack.push(new Value(ctx.INT().getText(), VarType.INT));
     }
 
     @Override
@@ -102,7 +104,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
     @Override
     public void exitToreal(ProstyJezykParser.TorealContext ctx) {
         Value v = stack.pop();
-        LLVMGenerator.sitofp( v.name );
+        LLVMGenerator.sitofp(v.name);
         stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.REAL) );
     }
 
@@ -121,6 +123,33 @@ public class LLVMactions extends ProstyJezykBaseListener {
             error(ctx.getStart().getLine(), "unknown variable "+ID);
         }
     }
+
+    @Override public void exitRead(@NotNull ProstyJezykParser.ReadContext ctx) {
+        String ID = ctx.ID().getText();
+
+        if (ctx.var_type().t_INT() != null) {
+            variables.put(ID, VarType.INT);
+            //LLVMGenerator.assign_i32(ID, v.name);
+            LLVMGenerator.declare_i32(ID);
+            LLVMGenerator.scanf_i32(ID);
+        }
+
+        if (ctx.var_type().t_REAL() != null) {
+            variables.put(ID, VarType.REAL);
+            //LLVMGenerator.assign_i32(ID, v.name);
+            LLVMGenerator.declare_double(ID);
+            LLVMGenerator.scanf_i32(ID);
+        }
+
+
+
+    }
+
+
+
+
+
+
 
     void error(int line, String msg){
         System.err.println("Error, line "+line+", "+msg);
