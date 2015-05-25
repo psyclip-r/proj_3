@@ -28,13 +28,13 @@ public class ProstyJezykBaseListener implements ProstyJezykListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEnter_assign(@NotNull ProstyJezykParser.Enter_assignContext ctx) { }
+	@Override public void enterAssign(@NotNull ProstyJezykParser.AssignContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitEnter_assign(@NotNull ProstyJezykParser.Enter_assignContext ctx) { }
+	@Override public void exitAssign(@NotNull ProstyJezykParser.AssignContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -52,25 +52,25 @@ public class ProstyJezykBaseListener implements ProstyJezykListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPrint_action(@NotNull ProstyJezykParser.Print_actionContext ctx) { }
+	@Override public void enterPrint(@NotNull ProstyJezykParser.PrintContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPrint_action(@NotNull ProstyJezykParser.Print_actionContext ctx) { }
+	@Override public void exitPrint(@NotNull ProstyJezykParser.PrintContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEnter_read(@NotNull ProstyJezykParser.Enter_readContext ctx) { }
+	@Override public void enterRead(@NotNull ProstyJezykParser.ReadContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitEnter_read(@NotNull ProstyJezykParser.Enter_readContext ctx) { }
+	@Override public void exitRead(@NotNull ProstyJezykParser.ReadContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -280,42 +280,6 @@ public class ProstyJezykBaseListener implements ProstyJezykListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAdditionExp(@NotNull ProstyJezykParser.AdditionExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAdditionExp(@NotNull ProstyJezykParser.AdditionExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterMultiplyExp(@NotNull ProstyJezykParser.MultiplyExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitMultiplyExp(@NotNull ProstyJezykParser.MultiplyExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAtomExp(@NotNull ProstyJezykParser.AtomExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAtomExp(@NotNull ProstyJezykParser.AtomExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterArray(@NotNull ProstyJezykParser.ArrayContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -347,6 +311,114 @@ public class ProstyJezykBaseListener implements ProstyJezykListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitVar_type(@NotNull ProstyJezykParser.Var_typeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSingle0(@NotNull ProstyJezykParser.Single0Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSingle0(@NotNull ProstyJezykParser.Single0Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAdd(@NotNull ProstyJezykParser.AddContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAdd(@NotNull ProstyJezykParser.AddContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSingle1(@NotNull ProstyJezykParser.Single1Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSingle1(@NotNull ProstyJezykParser.Single1Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMult(@NotNull ProstyJezykParser.MultContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMult(@NotNull ProstyJezykParser.MultContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterInt(@NotNull ProstyJezykParser.IntContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInt(@NotNull ProstyJezykParser.IntContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterReal(@NotNull ProstyJezykParser.RealContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitReal(@NotNull ProstyJezykParser.RealContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterToint(@NotNull ProstyJezykParser.TointContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitToint(@NotNull ProstyJezykParser.TointContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterToreal(@NotNull ProstyJezykParser.TorealContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitToreal(@NotNull ProstyJezykParser.TorealContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPar(@NotNull ProstyJezykParser.ParContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPar(@NotNull ProstyJezykParser.ParContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

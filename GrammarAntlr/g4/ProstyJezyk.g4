@@ -3,10 +3,10 @@ grammar ProstyJezyk;
 prog : ( start? NEWLINE )* ;
 
 start :
-    ( var_type NAME '=' value ) #enter_assign |
+    ( ID '=' expr0 ) #assign |
     function #enter_fun |
-    f_PRINT value #print_action |
-    var_type NAME '=' f_READ #enter_read |
+    PRINT ID #print |
+    READ ID #read   |
     if_definition #enter_if |
     while_definition #enter_while ;
 
@@ -37,31 +37,13 @@ LESS : '<' ;
 MORE : '>' ;
 EQUAL_S: '==' ;
 
-value : INT | REAL | STRING | array | NAME | array | el_in_array | additionExp;
+value : INT | REAL | STRING | array | NAME | array | el_in_array ;
 
 // tutaj startujemy
-additionExp : multiplyExp ( PLUS_MINUS additionExp  )? ;
-
-PLUS_MINUS :
-    PLUS |
-    MINUS ;
-PLUS : '+';
-MINUS : '-';
-
-MUL_DIV :
-    MUL |
-    DIV ;
-DIV : '/';
-MUL : '*';
-
-multiplyExp : atomExp ( MUL_DIV multiplyExp  )? ;
-
-atomExp : NAME | INT | REAL | '(' additionExp ')' ;
 
 array : ( OP_BRACKET value (COMMA value)* CLO_BRACKET ) | (OP_BRACKET CLO_BRACKET) ;
 el_in_array : NAME OP_BRACKET INT CLO_BRACKET;
 
-NEWLINE : '\r'? '\n' ;
 
 var_type : t_STRING |
            t_INT    |
@@ -70,10 +52,55 @@ var_type : t_STRING |
            t_VOID
             ;
 
+// TUTAJ POCZATEK
+
+expr0:  expr1			#single0
+      | expr1 ADD expr1		#add
+ //     | expr1 SUBS expr1     #substract
+;
+
+expr1:  expr2			#single1
+      | expr2 MULT expr2	#mult
+ //     | expr2 DIV expr2 #div
+
+;
+
+expr2:   INT			#int
+       | REAL			#real
+       | TOINT expr2		#toint
+       | TOREAL expr2		#toreal
+       | '(' expr0 ')'		#par
+;
 
 
+READ:   'read'
+    ;
+
+PRINT:	'print'
+    ;
+
+TOINT: '(int)'
+    ;
+
+TOREAL: '(real)'
+    ;
+
+ID:   ('a'..'z'|'A'..'Z')+
+   ;
+
+
+ADD: '+'
+    ;
+
+MULT: '*'
+    ;
+SUBS: '-'
+    ;
+
+// TUTAJ KONIEC
 
 NAME : 'a'..'z'+ ;
+
 
 INT:   '0'..'9'+ ;
 REAL: '0'..'9'+ '.' '0'..'9'+;
@@ -98,7 +125,8 @@ CLO_BRACE : ')' ;
 START_FUNCT : '{';
 END_FUNCT : '}';
 
-
+NEWLINE:	'\r'? '\n'
+    ;
 
 fragment ESC :   '\\' (["\\/bfnrt] | UNICODE) ;
 fragment UNICODE : 'u' HEX HEX HEX HEX ;

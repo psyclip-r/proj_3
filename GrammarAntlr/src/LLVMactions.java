@@ -6,12 +6,137 @@ import java.util.Stack;
 /**
  * Created by kuba on 26.04.15.
  */
+
+
+enum VarType{ INT, REAL, UNKNOWN }
+
+class Value{
+    public String name;
+    public VarType type;
+    public Value( String name, VarType type ){
+        this.name = name;
+        this.type = type;
+    }
+}
+
+
+
+public class LLVMactions extends ProstyJezykBaseListener {
+
+    HashMap<String, VarType> variables = new HashMap<String, VarType>();
+    Stack<Value> stack = new Stack<Value>();
+
+    @Override
+    public void exitAssign(ProstyJezykParser.AssignContext ctx) {
+        String ID = ctx.ID().getText();
+        Value v = stack.pop();
+        variables.put(ID, v.type);
+        if( v.type == VarType.INT ){
+            LLVMGenerator.declare_i32(ID);
+            LLVMGenerator.assign_i32(ID, v.name);
+        }
+        if( v.type == VarType.REAL ){
+            LLVMGenerator.declare_double(ID);
+            LLVMGenerator.assign_double(ID, v.name);
+        }
+    }
+
+    @Override
+    public void exitProg(ProstyJezykParser.ProgContext ctx) {
+        System.out.println( LLVMGenerator.generate() );
+    }
+
+    @Override
+    public void exitInt(ProstyJezykParser.IntContext ctx) {
+        stack.push( new Value(ctx.INT().getText(), VarType.INT) );
+    }
+
+    @Override
+    public void exitReal(ProstyJezykParser.RealContext ctx) {
+        stack.push( new Value(ctx.REAL().getText(), VarType.REAL) );
+    }
+
+    @Override
+    public void exitAdd(ProstyJezykParser.AddContext ctx) {
+        Value v1 = stack.pop();
+        Value v2 = stack.pop();
+        if( v1.type == v2.type ) {
+            if( v1.type == VarType.INT ){
+                LLVMGenerator.add_i32(v1.name, v2.name);
+                stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT) );
+            }
+            if( v1.type == VarType.REAL ){
+                LLVMGenerator.add_double(v1.name, v2.name);
+                stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.REAL) );
+            }
+        } else {
+            error(ctx.getStart().getLine(), "add type mismatch");
+        }
+    }
+
+    @Override
+    public void exitMult(ProstyJezykParser.MultContext ctx) {
+        Value v1 = stack.pop();
+        Value v2 = stack.pop();
+        if( v1.type == v2.type ) {
+            if( v1.type == VarType.INT ){
+                LLVMGenerator.mult_i32(v1.name, v2.name);
+                stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT) );
+            }
+            if( v1.type == VarType.REAL ){
+                LLVMGenerator.mult_double(v1.name, v2.name);
+                stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.REAL) );
+            }
+        } else {
+            error(ctx.getStart().getLine(), "mult type mismatch");
+        }
+    }
+
+    @Override
+    public void exitToint(ProstyJezykParser.TointContext ctx) {
+        Value v = stack.pop();
+        LLVMGenerator.fptosi( v.name );
+        stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT) );
+    }
+
+    @Override
+    public void exitToreal(ProstyJezykParser.TorealContext ctx) {
+        Value v = stack.pop();
+        LLVMGenerator.sitofp( v.name );
+        stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.REAL) );
+    }
+
+    @Override
+    public void exitPrint(ProstyJezykParser.PrintContext ctx) {
+        String ID = ctx.ID().getText();
+        VarType type = variables.get(ID);
+        if( type != null ) {
+            if( type == VarType.INT ){
+                LLVMGenerator.printf_i32( ID );
+            }
+            if( type == VarType.REAL ){
+                LLVMGenerator.printf_double( ID );
+            }
+        } else {
+            error(ctx.getStart().getLine(), "unknown variable "+ID);
+        }
+    }
+
+    void error(int line, String msg){
+        System.err.println("Error, line "+line+", "+msg);
+        System.exit(1);
+    }
+
+}
+/*
 public class LLVMactions extends ProstyJezykBaseListener{
     HashMap<String, Integer> int_memory = new HashMap<String, Integer>();
     HashMap<String, Double> real_memory = new HashMap<String, Double>();
     HashMap<String, String> string_memory = new HashMap<String, String>();
-    Stack stack = new Stack();
-
+    Stack oldStack = new Stack();
+    Stack<String> stringStack = new Stack<String>();
+    HashMap<String, VarType> variables = new HashMap<String, VarType>();
+    Stack<Value> stack = new Stack<Value>();
 
     Integer value;
 
@@ -23,13 +148,14 @@ public class LLVMactions extends ProstyJezykBaseListener{
         LLVMGenerator.exitProg();
     }
 
+    /*
     @Override public void exitPrint_action(@NotNull ProstyJezykParser.Print_actionContext ctx) {
         //System.out.println(value);
 
         // LLVMGenerator.printInteger(value);
         if(ctx.value().INT() != null){
             Integer tmp = Integer.valueOf( ctx.value().INT().getText() );
-            LLVMGenerator.printInteger(tmp);
+            //LLVMGenerator.printInteger(tmp);
         }
         if(ctx.value().REAL() != null){
             //not yet implemented
@@ -40,7 +166,7 @@ public class LLVMactions extends ProstyJezykBaseListener{
 
         if(ctx.value().NAME() != null){
             if( int_memory.get(ctx.value().NAME().getText()) != null ){
-                LLVMGenerator.printInteger(int_memory.get(ctx.value().NAME().getText()));
+                //LLVMGenerator.printInteger(int_memory.get(ctx.value().NAME().getText()));
             }
             if( real_memory.get(ctx.value().NAME().getText()) != null ){
                 //not yet implemented
@@ -52,11 +178,25 @@ public class LLVMactions extends ProstyJezykBaseListener{
         }
 
     }
+    */
 
     // jak przypiszemy wartosc do zmiennej to zapisujemy
     // ja do tablicy pod okreslona nazwa
+       /*
     @Override public void exitEnter_assign(@NotNull ProstyJezykParser.Enter_assignContext ctx) {
-        /*
+        String name = ctx.NAME().getText();
+        Value v = stack.pop();
+        variables.put(name, v.type);
+        if( v.type == VarType.INT ){
+            //LLVMGenerator.declare_i32(name);
+            //LLVMGenerator.assign_i32(name, v.name);
+        }
+        if( v.type == VarType.REAL ){
+            //LLVMGenerator.declare_double(name);
+            //LLVMGenerator.assign_double(name, v.name);
+        }
+
+
         if(ctx.var_type().getText().equalsIgnoreCase("int")){
             Integer tmp = Integer.valueOf( ctx.value().INT().getText() );
             int_memory.put(ctx.NAME().getText(), tmp);
@@ -72,10 +212,10 @@ public class LLVMactions extends ProstyJezykBaseListener{
         if(ctx.var_type().getText().equalsIgnoreCase("array")){
             //not yet implemented
         }
-    */
+
 
     }
-
+    */
     // wiemy co drukowac dzieki funkcji exitValue
     // ktora zawsze przed wypisaniem sprawdza co jest do wypisania
     // - czy zmienna czy liczba -
@@ -87,34 +227,16 @@ public class LLVMactions extends ProstyJezykBaseListener{
     // VALUE moze byc INT albo VARIABLE
     // jak INT to mamy do wyswietlenia liczbe - np. 32
     // a jak VARIABLE to zmienna - np. "a"
+/*
     @Override public void exitValue(@NotNull ProstyJezykParser.ValueContext ctx) {
         System.out.println("exitValue");
 
-        while( ! stack.isEmpty() ){
-            System.out.println(stack.pop().toString());
+        while( ! oldStack.isEmpty() ){
+            System.out.println(oldStack.pop().toString());
         }
-
-        /*
-        if( ctx.INT() == null ){
-            // jak VARIABLE to nie null, to znaczy ze mamy do czynienia ze zmienna VARIABLE
-            // zadeklarowana wczesniej, dlatego ja odczytujemy i wyswietlamy,
-            // zmienna mamy w pamieci
-            // przyklad kodu: "wyswietl x"
-            value = int_memory.get(ctx.NAME().getText());
-        }
-        if( ctx.INT() != null ){
-            // jak zmienna to INT
-            // to znaczy ze mamy do wyswietlenia LIICZBE, a nie zmienna
-            // czyli wyswietlamy to co tam uzytownik wpisal
-            // przyklad kodu: "wyswietl 13"
-            Integer tmp = Integer.valueOf (ctx.INT().getText() );
-            value = tmp;
-        }
-        */
-
 
     }
-
+    /*
     @Override public void exitAdditionExp(@NotNull ProstyJezykParser.AdditionExpContext ctx) {
         System.out.println("exitMultiplyExp");
         boolean isAdd = false;
@@ -130,15 +252,15 @@ public class LLVMactions extends ProstyJezykBaseListener{
         }
 
         if( isAddSubs ){
-            double tmp_2 =  Double.valueOf( stack.pop().toString() );
-            double tmp_1 =  Double.valueOf( stack.pop().toString() );
+            double tmp_2 =  Double.valueOf(oldStack.pop().toString());
+            double tmp_1 =  Double.valueOf( oldStack.pop().toString() );
             double result;
             if(isAdd){
                 result = tmp_1 + tmp_2;
-                stack.push(result);
+                oldStack.push(result);
             }else{
                 result = tmp_1 - tmp_2;
-                stack.push(result);
+                oldStack.push(result);
             }
         }
 
@@ -158,15 +280,15 @@ public class LLVMactions extends ProstyJezykBaseListener{
         }
 
         if( isDIvMul ){
-            double tmp_2 =  Double.valueOf( stack.pop().toString() );
-            double tmp_1 =  Double.valueOf( stack.pop().toString() );
+            double tmp_2 =  Double.valueOf(oldStack.pop().toString());
+            double tmp_1 =  Double.valueOf( oldStack.pop().toString() );
             double result;
             if(isDivide){
                 result = tmp_1 / tmp_2;
-                stack.push(result);
+                oldStack.push(result);
             }else{
                 result = tmp_1 * tmp_2;
-                stack.push(result);
+                oldStack.push(result);
             }
         }
 
@@ -180,18 +302,21 @@ public class LLVMactions extends ProstyJezykBaseListener{
         }
         if(ctx.INT() != null){
             Integer tmp = Integer.valueOf(ctx.INT().getText());
-            stack.push(tmp);
+            oldStack.push(tmp);
         }
         if(ctx.REAL() != null){
             double tmp = Double.valueOf( ctx.REAL().getText() );
-            stack.push(tmp);
+            oldStack.push(tmp);
         }
         if(ctx.NAME() != null){
             String tmp = ctx.NAME().getText();
-            stack.push(tmp);
+            oldStack.push(tmp);
         }
 
         System.out.println("exitAtomExp");
     }
 
-}
+*/
+
+
+//}
