@@ -32,91 +32,55 @@ compare_sign :
     EQUAL_S
     ;
 
-
-
-LESS : '<' ;
-MORE : '>' ;
-EQUAL_S: '==' ;
-
 value : INT | REAL | STRING | array | ID_NAME ;
-
-// tutaj startujemy
 
 array : ( OP_BRACKET value (COMMA value)* CLO_BRACKET ) | (OP_BRACKET CLO_BRACKET) ;
 el_in_array : NAME OP_BRACKET INT CLO_BRACKET;
-
 
 var_type : t_STRING |
            t_INT    |
            t_REAL   |
            t_ARRAY  |
-           t_VOID
-            ;
+           t_VOID;
 
-// TUTAJ POCZATEK
+ex_0:  ex_1			    #blabla_1
+      | ex_1 ADD ex_1	#add
+      | ex_1 SUBS ex_1  #substract;
 
-ex_0:  ex_1			#blabla_1
-      | ex_1 ADD ex_1		#add
-      | ex_1 SUBS ex_1     #substract
-;
-
-ex_1:  ex_2			#blabla_2
+ex_1:  ex_2			    #blabla_2
       | ex_2 MULT ex_2	#mult
-      | ex_2 DIV ex_2 #div
-
-;
+      | ex_2 DIV ex_2   #div;
 
 ex_2:   INT			#int
        | REAL			#real
        | TOINT ex_2		#toint
-       | TOREAL ex_2		#toreal
-       | '(' ex_0 ')'		#par
-;
+       | TOREAL ex_2	#toreal
+       | '(' ex_0 ')'	#par;
 
 
-READ:   'read'
-    ;
-
-PRINT:	'print'
-    ;
-
-TOINT: '(int)'
-    ;
-
-TOREAL: '(real)'
-    ;
-
-ID_NAME:   ('a'..'z'|'A'..'Z')+
-   ;
-
-
-ADD: '+'
-    ;
-
-MULT: '*'
-    ;
-SUBS: '-'
-    ;
+LESS : '<' ;
+MORE : '>' ;
+EQUAL_S: '==' ;
+READ: 'read';
+PRINT: 'print';
+TOINT: '(int)';
+TOREAL: '(real)';
+ID_NAME:   ('a'..'z'|'A'..'Z')+;
+ADD: '+';
+MULT: '*';
+SUBS: '-';
 DIV: '/' ;
-
-// TUTAJ KONIEC
-
 NAME : 'a'..'z'+ ;
-
-
 INT:   '0'..'9'+ ;
 REAL: '0'..'9'+ '.' '0'..'9'+;
 STRING :  QUOTES (ESC | ~["\\])* QUOTES ;
-
 t_STRING: 'string' ;
 t_INT : 'int' ;
 t_REAL : 'real';
 t_ARRAY : 'array';
 t_VOID : 'void';
-
 f_PRINT : 'print';
 f_READ : 'read' ;
-
 EQUAL : '=' ;
 QUOTES : '"' ;
 OP_BRACKET : '[' ;
