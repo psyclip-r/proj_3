@@ -28,13 +28,13 @@ public class ProstyJezykBaseListener implements ProstyJezykListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAssign(@NotNull ProstyJezykParser.AssignContext ctx) { }
+	@Override public void enterAssignValue(@NotNull ProstyJezykParser.AssignValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAssign(@NotNull ProstyJezykParser.AssignContext ctx) { }
+	@Override public void exitAssignValue(@NotNull ProstyJezykParser.AssignValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -52,13 +52,13 @@ public class ProstyJezykBaseListener implements ProstyJezykListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPrint(@NotNull ProstyJezykParser.PrintContext ctx) { }
+	@Override public void enterPrintID(@NotNull ProstyJezykParser.PrintIDContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPrint(@NotNull ProstyJezykParser.PrintContext ctx) { }
+	@Override public void exitPrintID(@NotNull ProstyJezykParser.PrintIDContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

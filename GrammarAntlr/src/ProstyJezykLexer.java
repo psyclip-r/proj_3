@@ -18,7 +18,7 @@ public class ProstyJezykLexer extends Lexer {
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		LESS=10, MORE=11, EQUAL_S=12, READ=13, PRINT=14, TOINT=15, TOREAL=16, 
-		ID=17, ADD=18, MULT=19, SUBS=20, NAME=21, INT=22, REAL=23, STRING=24, 
+		ID_NAME=17, ADD=18, MULT=19, SUBS=20, NAME=21, INT=22, REAL=23, STRING=24, 
 		EQUAL=25, QUOTES=26, OP_BRACKET=27, CLO_BRACKET=28, COMMA=29, OP_BRACE=30, 
 		CLO_BRACE=31, START_FUNCT=32, END_FUNCT=33, NEWLINE=34, WS=35;
 	public static String[] modeNames = {
@@ -27,10 +27,10 @@ public class ProstyJezykLexer extends Lexer {
 
 	public static final String[] ruleNames = {
 		"T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "T__6", "T__7", "T__8", 
-		"LESS", "MORE", "EQUAL_S", "READ", "PRINT", "TOINT", "TOREAL", "ID", "ADD", 
-		"MULT", "SUBS", "NAME", "INT", "REAL", "STRING", "EQUAL", "QUOTES", "OP_BRACKET", 
-		"CLO_BRACKET", "COMMA", "OP_BRACE", "CLO_BRACE", "START_FUNCT", "END_FUNCT", 
-		"NEWLINE", "ESC", "UNICODE", "HEX", "EXP", "WS", "COMMENT"
+		"LESS", "MORE", "EQUAL_S", "READ", "PRINT", "TOINT", "TOREAL", "ID_NAME", 
+		"ADD", "MULT", "SUBS", "NAME", "INT", "REAL", "STRING", "EQUAL", "QUOTES", 
+		"OP_BRACKET", "CLO_BRACKET", "COMMA", "OP_BRACE", "CLO_BRACE", "START_FUNCT", 
+		"END_FUNCT", "NEWLINE", "ESC", "UNICODE", "HEX", "EXP", "WS", "COMMENT"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -41,10 +41,10 @@ public class ProstyJezykLexer extends Lexer {
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, null, null, null, "LESS", "MORE", 
-		"EQUAL_S", "READ", "PRINT", "TOINT", "TOREAL", "ID", "ADD", "MULT", "SUBS", 
-		"NAME", "INT", "REAL", "STRING", "EQUAL", "QUOTES", "OP_BRACKET", "CLO_BRACKET", 
-		"COMMA", "OP_BRACE", "CLO_BRACE", "START_FUNCT", "END_FUNCT", "NEWLINE", 
-		"WS"
+		"EQUAL_S", "READ", "PRINT", "TOINT", "TOREAL", "ID_NAME", "ADD", "MULT", 
+		"SUBS", "NAME", "INT", "REAL", "STRING", "EQUAL", "QUOTES", "OP_BRACKET", 
+		"CLO_BRACKET", "COMMA", "OP_BRACE", "CLO_BRACE", "START_FUNCT", "END_FUNCT", 
+		"NEWLINE", "WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 

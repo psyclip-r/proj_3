@@ -17,12 +17,12 @@ public interface ProstyJezykVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProg(@NotNull ProstyJezykParser.ProgContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code assign}
+	 * Visit a parse tree produced by the {@code assignValue}
 	 * labeled alternative in {@link ProstyJezykParser#start}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAssign(@NotNull ProstyJezykParser.AssignContext ctx);
+	T visitAssignValue(@NotNull ProstyJezykParser.AssignValueContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code enter_fun}
 	 * labeled alternative in {@link ProstyJezykParser#start}.
@@ -31,12 +31,12 @@ public interface ProstyJezykVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitEnter_fun(@NotNull ProstyJezykParser.Enter_funContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code print}
+	 * Visit a parse tree produced by the {@code printID}
 	 * labeled alternative in {@link ProstyJezykParser#start}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitPrint(@NotNull ProstyJezykParser.PrintContext ctx);
+	T visitPrintID(@NotNull ProstyJezykParser.PrintIDContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code read}
 	 * labeled alternative in {@link ProstyJezykParser#start}.

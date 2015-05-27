@@ -3,10 +3,10 @@ grammar ProstyJezyk;
 prog : ( start? NEWLINE )* ;
 
 start :
-    ( ID '=' expr0 ) #assign |
+    ( ID_NAME '=' expr0 ) #assignValue |
     function #enter_fun |
-    PRINT ID #print |
-    READ var_type ID #read   |
+    PRINT ID_NAME #printID |
+    READ var_type ID_NAME #read   |
     if_definition #enter_if |
     while_definition #enter_while ;
 
@@ -87,7 +87,7 @@ TOINT: '(int)'
 TOREAL: '(real)'
     ;
 
-ID:   ('a'..'z'|'A'..'Z')+
+ID_NAME:   ('a'..'z'|'A'..'Z')+
    ;
 
 

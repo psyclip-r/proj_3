@@ -27,17 +27,38 @@ public class LLVMactions extends ProstyJezykBaseListener {
     Stack<Value> stack = new Stack<Value>();
 
     @Override
-    public void exitAssign(ProstyJezykParser.AssignContext ctx) {
-        String ID = ctx.ID().getText();
+    public void exitAssignValue(ProstyJezykParser.AssignValueContext ctx) {
+        String ID = ctx.ID_NAME().getText();
         Value v = stack.pop();
-        variables.put(ID, v.type);
+        // to po to, żeby sprawdzic czy juz takiem zmiennej nie mamy
+        VarType varExistsCheck = variables.get(ID);
+
+        if(varExistsCheck == null){
+            // jak nie ma to ja deklarujemy
+            variables.put(ID, v.type);
+        }
+
         if( v.type == VarType.INT ){
-            LLVMGenerator.declareInt(ID);
+            // zabezpieczenie, zeby mozna bylo przypisac do "y" pare wartosci wkilku liniach
+            if( varExistsCheck == null ){
+                LLVMGenerator.declareInt(ID);
+            }else{
+                if(varExistsCheck != VarType.INT){
+                    printError(ctx.getStart().getLine(), ID +  " : przedtem zmienna byla innego typu.");
+                }
+            }
             // System.out.println("name: " + v.name);
             LLVMGenerator.assignInt(ID, v.name);
         }
         if( v.type == VarType.REAL ){
-            LLVMGenerator.declareDOuble(ID);
+            if( varExistsCheck == null ){
+                LLVMGenerator.declareDOuble(ID);
+            }else{
+                if(varExistsCheck != VarType.REAL){
+                    printError(ctx.getStart().getLine(), ID +  " : przedtem zmienna byla innego typu.");
+                }
+            }
+
             // System.out.println("name: " + v.name);
             LLVMGenerator.assignDouble(ID, v.name);
         }
@@ -109,8 +130,8 @@ public class LLVMactions extends ProstyJezykBaseListener {
     }
 
     @Override
-    public void exitPrint(ProstyJezykParser.PrintContext ctx) {
-        String ID = ctx.ID().getText();
+    public void exitPrintID(ProstyJezykParser.PrintIDContext ctx) {
+        String ID = ctx.ID_NAME().getText();
         VarType type = variables.get(ID);
         if( type != null ) {
             if( type == VarType.INT ){
@@ -125,7 +146,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
     }
 
     @Override public void exitRead(@NotNull ProstyJezykParser.ReadContext ctx) {
-        String ID = ctx.ID().getText();
+        String ID = ctx.ID_NAME().getText();
 
         if (ctx.var_type().t_INT() != null) {
             if( variables.get(ID) == null ){

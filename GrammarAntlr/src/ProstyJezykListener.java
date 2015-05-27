@@ -18,17 +18,17 @@ public interface ProstyJezykListener extends ParseTreeListener {
 	 */
 	void exitProg(@NotNull ProstyJezykParser.ProgContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code assign}
+	 * Enter a parse tree produced by the {@code assignValue}
 	 * labeled alternative in {@link ProstyJezykParser#start}.
 	 * @param ctx the parse tree
 	 */
-	void enterAssign(@NotNull ProstyJezykParser.AssignContext ctx);
+	void enterAssignValue(@NotNull ProstyJezykParser.AssignValueContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code assign}
+	 * Exit a parse tree produced by the {@code assignValue}
 	 * labeled alternative in {@link ProstyJezykParser#start}.
 	 * @param ctx the parse tree
 	 */
-	void exitAssign(@NotNull ProstyJezykParser.AssignContext ctx);
+	void exitAssignValue(@NotNull ProstyJezykParser.AssignValueContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code enter_fun}
 	 * labeled alternative in {@link ProstyJezykParser#start}.
@@ -42,17 +42,17 @@ public interface ProstyJezykListener extends ParseTreeListener {
 	 */
 	void exitEnter_fun(@NotNull ProstyJezykParser.Enter_funContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code print}
+	 * Enter a parse tree produced by the {@code printID}
 	 * labeled alternative in {@link ProstyJezykParser#start}.
 	 * @param ctx the parse tree
 	 */
-	void enterPrint(@NotNull ProstyJezykParser.PrintContext ctx);
+	void enterPrintID(@NotNull ProstyJezykParser.PrintIDContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code print}
+	 * Exit a parse tree produced by the {@code printID}
 	 * labeled alternative in {@link ProstyJezykParser#start}.
 	 * @param ctx the parse tree
 	 */
-	void exitPrint(@NotNull ProstyJezykParser.PrintContext ctx);
+	void exitPrintID(@NotNull ProstyJezykParser.PrintIDContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code read}
 	 * labeled alternative in {@link ProstyJezykParser#start}.

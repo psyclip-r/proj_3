@@ -18,7 +18,7 @@ public class ProstyJezykParser extends Parser {
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		LESS=10, MORE=11, EQUAL_S=12, READ=13, PRINT=14, TOINT=15, TOREAL=16, 
-		ID=17, ADD=18, MULT=19, SUBS=20, NAME=21, INT=22, REAL=23, STRING=24, 
+		ID_NAME=17, ADD=18, MULT=19, SUBS=20, NAME=21, INT=22, REAL=23, STRING=24, 
 		EQUAL=25, QUOTES=26, OP_BRACKET=27, CLO_BRACKET=28, COMMA=29, OP_BRACE=30, 
 		CLO_BRACE=31, START_FUNCT=32, END_FUNCT=33, NEWLINE=34, WS=35;
 	public static final int
@@ -46,10 +46,10 @@ public class ProstyJezykParser extends Parser {
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, null, null, null, "LESS", "MORE", 
-		"EQUAL_S", "READ", "PRINT", "TOINT", "TOREAL", "ID", "ADD", "MULT", "SUBS", 
-		"NAME", "INT", "REAL", "STRING", "EQUAL", "QUOTES", "OP_BRACKET", "CLO_BRACKET", 
-		"COMMA", "OP_BRACE", "CLO_BRACE", "START_FUNCT", "END_FUNCT", "NEWLINE", 
-		"WS"
+		"EQUAL_S", "READ", "PRINT", "TOINT", "TOREAL", "ID_NAME", "ADD", "MULT", 
+		"SUBS", "NAME", "INT", "REAL", "STRING", "EQUAL", "QUOTES", "OP_BRACKET", 
+		"CLO_BRACKET", "COMMA", "OP_BRACE", "CLO_BRACE", "START_FUNCT", "END_FUNCT", 
+		"NEWLINE", "WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -140,12 +140,12 @@ public class ProstyJezykParser extends Parser {
 			setState(66);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID) | (1L << NEWLINE))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID_NAME) | (1L << NEWLINE))) != 0)) {
 				{
 				{
 				setState(61);
 				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID))) != 0)) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID_NAME))) != 0)) {
 					{
 					setState(60); 
 					start();
@@ -222,23 +222,23 @@ public class ProstyJezykParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class AssignContext extends StartContext {
-		public TerminalNode ID() { return getToken(ProstyJezykParser.ID, 0); }
+	public static class AssignValueContext extends StartContext {
+		public TerminalNode ID_NAME() { return getToken(ProstyJezykParser.ID_NAME, 0); }
 		public Expr0Context expr0() {
 			return getRuleContext(Expr0Context.class,0);
 		}
-		public AssignContext(StartContext ctx) { copyFrom(ctx); }
+		public AssignValueContext(StartContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ProstyJezykListener ) ((ProstyJezykListener)listener).enterAssign(this);
+			if ( listener instanceof ProstyJezykListener ) ((ProstyJezykListener)listener).enterAssignValue(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ProstyJezykListener ) ((ProstyJezykListener)listener).exitAssign(this);
+			if ( listener instanceof ProstyJezykListener ) ((ProstyJezykListener)listener).exitAssignValue(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProstyJezykVisitor ) return ((ProstyJezykVisitor<? extends T>)visitor).visitAssign(this);
+			if ( visitor instanceof ProstyJezykVisitor ) return ((ProstyJezykVisitor<? extends T>)visitor).visitAssignValue(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -247,7 +247,7 @@ public class ProstyJezykParser extends Parser {
 		public Var_typeContext var_type() {
 			return getRuleContext(Var_typeContext.class,0);
 		}
-		public TerminalNode ID() { return getToken(ProstyJezykParser.ID, 0); }
+		public TerminalNode ID_NAME() { return getToken(ProstyJezykParser.ID_NAME, 0); }
 		public ReadContext(StartContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -260,6 +260,24 @@ public class ProstyJezykParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof ProstyJezykVisitor ) return ((ProstyJezykVisitor<? extends T>)visitor).visitRead(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class PrintIDContext extends StartContext {
+		public TerminalNode PRINT() { return getToken(ProstyJezykParser.PRINT, 0); }
+		public TerminalNode ID_NAME() { return getToken(ProstyJezykParser.ID_NAME, 0); }
+		public PrintIDContext(StartContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ProstyJezykListener ) ((ProstyJezykListener)listener).enterPrintID(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ProstyJezykListener ) ((ProstyJezykListener)listener).exitPrintID(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ProstyJezykVisitor ) return ((ProstyJezykVisitor<? extends T>)visitor).visitPrintID(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -282,24 +300,6 @@ public class ProstyJezykParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class PrintContext extends StartContext {
-		public TerminalNode PRINT() { return getToken(ProstyJezykParser.PRINT, 0); }
-		public TerminalNode ID() { return getToken(ProstyJezykParser.ID, 0); }
-		public PrintContext(StartContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ProstyJezykListener ) ((ProstyJezykListener)listener).enterPrint(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ProstyJezykListener ) ((ProstyJezykListener)listener).exitPrint(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ProstyJezykVisitor ) return ((ProstyJezykVisitor<? extends T>)visitor).visitPrint(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 
 	public final StartContext start() throws RecognitionException {
 		StartContext _localctx = new StartContext(_ctx, getState());
@@ -307,13 +307,13 @@ public class ProstyJezykParser extends Parser {
 		try {
 			setState(81);
 			switch (_input.LA(1)) {
-			case ID:
-				_localctx = new AssignContext(_localctx);
+			case ID_NAME:
+				_localctx = new AssignValueContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				{
 				setState(69); 
-				match(ID);
+				match(ID_NAME);
 				setState(70); 
 				match(EQUAL);
 				setState(71); 
@@ -330,13 +330,13 @@ public class ProstyJezykParser extends Parser {
 				}
 				break;
 			case PRINT:
-				_localctx = new PrintContext(_localctx);
+				_localctx = new PrintIDContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(73); 
 				match(PRINT);
 				setState(74); 
-				match(ID);
+				match(ID_NAME);
 				}
 				break;
 			case READ:
@@ -348,7 +348,7 @@ public class ProstyJezykParser extends Parser {
 				setState(76); 
 				var_type();
 				setState(77); 
-				match(ID);
+				match(ID_NAME);
 				}
 				break;
 			case T__1:
@@ -604,12 +604,12 @@ public class ProstyJezykParser extends Parser {
 			setState(120);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID) | (1L << NEWLINE))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID_NAME) | (1L << NEWLINE))) != 0)) {
 				{
 				{
 				setState(115);
 				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID))) != 0)) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID_NAME))) != 0)) {
 					{
 					setState(114); 
 					start();
@@ -830,12 +830,12 @@ public class ProstyJezykParser extends Parser {
 			setState(152);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID) | (1L << NEWLINE))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID_NAME) | (1L << NEWLINE))) != 0)) {
 				{
 				{
 				setState(147);
 				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID))) != 0)) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID_NAME))) != 0)) {
 					{
 					setState(146); 
 					start();
@@ -950,12 +950,12 @@ public class ProstyJezykParser extends Parser {
 			setState(166);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID) | (1L << NEWLINE))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID_NAME) | (1L << NEWLINE))) != 0)) {
 				{
 				{
 				setState(161);
 				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID))) != 0)) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID_NAME))) != 0)) {
 					{
 					setState(160); 
 					start();
@@ -1140,12 +1140,12 @@ public class ProstyJezykParser extends Parser {
 			setState(188);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID) | (1L << NEWLINE))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID_NAME) | (1L << NEWLINE))) != 0)) {
 				{
 				{
 				setState(183);
 				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID))) != 0)) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__3) | (1L << READ) | (1L << PRINT) | (1L << ID_NAME))) != 0)) {
 					{
 					setState(182); 
 					start();
