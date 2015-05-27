@@ -155,64 +155,78 @@ public interface ProstyJezykVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVar_type(@NotNull ProstyJezykParser.Var_typeContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code single0}
-	 * labeled alternative in {@link ProstyJezykParser#expr0}.
+	 * Visit a parse tree produced by the {@code blabla_1}
+	 * labeled alternative in {@link ProstyJezykParser#ex_0}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSingle0(@NotNull ProstyJezykParser.Single0Context ctx);
+	T visitBlabla_1(@NotNull ProstyJezykParser.Blabla_1Context ctx);
 	/**
 	 * Visit a parse tree produced by the {@code add}
-	 * labeled alternative in {@link ProstyJezykParser#expr0}.
+	 * labeled alternative in {@link ProstyJezykParser#ex_0}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitAdd(@NotNull ProstyJezykParser.AddContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code single1}
-	 * labeled alternative in {@link ProstyJezykParser#expr1}.
+	 * Visit a parse tree produced by the {@code substract}
+	 * labeled alternative in {@link ProstyJezykParser#ex_0}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSingle1(@NotNull ProstyJezykParser.Single1Context ctx);
+	T visitSubstract(@NotNull ProstyJezykParser.SubstractContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code blabla_2}
+	 * labeled alternative in {@link ProstyJezykParser#ex_1}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlabla_2(@NotNull ProstyJezykParser.Blabla_2Context ctx);
 	/**
 	 * Visit a parse tree produced by the {@code mult}
-	 * labeled alternative in {@link ProstyJezykParser#expr1}.
+	 * labeled alternative in {@link ProstyJezykParser#ex_1}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitMult(@NotNull ProstyJezykParser.MultContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code div}
+	 * labeled alternative in {@link ProstyJezykParser#ex_1}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDiv(@NotNull ProstyJezykParser.DivContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code int}
-	 * labeled alternative in {@link ProstyJezykParser#expr2}.
+	 * labeled alternative in {@link ProstyJezykParser#ex_2}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitInt(@NotNull ProstyJezykParser.IntContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code real}
-	 * labeled alternative in {@link ProstyJezykParser#expr2}.
+	 * labeled alternative in {@link ProstyJezykParser#ex_2}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitReal(@NotNull ProstyJezykParser.RealContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code toint}
-	 * labeled alternative in {@link ProstyJezykParser#expr2}.
+	 * labeled alternative in {@link ProstyJezykParser#ex_2}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitToint(@NotNull ProstyJezykParser.TointContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code toreal}
-	 * labeled alternative in {@link ProstyJezykParser#expr2}.
+	 * labeled alternative in {@link ProstyJezykParser#ex_2}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitToreal(@NotNull ProstyJezykParser.TorealContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code par}
-	 * labeled alternative in {@link ProstyJezykParser#expr2}.
+	 * labeled alternative in {@link ProstyJezykParser#ex_2}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */

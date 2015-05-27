@@ -237,7 +237,24 @@ public class LLVMactions extends ProstyJezykBaseListener {
                 stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL) );
             }
         } else {
-            printError(ctx.getStart().getLine(), "add type mismatch");
+            printError(ctx.getStart().getLine(), "zle typy w dodawaniu");
+        }
+    }
+
+    @Override public void exitSubstract(@NotNull ProstyJezykParser.SubstractContext ctx) {
+        Value v1 = stack.pop();
+        Value v2 = stack.pop();
+        if( v1.type == v2.type ) {
+            if( v1.type == VarType.INT ){
+                LLVMGenerator.substractInt(v1.name, v2.name);
+                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.INT) );
+            }
+            if( v1.type == VarType.REAL ){
+                LLVMGenerator.substractDouble(v1.name, v2.name);
+                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL) );
+            }
+        } else {
+            printError(ctx.getStart().getLine(), "zle typy w dodawaniu");
         }
     }
 
@@ -255,9 +272,28 @@ public class LLVMactions extends ProstyJezykBaseListener {
                 stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL) );
             }
         } else {
-            printError(ctx.getStart().getLine(), "mult type mismatch");
+            printError(ctx.getStart().getLine(), "zle typy w mnozeniu");
         }
     }
+
+    @Override public void exitDiv(@NotNull ProstyJezykParser.DivContext ctx) {
+        Value v1 = stack.pop();
+        Value v2 = stack.pop();
+        if( v1.type == v2.type ) {
+            if( v1.type == VarType.INT ){
+                LLVMGenerator.divInt(v1.name, v2.name);
+                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.INT) );
+            }
+            if( v1.type == VarType.REAL ){
+                LLVMGenerator.divDouble(v1.name, v2.name);
+                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL) );
+            }
+        } else {
+            printError(ctx.getStart().getLine(), "zle typy w mnozeniu");
+        }
+    }
+
+
 
     @Override
     public void exitToint(ProstyJezykParser.TointContext ctx) {

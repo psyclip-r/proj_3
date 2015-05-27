@@ -3,7 +3,7 @@ grammar ProstyJezyk;
 prog : ( start? NEWLINE )* ;
 
 start :
-    ( ID_NAME '=' expr0 ) #assignValue |
+    ( ID_NAME '=' ex_0 ) #assignValue |
     function #enter_fun |
     PRINT ID_NAME #printID |
     READ var_type ID_NAME #read   |
@@ -55,22 +55,22 @@ var_type : t_STRING |
 
 // TUTAJ POCZATEK
 
-expr0:  expr1			#single0
-      | expr1 ADD expr1		#add
- //     | expr1 SUBS expr1     #substract
+ex_0:  ex_1			#blabla_1
+      | ex_1 ADD ex_1		#add
+      | ex_1 SUBS ex_1     #substract
 ;
 
-expr1:  expr2			#single1
-      | expr2 MULT expr2	#mult
- //     | expr2 DIV expr2 #div
+ex_1:  ex_2			#blabla_2
+      | ex_2 MULT ex_2	#mult
+      | ex_2 DIV ex_2 #div
 
 ;
 
-expr2:   INT			#int
+ex_2:   INT			#int
        | REAL			#real
-       | TOINT expr2		#toint
-       | TOREAL expr2		#toreal
-       | '(' expr0 ')'		#par
+       | TOINT ex_2		#toint
+       | TOREAL ex_2		#toreal
+       | '(' ex_0 ')'		#par
 ;
 
 
@@ -97,6 +97,7 @@ MULT: '*'
     ;
 SUBS: '-'
     ;
+DIV: '/' ;
 
 // TUTAJ KONIEC
 

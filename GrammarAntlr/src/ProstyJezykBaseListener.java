@@ -292,13 +292,13 @@ public class ProstyJezykBaseListener implements ProstyJezykListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSingle0(@NotNull ProstyJezykParser.Single0Context ctx) { }
+	@Override public void enterBlabla_1(@NotNull ProstyJezykParser.Blabla_1Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSingle0(@NotNull ProstyJezykParser.Single0Context ctx) { }
+	@Override public void exitBlabla_1(@NotNull ProstyJezykParser.Blabla_1Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -316,13 +316,25 @@ public class ProstyJezykBaseListener implements ProstyJezykListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSingle1(@NotNull ProstyJezykParser.Single1Context ctx) { }
+	@Override public void enterSubstract(@NotNull ProstyJezykParser.SubstractContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSingle1(@NotNull ProstyJezykParser.Single1Context ctx) { }
+	@Override public void exitSubstract(@NotNull ProstyJezykParser.SubstractContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBlabla_2(@NotNull ProstyJezykParser.Blabla_2Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBlabla_2(@NotNull ProstyJezykParser.Blabla_2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -335,6 +347,18 @@ public class ProstyJezykBaseListener implements ProstyJezykListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitMult(@NotNull ProstyJezykParser.MultContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDiv(@NotNull ProstyJezykParser.DivContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDiv(@NotNull ProstyJezykParser.DivContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -55,6 +55,13 @@ class LLVMGenerator{
     }
     */
 
+    static void addIntVar(String val1, String var){
+        content += "%"+ register +" = load i32* %"+var+"\n";
+        register++;
+        content += "%"+ register +" = add i32 "+val1+", "+(register-1)+"\n";
+        register++;
+    }
+
     static void addInt(String val1, String val2){
         content += "%"+ register +" = add i32 "+val1+", "+val2+"\n";
         register++;
@@ -62,6 +69,16 @@ class LLVMGenerator{
 
     static void addDouble(String val1, String val2){
         content += "%"+ register +" = fadd double "+val1+", "+val2+"\n";
+        register++;
+    }
+
+    static void substractInt(String val1, String val2){
+        content += "%"+ register +" = sub i32 "+val2+", "+val1+"\n";
+        register++;
+    }
+
+    static void substractDouble(String val1, String val2){
+        content += "%"+ register +" = fsub double "+val2+", "+val1+"\n";
         register++;
     }
 
@@ -74,6 +91,18 @@ class LLVMGenerator{
         content += "%"+ register +" = fmul double "+val1+", "+val2+"\n";
         register++;
     }
+
+
+    static void divInt(String val1, String val2){
+        content += "%"+ register +" = div i32 "+val2+", "+val1+"\n";
+        register++;
+    }
+
+    static void divDouble(String val1, String val2){
+        content += "%"+ register +" = fdiv double "+val2+", "+val1+"\n";
+        register++;
+    }
+
 
     static void intToDouble(String id){
         content += "%"+ register +" = sitofp i32 "+id+" to double\n";

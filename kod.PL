@@ -1,6 +1,5 @@
 x = 3.4+(real)(3+3)
 print x
-
 y = 32.23
 y = 32.211
 print y
@@ -11,6 +10,11 @@ print y
 z = 3
 read real w
 if(4.0 < w){
-y = 9999.9
-print y
+t = 9999.9
+print t
 }
+a = 5.0 / 2.4
+print a
+
+
+
