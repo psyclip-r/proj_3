@@ -9,8 +9,8 @@ print y
 y = 32.321*32.0
 print y
 z = 3
-read int w
-if(4 < w){
+read real w
+if(w == 4.0){
 y = 9999.9
 print y
 }

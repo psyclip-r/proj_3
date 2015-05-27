@@ -109,6 +109,20 @@ class LLVMGenerator{
         content += "false"+b+":\n";
     }
 
+    // A == B REAL
+    static void icmpRealEquall(String id, String value){
+        content += "%"+register+" = load double* %"+id+"\n";
+        register++;
+        content += "%"+register+" = fcmp oeq double %"+(register-1)+", "+value+"\n";
+        register++;
+    }
+    /*
+    %4 = load double* %a, align 8
+            %5 = load double* %b, align 8
+            %6 = fcmp oeq double %4, %5
+    br i1 %6, label %7, label %9
+    */
+
     // A == B
     static void icmpIntEquall(String id, String value){
         content += "%"+register+" = load i32* %"+id+"\n";

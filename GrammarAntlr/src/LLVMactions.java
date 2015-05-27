@@ -53,6 +53,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
             sign = Sign.LESS;
         }
 
+        // INT licza <znak> zmienna
         if( ctx.value(0).INT() != null && ctx.value(1).ID_NAME() != null ){
             // System.out.println("Zmieniona kolejność");
             String ID = ctx.value(1).ID_NAME().getText();
@@ -73,6 +74,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
             }
         }
 
+        // INT  zmienna <znak> liczba
         if( (ctx.value(0).ID_NAME() != null) && (ctx.value(1).INT() != null) ){
             /*
             System.out.println(ctx.value(0).ID_NAME());
@@ -102,6 +104,40 @@ public class LLVMactions extends ProstyJezykBaseListener {
                 System.err.println("Line "+ ctx.getStart().getLine()+", unknown variable: "+ID);
             }
         }
+
+        // REAL  zmienna <znak> liczba
+        if( (ctx.value(0).ID_NAME() != null) && (ctx.value(1).REAL() != null) ){
+            /*
+            System.out.println(ctx.value(0).ID_NAME());
+            System.out.println(ctx.value(1).INT() );
+
+            System.out.println(ctx.value(1).ID_NAME());
+            System.out.println(ctx.value(0).INT() );
+
+
+            System.out.println("Kolejność ok");
+            */
+
+            String ID = ctx.value(0).ID_NAME().getText();
+            String REAL = ctx.value(1).REAL().getText();
+            VarType varExistsCheck = variables.get(ID);
+            if( varExistsCheck != null ) {
+                if(sign == Sign.EQUAL){
+                    LLVMGenerator.icmpRealEquall(ID, REAL);
+                }
+                if(sign == Sign.MORE){
+                    //LLVMGenerator.icmpIntMore(ID, REAL);
+                }
+                if(sign == Sign.LESS){
+                    //LLVMGenerator.icmpIntLess(ID, REAL);
+                }
+            } else {
+                System.err.println("Line "+ ctx.getStart().getLine()+", unknown variable: "+ID);
+            }
+        }
+
+
+
     }
 
     @Override
