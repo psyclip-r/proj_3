@@ -7,3 +7,9 @@ y = 32.211
 print y
 y = (real) 32
 print y
+y = 32.321*32.0
+print y
+if(x < 4){
+y = 32.2
+print y
+}

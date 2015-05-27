@@ -14,11 +14,10 @@ function : 'fun' var_type NAME funct_arg NEWLINE* funct_body;
 funct_arg : ( OP_BRACE var_type NAME (COMMA var_type NAME)* CLO_BRACE ) | (OP_BRACE CLO_BRACE) ;
 funct_body : START_FUNCT ( start? NEWLINE )* END_FUNCT;
 
-if_definition :  if_condition NEWLINE* if_body (else_definition else_body)?;
+if_definition :  if_condition NEWLINE* if_body;
 if_condition : 'if' OP_BRACE value compare_sign value CLO_BRACE;
 if_body : START_FUNCT ( start? NEWLINE )* END_FUNCT;
-else_definition : 'else' ;
-else_body : START_FUNCT ( start? NEWLINE )* END_FUNCT;
+
 
 while_definition : while_cond while_body;
 while_cond : 'while' OP_BRACE compare_first compare_sign compare_second CLO_BRACE;
@@ -39,7 +38,7 @@ LESS : '<' ;
 MORE : '>' ;
 EQUAL_S: '==' ;
 
-value : INT | REAL | STRING | array | NAME | array | el_in_array ;
+value : INT | REAL | STRING | array | ID_NAME ;
 
 // tutaj startujemy
 

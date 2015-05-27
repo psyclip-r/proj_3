@@ -95,18 +95,6 @@ public interface ProstyJezykVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIf_body(@NotNull ProstyJezykParser.If_bodyContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ProstyJezykParser#else_definition}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitElse_definition(@NotNull ProstyJezykParser.Else_definitionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link ProstyJezykParser#else_body}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitElse_body(@NotNull ProstyJezykParser.Else_bodyContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link ProstyJezykParser#while_definition}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

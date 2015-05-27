@@ -150,26 +150,6 @@ public interface ProstyJezykListener extends ParseTreeListener {
 	 */
 	void exitIf_body(@NotNull ProstyJezykParser.If_bodyContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ProstyJezykParser#else_definition}.
-	 * @param ctx the parse tree
-	 */
-	void enterElse_definition(@NotNull ProstyJezykParser.Else_definitionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ProstyJezykParser#else_definition}.
-	 * @param ctx the parse tree
-	 */
-	void exitElse_definition(@NotNull ProstyJezykParser.Else_definitionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ProstyJezykParser#else_body}.
-	 * @param ctx the parse tree
-	 */
-	void enterElse_body(@NotNull ProstyJezykParser.Else_bodyContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ProstyJezykParser#else_body}.
-	 * @param ctx the parse tree
-	 */
-	void exitElse_body(@NotNull ProstyJezykParser.Else_bodyContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link ProstyJezykParser#while_definition}.
 	 * @param ctx the parse tree
 	 */
