@@ -9,7 +9,8 @@ y = (real) 32
 print y
 y = 32.321*32.0
 print y
-if(x < 4){
-y = 32.2
+z = 3
+if(z < 4){
+y = 9999.9
 print y
 }

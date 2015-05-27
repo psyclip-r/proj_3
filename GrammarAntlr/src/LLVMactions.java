@@ -26,6 +26,32 @@ public class LLVMactions extends ProstyJezykBaseListener {
     HashMap<String, VarType> variables = new HashMap<String, VarType>();
     Stack<Value> stack = new Stack<Value>();
 
+    @Override public void enterIf_body(@NotNull ProstyJezykParser.If_bodyContext ctx) {
+        LLVMGenerator.ifstart();
+    }
+
+
+    @Override public void exitIf_body(@NotNull ProstyJezykParser.If_bodyContext ctx) {
+        LLVMGenerator.ifend();
+    }
+
+    @Override public void exitIf_condition(@NotNull ProstyJezykParser.If_conditionContext ctx) {
+        if( ctx.value(0) == null || ctx.value(1) == null ){
+            printError(ctx.getStart().getLine(), "brak dwóch warunków w pętli");
+        }
+
+        if( ctx.value(0).ID_NAME() != null || ctx.value(1).INT() != null ){
+            String ID = ctx.value(0).ID_NAME().getText();
+            String INT = ctx.value(1).INT().getText();
+            VarType varExistsCheck = variables.get(ID);
+            if( varExistsCheck != null ) {
+                LLVMGenerator.icmp( ID, INT );
+            } else {
+                System.err.println("Line "+ ctx.getStart().getLine()+", unknown variable: "+ID);
+            }
+        }
+    }
+
     @Override
     public void exitAssignValue(ProstyJezykParser.AssignValueContext ctx) {
         String ID = ctx.ID_NAME().getText();

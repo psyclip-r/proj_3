@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 /**
  * Created by kuba on 26.04.15.
  */
@@ -8,6 +10,8 @@ class LLVMGenerator{
     static String header = "";
     static String content = "";
     static int register = 1;
+    static int br = 0;
+    static Stack<Integer> brstack = new Stack<Integer>();
 
     static void printfInt(String id){
         content += "%"+ register +" = load i32* %"+id+"\n";
@@ -88,6 +92,27 @@ class LLVMGenerator{
 
     static void scanfDouble(String id){
         content += "%" + register + " = call i32 (i8*, ...)* @__isoc99_scanf(i8* getelementptr inbounds ([4 x i8]* @.str1, i32 0, i32 0), double* %" + id + ") \n";
+        register++;
+    }
+
+    static void ifstart(){
+        br++;
+        content += "br i1 %"+(register-1)+", label %true"+br+", label %false"+br+"\n";
+        content += "true"+br+":\n";
+        brstack.push(br);
+
+    }
+
+    static void ifend(){
+        int b = brstack.pop();
+        content += "br label %false"+b+"\n";
+        content += "false"+b+":\n";
+    }
+
+    static void icmp(String id, String value){
+        content += "%"+register+" = load i32* %"+id+"\n";
+        register++;
+        content += "%"+register+" = icmp eq i32 %"+(register-1)+", "+value+"\n";
         register++;
     }
 
