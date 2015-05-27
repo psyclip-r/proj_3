@@ -10,6 +10,8 @@ import java.util.Stack;
 
 enum VarType{ INT, REAL, UNKNOWN }
 
+enum Sign{EQUAL, LESS, MORE}
+
 class Value{
     public String name;
     public VarType type;
@@ -40,12 +42,31 @@ public class LLVMactions extends ProstyJezykBaseListener {
             printError(ctx.getStart().getLine(), "brak dwóch warunków w pętli");
         }
 
+        Sign sign = Sign.MORE;
+        if( ctx.compare_sign().EQUAL_S() != null ){
+            sign = Sign.EQUAL;
+        }
+        if( ctx.compare_sign().MORE() != null ){
+            sign = Sign.MORE;
+        }
+        if( ctx.compare_sign().LESS() != null ){
+            sign = Sign.LESS;
+        }
+
         if( ctx.value(0).ID_NAME() != null || ctx.value(1).INT() != null ){
             String ID = ctx.value(0).ID_NAME().getText();
             String INT = ctx.value(1).INT().getText();
             VarType varExistsCheck = variables.get(ID);
             if( varExistsCheck != null ) {
-                LLVMGenerator.icmp( ID, INT );
+                if(sign == Sign.EQUAL){
+                    LLVMGenerator.icmpEquall(ID, INT);
+                }
+                if(sign == Sign.MORE){
+                    LLVMGenerator.icmpMore(ID, INT);
+                }
+                if(sign == Sign.LESS){
+                    LLVMGenerator.icmpLess(ID, INT);
+                }
             } else {
                 System.err.println("Line "+ ctx.getStart().getLine()+", unknown variable: "+ID);
             }

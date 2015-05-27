@@ -109,10 +109,27 @@ class LLVMGenerator{
         content += "false"+b+":\n";
     }
 
-    static void icmp(String id, String value){
+    // A == B
+    static void icmpEquall(String id, String value){
         content += "%"+register+" = load i32* %"+id+"\n";
         register++;
         content += "%"+register+" = icmp eq i32 %"+(register-1)+", "+value+"\n";
+        register++;
+    }
+
+    // A > B
+    static void icmpMore(String id, String value){
+        content += "%"+register+" = load i32* %"+id+"\n";
+        register++;
+        content += "%"+register+" = icmp sgt i32 %"+(register-1)+", "+value+"\n";
+        register++;
+    }
+
+    // A < B
+    static void icmpLess(String id, String value){
+        content += "%"+register+" = load i32* %"+id+"\n";
+        register++;
+        content += "%"+register+" = icmp slt i32 %"+(register-1)+", "+value+"\n";
         register++;
     }
 
