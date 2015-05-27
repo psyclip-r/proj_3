@@ -10,7 +10,7 @@ y = 32.321*32.0
 print y
 z = 3
 read real w
-if(w == 4.0){
+if(4.0 < w){
 y = 9999.9
 print y
 }

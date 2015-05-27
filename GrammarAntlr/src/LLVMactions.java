@@ -126,16 +126,46 @@ public class LLVMactions extends ProstyJezykBaseListener {
                     LLVMGenerator.icmpRealEquall(ID, REAL);
                 }
                 if(sign == Sign.MORE){
-                    //LLVMGenerator.icmpIntMore(ID, REAL);
+                    LLVMGenerator.icmpRealMore(ID, REAL);
                 }
                 if(sign == Sign.LESS){
-                    //LLVMGenerator.icmpIntLess(ID, REAL);
+                    LLVMGenerator.icmpRealLess(ID, REAL);
                 }
             } else {
                 System.err.println("Line "+ ctx.getStart().getLine()+", unknown variable: "+ID);
             }
         }
 
+        // REAL    liczba <znak> zmienna
+        if( (ctx.value(1).ID_NAME() != null) && (ctx.value(0).REAL() != null) ){
+            /*
+            System.out.println(ctx.value(0).ID_NAME());
+            System.out.println(ctx.value(1).INT() );
+
+            System.out.println(ctx.value(1).ID_NAME());
+            System.out.println(ctx.value(0).INT() );
+
+
+            System.out.println("Kolejność ok");
+            */
+
+            String ID = ctx.value(1).ID_NAME().getText();
+            String REAL = ctx.value(0).REAL().getText();
+            VarType varExistsCheck = variables.get(ID);
+            if( varExistsCheck != null ) {
+                if(sign == Sign.EQUAL){
+                    LLVMGenerator.icmpRealEquall(ID, REAL);
+                }
+                if(sign == Sign.LESS){
+                    LLVMGenerator.icmpRealMore(ID, REAL);
+                }
+                if(sign == Sign.MORE){
+                    LLVMGenerator.icmpRealLess(ID, REAL);
+                }
+            } else {
+                System.err.println("Line "+ ctx.getStart().getLine()+", unknown variable: "+ID);
+            }
+        }
 
 
     }

@@ -116,14 +116,25 @@ class LLVMGenerator{
         content += "%"+register+" = fcmp oeq double %"+(register-1)+", "+value+"\n";
         register++;
     }
-    /*
-    %4 = load double* %a, align 8
-            %5 = load double* %b, align 8
-            %6 = fcmp oeq double %4, %5
-    br i1 %6, label %7, label %9
-    */
 
-    // A == B
+    // A > B REAL
+    static void icmpRealMore(String id, String value){
+        content += "%"+register+" = load double* %"+id+"\n";
+        register++;
+        content += "%"+register+" = fcmp ogt double %"+(register-1)+", "+value+"\n";
+        register++;
+    }
+
+    // A < B REAL
+    static void icmpRealLess(String id, String value){
+        content += "%"+register+" = load double* %"+id+"\n";
+        register++;
+        content += "%"+register+" = fcmp olt double %"+(register-1)+", "+value+"\n";
+        register++;
+    }
+
+
+    // A == B INT
     static void icmpIntEquall(String id, String value){
         content += "%"+register+" = load i32* %"+id+"\n";
         register++;
@@ -131,7 +142,7 @@ class LLVMGenerator{
         register++;
     }
 
-    // A > B
+    // A > B INT
     static void icmpIntMore(String id, String value){
         content += "%"+register+" = load i32* %"+id+"\n";
         register++;
@@ -139,7 +150,7 @@ class LLVMGenerator{
         register++;
     }
 
-    // A < B
+    // A < B INT
     static void icmpIntLess(String id, String value){
         content += "%"+register+" = load i32* %"+id+"\n";
         register++;
