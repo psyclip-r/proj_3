@@ -32,20 +32,20 @@ public class LLVMactions extends ProstyJezykBaseListener {
         Value v = stack.pop();
         variables.put(ID, v.type);
         if( v.type == VarType.INT ){
-            LLVMGenerator.declare_i32(ID);
+            LLVMGenerator.declareInt(ID);
             // System.out.println("name: " + v.name);
-            LLVMGenerator.assign_i32(ID, v.name);
+            LLVMGenerator.assignInt(ID, v.name);
         }
         if( v.type == VarType.REAL ){
-            LLVMGenerator.declare_double(ID);
+            LLVMGenerator.declareDOuble(ID);
             // System.out.println("name: " + v.name);
-            LLVMGenerator.assign_double(ID, v.name);
+            LLVMGenerator.assignDouble(ID, v.name);
         }
     }
 
     @Override
     public void exitProg(ProstyJezykParser.ProgContext ctx) {
-        System.out.println( LLVMGenerator.generate() );
+        System.out.println( LLVMGenerator.generateLLVMcode() );
     }
 
     @Override
@@ -64,15 +64,15 @@ public class LLVMactions extends ProstyJezykBaseListener {
         Value v2 = stack.pop();
         if( v1.type == v2.type ) {
             if( v1.type == VarType.INT ){
-                LLVMGenerator.add_i32(v1.name, v2.name);
-                stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT) );
+                LLVMGenerator.addInt(v1.name, v2.name);
+                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.INT) );
             }
             if( v1.type == VarType.REAL ){
-                LLVMGenerator.add_double(v1.name, v2.name);
-                stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.REAL) );
+                LLVMGenerator.addDouble(v1.name, v2.name);
+                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL) );
             }
         } else {
-            error(ctx.getStart().getLine(), "add type mismatch");
+            printError(ctx.getStart().getLine(), "add type mismatch");
         }
     }
 
@@ -82,30 +82,30 @@ public class LLVMactions extends ProstyJezykBaseListener {
         Value v2 = stack.pop();
         if( v1.type == v2.type ) {
             if( v1.type == VarType.INT ){
-                LLVMGenerator.mult_i32(v1.name, v2.name);
-                stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT) );
+                LLVMGenerator.multInt(v1.name, v2.name);
+                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.INT) );
             }
             if( v1.type == VarType.REAL ){
-                LLVMGenerator.mult_double(v1.name, v2.name);
-                stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.REAL) );
+                LLVMGenerator.multDouble(v1.name, v2.name);
+                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL) );
             }
         } else {
-            error(ctx.getStart().getLine(), "mult type mismatch");
+            printError(ctx.getStart().getLine(), "mult type mismatch");
         }
     }
 
     @Override
     public void exitToint(ProstyJezykParser.TointContext ctx) {
         Value v = stack.pop();
-        LLVMGenerator.fptosi( v.name );
-        stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT) );
+        LLVMGenerator.doubleToInt(v.name);
+        stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.INT) );
     }
 
     @Override
     public void exitToreal(ProstyJezykParser.TorealContext ctx) {
         Value v = stack.pop();
-        LLVMGenerator.sitofp(v.name);
-        stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.REAL) );
+        LLVMGenerator.intToDouble(v.name);
+        stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL) );
     }
 
     @Override
@@ -114,13 +114,13 @@ public class LLVMactions extends ProstyJezykBaseListener {
         VarType type = variables.get(ID);
         if( type != null ) {
             if( type == VarType.INT ){
-                LLVMGenerator.printf_i32( ID );
+                LLVMGenerator.printfInt(ID);
             }
             if( type == VarType.REAL ){
-                LLVMGenerator.printf_double( ID );
+                LLVMGenerator.printfDouble(ID);
             }
         } else {
-            error(ctx.getStart().getLine(), "unknown variable "+ID);
+            printError(ctx.getStart().getLine(), "unknown variable " + ID);
         }
     }
 
@@ -130,29 +130,29 @@ public class LLVMactions extends ProstyJezykBaseListener {
         if (ctx.var_type().t_INT() != null) {
             if( variables.get(ID) == null ){
                 variables.put(ID, VarType.INT);
-                LLVMGenerator.declare_i32(ID);
+                LLVMGenerator.declareInt(ID);
             }else{
                 VarType v = variables.get(ID);
                 if(v == VarType.REAL){
-                    error(ctx.getStart().getLine(), "variable has a different type ");
+                    printError(ctx.getStart().getLine(), "variable has a different type ");
                 }
             }
-            //LLVMGenerator.assign_i32(ID, v.name);
-            LLVMGenerator.scanf_i32(ID);
+            //LLVMGenerator.assignInt(ID, v.name);
+            LLVMGenerator.scanfInt(ID);
         }
 
         if (ctx.var_type().t_REAL() != null) {
             if( variables.get(ID) == null ){
                 variables.put(ID, VarType.REAL);
-                LLVMGenerator.declare_double(ID);
+                LLVMGenerator.declareDOuble(ID);
             }else{
                 VarType v = variables.get(ID);
                 if(v == VarType.INT){
-                    error(ctx.getStart().getLine(), "variable has a different type ");
+                    printError(ctx.getStart().getLine(), "variable has a different type ");
                 }
             }
-            //LLVMGenerator.assign_i32(ID, v.name);
-            LLVMGenerator.scanf_double(ID);
+            //LLVMGenerator.assignInt(ID, v.name);
+            LLVMGenerator.scanfDouble(ID);
         }
 
 
@@ -160,13 +160,8 @@ public class LLVMactions extends ProstyJezykBaseListener {
     }
 
 
-
-
-
-
-
-    void error(int line, String msg){
-        System.err.println("Error, line "+line+", "+msg);
+    void printError(int line, String msg){
+        System.err.println("Blad w linii "+line+", "+msg);
         System.exit(1);
     }
 
@@ -231,11 +226,11 @@ public class LLVMactions extends ProstyJezykBaseListener{
         Value v = stack.pop();
         variables.put(name, v.type);
         if( v.type == VarType.INT ){
-            //LLVMGenerator.declare_i32(name);
-            //LLVMGenerator.assign_i32(name, v.name);
+            //LLVMGenerator.declareInt(name);
+            //LLVMGenerator.assignInt(name, v.name);
         }
         if( v.type == VarType.REAL ){
-            //LLVMGenerator.declare_double(name);
+            //LLVMGenerator.declareDOuble(name);
             //LLVMGenerator.assign_double(name, v.name);
         }
 

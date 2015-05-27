@@ -5,92 +5,93 @@
 
 class LLVMGenerator{
 
-    static String header_text = "";
-    static String main_text = "";
-    static int reg = 1;
+    static String header = "";
+    static String content = "";
+    static int register = 1;
 
-    static void printf_i32(String id){
-        main_text += "%"+reg+" = load i32* %"+id+"\n";
-        reg++;
-        main_text += "%"+reg+" = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @strpi, i32 0, i32 0), i32 %"+(reg-1)+")\n";
-        reg++;
+    static void printfInt(String id){
+        content += "%"+ register +" = load i32* %"+id+"\n";
+        register++;
+        content += "%"+ register +" = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @strpi, i32 0, i32 0), i32 %"+(register -1)+")\n";
+        register++;
     }
 
-    static void printf_double(String id){
-        main_text += "%"+reg+" = load double* %"+id+"\n";
-        reg++;
-        main_text += "%"+reg+" = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @strpd, i32 0, i32 0), double %"+(reg-1)+")\n";
-        reg++;
+    static void printfDouble(String id){
+        content += "%"+ register +" = load double* %"+id+"\n";
+        register++;
+        content += "%"+ register +" = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @strpd, i32 0, i32 0), double %"+(register -1)+")\n";
+        register++;
     }
 
-    static void declare_i32(String id){
-        main_text += "%"+id+" = alloca i32\n";
+    static void declareInt(String id){
+        content += "%"+id+" = alloca i32\n";
     }
 
-    static void declare_double(String id){
-        main_text += "%"+id+" = alloca double\n";
+    static void declareDOuble(String id){
+        content += "%"+id+" = alloca double\n";
     }
 
-    static void assign_i32(String id, String value){
-        main_text += "store i32 "+value+", i32* %"+id+"\n";
+    static void assignInt(String id, String value){
+        content += "store i32 "+value+", i32* %"+id+"\n";
     }
 
-    static void assign_double(String id, String value){
-        main_text += "store double "+value+", double* %"+id+"\n";
+    static void assignDouble(String id, String value){
+        content += "store double "+value+", double* %"+id+"\n";
     }
 
-
+    /*
     static void load_i32(String id){
-        main_text += "%"+reg+" = load i32* %"+id+"\n";
-        reg++;
+        content += "%"+register+" = load i32* %"+id+"\n";
+        register++;
     }
 
     static void load_double(String id){
-        main_text += "%"+reg+" = load double* %"+id+"\n";
-        reg++;
+        content += "%"+register+" = load double* %"+id+"\n";
+        register++;
+    }
+    */
+
+    static void addInt(String val1, String val2){
+        content += "%"+ register +" = add i32 "+val1+", "+val2+"\n";
+        register++;
     }
 
-    static void add_i32(String val1, String val2){
-        main_text += "%"+reg+" = add i32 "+val1+", "+val2+"\n";
-        reg++;
+    static void addDouble(String val1, String val2){
+        content += "%"+ register +" = fadd double "+val1+", "+val2+"\n";
+        register++;
     }
 
-    static void add_double(String val1, String val2){
-        main_text += "%"+reg+" = fadd double "+val1+", "+val2+"\n";
-        reg++;
+    static void multInt(String val1, String val2){
+        content += "%"+ register +" = mul i32 "+val1+", "+val2+"\n";
+        register++;
     }
 
-    static void mult_i32(String val1, String val2){
-        main_text += "%"+reg+" = mul i32 "+val1+", "+val2+"\n";
-        reg++;
+    static void multDouble(String val1, String val2){
+        content += "%"+ register +" = fmul double "+val1+", "+val2+"\n";
+        register++;
     }
 
-    static void mult_double(String val1, String val2){
-        main_text += "%"+reg+" = fmul double "+val1+", "+val2+"\n";
-        reg++;
+    static void intToDouble(String id){
+        content += "%"+ register +" = sitofp i32 "+id+" to double\n";
+        register++;
     }
 
-    static void sitofp(String id){
-        main_text += "%"+reg+" = sitofp i32 "+id+" to double\n";
-        reg++;
+    static void doubleToInt(String id){
+        content += "%"+ register +" = fptosi double "+id+" to i32\n";
+        register++;
     }
 
-    static void fptosi(String id){
-        main_text += "%"+reg+" = fptosi double "+id+" to i32\n";
-        reg++;
+    static void scanfInt(String id){
+        content += "%" + register + " = call i32 (i8*, ...)* @__isoc99_scanf(i8* getelementptr inbounds ([3 x i8]* @.str, i32 0, i32 0), i32* %" + id + ") \n";
+        register++;
     }
 
-    static void scanf_i32(String id){
-        main_text += "%" + reg + " = call i32 (i8*, ...)* @__isoc99_scanf(i8* getelementptr inbounds ([3 x i8]* @.str, i32 0, i32 0), i32* %" + id + ") \n";
-        reg++;
+    static void scanfDouble(String id){
+        content += "%" + register + " = call i32 (i8*, ...)* @__isoc99_scanf(i8* getelementptr inbounds ([4 x i8]* @.str1, i32 0, i32 0), double* %" + id + ") \n";
+        register++;
     }
 
-    static void scanf_double(String id){
-        main_text += "%" + reg + " = call i32 (i8*, ...)* @__isoc99_scanf(i8* getelementptr inbounds ([4 x i8]* @.str1, i32 0, i32 0), double* %" + id + ") \n";
-        reg++;
-    }
-
-    static String generate(){
+    static String generateLLVMcode(){
         String text = "";
         text += "declare i32 @printf(i8*, ...)\n";
         text += "declare i32 @__isoc99_scanf(i8*, ...)\n";
@@ -99,9 +100,9 @@ class LLVMGenerator{
         text += "@strs = constant [3 x i8] c\"%d\\00\"\n";
         text += "@.str = private unnamed_addr constant [3 x i8] c\"%d\\00\", align 1\n" +
                 "@.str1 = private unnamed_addr constant [4 x i8] c\"%lf\\00\", align 1";
-        text += header_text;
+        text += header;
         text += "define i32 @main() nounwind{\n";
-        text += main_text;
+        text += content;
         text += "ret i32 0 }\n";
         return text;
     }
@@ -117,28 +118,28 @@ public class LLVMGenerator {
     static String mainText = "";
     static String declaration = "";
     static String print = "";
-    static int reg;
+    static int register;
 
     public LLVMGenerator(){
         num_of_number = 0;
-        reg = 1;
+        register = 1;
     }
 
     static void addInt(String val1, String val2){
-        mainText += "%"+reg+" = add i32 "+val1+", "+val2+"\n";
-        reg++;
+        mainText += "%"+register+" = add i32 "+val1+", "+val2+"\n";
+        register++;
     }
 
     static void addFloat(String val1, String val2){
-        mainText += "%"+reg+" = add i32 "+val1+", "+val2+"\n";
-        reg++;
+        mainText += "%"+register+" = add i32 "+val1+", "+val2+"\n";
+        register++;
     }
 
     static void printf(String id){
-        mainText += "%"+reg+" = load i32* %"+id+"\n";
-        reg++;
-        mainText += "%"+reg+" = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @strp, i32 0, i32 0), i32 %"+(reg-1)+")\n";
-        reg++;
+        mainText += "%"+register+" = load i32* %"+id+"\n";
+        register++;
+        mainText += "%"+register+" = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @strp, i32 0, i32 0), i32 %"+(register-1)+")\n";
+        register++;
     }
 
     static void declare(String id){
@@ -150,8 +151,8 @@ public class LLVMGenerator {
     }
 
     static void load(String id){
-        mainText += "%"+reg+" = load i32* %"+id+"\n";
-        reg++;
+        mainText += "%"+register+" = load i32* %"+id+"\n";
+        register++;
     }
 
     /*
