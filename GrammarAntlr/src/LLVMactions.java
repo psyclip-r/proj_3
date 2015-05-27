@@ -53,19 +53,50 @@ public class LLVMactions extends ProstyJezykBaseListener {
             sign = Sign.LESS;
         }
 
-        if( ctx.value(0).ID_NAME() != null || ctx.value(1).INT() != null ){
+        if( ctx.value(0).INT() != null && ctx.value(1).ID_NAME() != null ){
+            // System.out.println("Zmieniona kolejność");
+            String ID = ctx.value(1).ID_NAME().getText();
+            String INT = ctx.value(0).INT().getText();
+            VarType varExistsCheck = variables.get(ID);
+            if( varExistsCheck != null ) {
+                if(sign == Sign.EQUAL){
+                    LLVMGenerator.icmpIntEquall(ID, INT);
+                }
+                if(sign == Sign.LESS){
+                    LLVMGenerator.icmpIntMore(ID, INT);
+                }
+                if(sign == Sign.MORE){
+                    LLVMGenerator.icmpIntLess(ID, INT);
+                }
+            } else {
+                System.err.println("Line "+ ctx.getStart().getLine()+", unknown variable: "+ID);
+            }
+        }
+
+        if( (ctx.value(0).ID_NAME() != null) && (ctx.value(1).INT() != null) ){
+            /*
+            System.out.println(ctx.value(0).ID_NAME());
+            System.out.println(ctx.value(1).INT() );
+
+            System.out.println(ctx.value(1).ID_NAME());
+            System.out.println(ctx.value(0).INT() );
+
+
+            System.out.println("Kolejność ok");
+            */
+
             String ID = ctx.value(0).ID_NAME().getText();
             String INT = ctx.value(1).INT().getText();
             VarType varExistsCheck = variables.get(ID);
             if( varExistsCheck != null ) {
                 if(sign == Sign.EQUAL){
-                    LLVMGenerator.icmpEquall(ID, INT);
+                    LLVMGenerator.icmpIntEquall(ID, INT);
                 }
                 if(sign == Sign.MORE){
-                    LLVMGenerator.icmpMore(ID, INT);
+                    LLVMGenerator.icmpIntMore(ID, INT);
                 }
                 if(sign == Sign.LESS){
-                    LLVMGenerator.icmpLess(ID, INT);
+                    LLVMGenerator.icmpIntLess(ID, INT);
                 }
             } else {
                 System.err.println("Line "+ ctx.getStart().getLine()+", unknown variable: "+ID);

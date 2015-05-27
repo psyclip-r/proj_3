@@ -10,7 +10,7 @@ y = 32.321*32.0
 print y
 z = 3
 read int w
-if(w < 4){
+if(4 < w){
 y = 9999.9
 print y
 }
