@@ -282,7 +282,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
         if( v1.type == v2.type ) {
             if( v1.type == VarType.INT ){
                 LLVMGenerator.divInt(v1.name, v2.name);
-                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.INT) );
+                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL) );
             }
             if( v1.type == VarType.REAL ){
                 LLVMGenerator.divDouble(v1.name, v2.name);

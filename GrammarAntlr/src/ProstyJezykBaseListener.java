@@ -424,6 +424,18 @@ public class ProstyJezykBaseListener implements ProstyJezykListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterEx_id_name(@NotNull ProstyJezykParser.Ex_id_nameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEx_id_name(@NotNull ProstyJezykParser.Ex_id_nameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterT_STRING(@NotNull ProstyJezykParser.T_STRINGContext ctx) { }
 	/**
 	 * {@inheritDoc}

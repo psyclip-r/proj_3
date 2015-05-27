@@ -255,6 +255,13 @@ public class ProstyJezykBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitEx_id_name(@NotNull ProstyJezykParser.Ex_id_nameContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitT_STRING(@NotNull ProstyJezykParser.T_STRINGContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

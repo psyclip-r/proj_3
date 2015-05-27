@@ -94,7 +94,7 @@ class LLVMGenerator{
 
 
     static void divInt(String val1, String val2){
-        content += "%"+ register +" = div i32 "+val2+", "+val1+"\n";
+        content += "%"+ register +" = fdiv double "+val2+".0, "+val1+".0\n";
         register++;
     }
 

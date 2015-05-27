@@ -51,11 +51,13 @@ ex_1:  ex_2			    #blabla_2
       | ex_2 MULT ex_2	#mult
       | ex_2 DIV ex_2   #div;
 
-ex_2:   INT			#int
+ex_2:   INT			    #int
        | REAL			#real
        | TOINT ex_2		#toint
        | TOREAL ex_2	#toreal
-       | '(' ex_0 ')'	#par;
+       | '(' ex_0 ')'	#par
+       | ID_NAME        #ex_id_name
+       ;
 
 
 LESS : '<' ;
