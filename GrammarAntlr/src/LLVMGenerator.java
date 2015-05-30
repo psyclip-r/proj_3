@@ -13,6 +13,51 @@ class LLVMGenerator{
     static int br = 0;
     static Stack<Integer> brstack = new Stack<Integer>();
 
+    static void declareWhileCond(String repetitions){
+        declare(Integer.toString(register));
+        int counter = register;
+        register++;
+        assign(Integer.toString(counter), "0");
+        br++;
+        content += "br label %cond"+br+"\n";
+        content += "cond"+br+":\n";
+
+        load(Integer.toString(counter));
+        add("%" + (register - 1), "1");
+        assign(Integer.toString(counter), "%" + (register-1));
+
+        content += "%"+register+" = icmp slt i32 %"+(register-2)+", "+repetitions+"\n";
+        register++;
+
+        content += "br i1 %"+(register-1)+", label %true"+br+", label %false"+br+"\n";
+        content += "true"+br+":\n";
+        brstack.push(br);
+    }
+
+    static void declare(String id){
+        content += "%"+id+" = alloca i32\n";
+    }
+
+    static void assign(String id, String value){
+        content += "store i32 "+value+", i32* %"+id+"\n";
+    }
+
+    static void load(String id){
+        content += "%"+register+" = load i32* %"+id+"\n";
+        register++;
+    }
+
+    static void add(String val1, String val2){
+        content += "%"+register+" = add i32 "+val1+", "+val2+"\n";
+        register++;
+    }
+
+    static void declateWhileEnd(){
+        int b = brstack.pop();
+        content += "br label %cond"+b+"\n";
+        content += "false"+b+":\n";
+    }
+
     static void printfInt(String id){
         content += "%"+ register +" = load i32* %"+id+"\n";
         register++;
@@ -43,7 +88,6 @@ class LLVMGenerator{
         content += "store double "+value+", double* %"+id+"\n";
     }
 
-    /*
     static void load_i32(String id){
         content += "%"+register+" = load i32* %"+id+"\n";
         register++;
@@ -53,10 +97,10 @@ class LLVMGenerator{
         content += "%"+register+" = load double* %"+id+"\n";
         register++;
     }
-    */
+
 
     static void addIntVar(String val1, String var){
-        content += "%"+ register +" = load i32* %"+var+"\n";
+        content += "%"+ register +" = load i32* "+var+"\n";
         register++;
         content += "%"+ register +" = add i32 "+val1+", "+(register-1)+"\n";
         register++;

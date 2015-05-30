@@ -28,6 +28,15 @@ public class LLVMactions extends ProstyJezykBaseListener {
     HashMap<String, VarType> variables = new HashMap<String, VarType>();
     Stack<Value> stack = new Stack<Value>();
 
+    @Override public void exitWhile_cond(@NotNull ProstyJezykParser.While_condContext ctx) {
+        String value = ctx.compare_second().INT().getText();
+        LLVMGenerator.declareWhileCond(value);
+    }
+    @Override public void exitWhile_body(@NotNull ProstyJezykParser.While_bodyContext ctx) {
+        LLVMGenerator.declateWhileEnd();
+    }
+
+
     @Override public void enterIf_body(@NotNull ProstyJezykParser.If_bodyContext ctx) {
         LLVMGenerator.ifstart();
     }

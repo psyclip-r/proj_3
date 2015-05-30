@@ -23,10 +23,10 @@ if_body : START_FUNCT ( start? NEWLINE )* END_FUNCT;
 
 while_definition : while_cond while_body;
 // while_cond : 'loop' OP_BRACE compare_first compare_sign compare_second CLO_BRACE;
-while_cond : 'loop' OP_BRACE compare_second CLO_BRACE;
+while_cond : 'while' OP_BRACE compare_first compare_sign compare_second CLO_BRACE;
 while_body : START_FUNCT ( start? NEWLINE )* END_FUNCT;
 
-compare_first : ID_NAME;
+compare_first : ID_NAME | INT | REAL;
 compare_second : ID_NAME | INT | REAL;
 
 compare_sign :
