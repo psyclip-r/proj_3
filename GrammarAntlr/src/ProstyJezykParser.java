@@ -22,16 +22,16 @@ public class ProstyJezykParser extends Parser {
 		STRING=26, EQUAL=27, QUOTES=28, OP_BRACKET=29, CLO_BRACKET=30, COMMA=31, 
 		OP_BRACE=32, CLO_BRACE=33, START_FUNCT=34, END_FUNCT=35, NEWLINE=36, WS=37;
 	public static final int
-		RULE_prog = 0, RULE_start = 1, RULE_function = 2, RULE_funct_arg = 3, 
-		RULE_funct_body = 4, RULE_if_definition = 5, RULE_if_condition = 6, RULE_if_body = 7, 
-		RULE_while_definition = 8, RULE_while_cond = 9, RULE_while_body = 10, 
-		RULE_compare_first = 11, RULE_compare_second = 12, RULE_compare_sign = 13, 
-		RULE_value = 14, RULE_array = 15, RULE_el_in_array = 16, RULE_var_type = 17, 
-		RULE_ex_0 = 18, RULE_ex_1 = 19, RULE_ex_2 = 20, RULE_t_STRING = 21, RULE_t_INT = 22, 
-		RULE_t_REAL = 23, RULE_t_ARRAY = 24, RULE_t_VOID = 25, RULE_f_PRINT = 26, 
-		RULE_f_READ = 27;
+		RULE_prog = 0, RULE_start = 1, RULE_function = 2, RULE_fname = 3, RULE_funct_arg = 4, 
+		RULE_funct_body = 5, RULE_if_definition = 6, RULE_if_condition = 7, RULE_if_body = 8, 
+		RULE_while_definition = 9, RULE_while_cond = 10, RULE_while_body = 11, 
+		RULE_compare_first = 12, RULE_compare_second = 13, RULE_compare_sign = 14, 
+		RULE_value = 15, RULE_array = 16, RULE_el_in_array = 17, RULE_var_type = 18, 
+		RULE_ex_0 = 19, RULE_ex_1 = 20, RULE_ex_2 = 21, RULE_t_STRING = 22, RULE_t_INT = 23, 
+		RULE_t_REAL = 24, RULE_t_ARRAY = 25, RULE_t_VOID = 26, RULE_f_PRINT = 27, 
+		RULE_f_READ = 28;
 	public static final String[] ruleNames = {
-		"prog", "start", "function", "funct_arg", "funct_body", "if_definition", 
+		"prog", "start", "function", "fname", "funct_arg", "funct_body", "if_definition", 
 		"if_condition", "if_body", "while_definition", "while_cond", "while_body", 
 		"compare_first", "compare_second", "compare_sign", "value", "array", "el_in_array", 
 		"var_type", "ex_0", "ex_1", "ex_2", "t_STRING", "t_INT", "t_REAL", "t_ARRAY", 
@@ -137,26 +137,26 @@ public class ProstyJezykParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(62);
+			setState(64);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << READ) | (1L << PRINT) | (1L << ID_NAME) | (1L << NEWLINE))) != 0)) {
 				{
 				{
-				setState(57);
+				setState(59);
 				_la = _input.LA(1);
 				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << READ) | (1L << PRINT) | (1L << ID_NAME))) != 0)) {
 					{
-					setState(56); 
+					setState(58); 
 					start();
 					}
 				}
 
-				setState(59); 
+				setState(61); 
 				match(NEWLINE);
 				}
 				}
-				setState(64);
+				setState(66);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -339,18 +339,18 @@ public class ProstyJezykParser extends Parser {
 		StartContext _localctx = new StartContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_start);
 		try {
-			setState(81);
+			setState(83);
 			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
 			case 1:
 				_localctx = new AssignValueContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				{
-				setState(65); 
-				match(ID_NAME);
-				setState(66); 
-				match(EQUAL);
 				setState(67); 
+				match(ID_NAME);
+				setState(68); 
+				match(EQUAL);
+				setState(69); 
 				ex_0();
 				}
 				}
@@ -359,7 +359,7 @@ public class ProstyJezykParser extends Parser {
 				_localctx = new Enter_funContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(68); 
+				setState(70); 
 				function();
 				}
 				break;
@@ -367,9 +367,9 @@ public class ProstyJezykParser extends Parser {
 				_localctx = new PrintIDContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(69); 
+				setState(71); 
 				match(PRINT);
-				setState(70); 
+				setState(72); 
 				match(ID_NAME);
 				}
 				break;
@@ -377,11 +377,11 @@ public class ProstyJezykParser extends Parser {
 				_localctx = new ReadContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(71); 
-				match(READ);
-				setState(72); 
-				var_type();
 				setState(73); 
+				match(READ);
+				setState(74); 
+				var_type();
+				setState(75); 
 				match(ID_NAME);
 				}
 				break;
@@ -389,7 +389,7 @@ public class ProstyJezykParser extends Parser {
 				_localctx = new Enter_ifContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(75); 
+				setState(77); 
 				if_definition();
 				}
 				break;
@@ -397,7 +397,7 @@ public class ProstyJezykParser extends Parser {
 				_localctx = new Enter_whileContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(76); 
+				setState(78); 
 				while_definition();
 				}
 				break;
@@ -405,9 +405,9 @@ public class ProstyJezykParser extends Parser {
 				_localctx = new IncreaseContext(_localctx);
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(77); 
+				setState(79); 
 				match(ID_NAME);
-				setState(78); 
+				setState(80); 
 				match(T__0);
 				}
 				break;
@@ -415,9 +415,9 @@ public class ProstyJezykParser extends Parser {
 				_localctx = new DecreaseContext(_localctx);
 				enterOuterAlt(_localctx, 8);
 				{
-				setState(79); 
+				setState(81); 
 				match(ID_NAME);
-				setState(80); 
+				setState(82); 
 				match(T__1);
 				}
 				break;
@@ -438,9 +438,8 @@ public class ProstyJezykParser extends Parser {
 		public Var_typeContext var_type() {
 			return getRuleContext(Var_typeContext.class,0);
 		}
-		public TerminalNode ID_NAME() { return getToken(ProstyJezykParser.ID_NAME, 0); }
-		public Funct_argContext funct_arg() {
-			return getRuleContext(Funct_argContext.class,0);
+		public FnameContext fname() {
+			return getRuleContext(FnameContext.class,0);
 		}
 		public Funct_bodyContext funct_body() {
 			return getRuleContext(Funct_bodyContext.class,0);
@@ -475,30 +474,70 @@ public class ProstyJezykParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(83); 
-			match(T__2);
-			setState(84); 
-			var_type();
 			setState(85); 
-			match(ID_NAME);
+			match(T__2);
 			setState(86); 
-			funct_arg();
-			setState(90);
+			var_type();
+			setState(87); 
+			fname();
+			setState(91);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==NEWLINE) {
 				{
 				{
-				setState(87); 
+				setState(88); 
 				match(NEWLINE);
 				}
 				}
-				setState(92);
+				setState(93);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(93); 
+			setState(94); 
 			funct_body();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class FnameContext extends ParserRuleContext {
+		public TerminalNode ID_NAME() { return getToken(ProstyJezykParser.ID_NAME, 0); }
+		public FnameContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_fname; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ProstyJezykListener ) ((ProstyJezykListener)listener).enterFname(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ProstyJezykListener ) ((ProstyJezykListener)listener).exitFname(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof ProstyJezykVisitor ) return ((ProstyJezykVisitor<? extends T>)visitor).visitFname(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final FnameContext fname() throws RecognitionException {
+		FnameContext _localctx = new FnameContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_fname);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(96); 
+			match(ID_NAME);
 			}
 		}
 		catch (RecognitionException re) {
@@ -550,40 +589,40 @@ public class ProstyJezykParser extends Parser {
 
 	public final Funct_argContext funct_arg() throws RecognitionException {
 		Funct_argContext _localctx = new Funct_argContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_funct_arg);
+		enterRule(_localctx, 8, RULE_funct_arg);
 		int _la;
 		try {
-			setState(111);
+			setState(114);
 			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
 				{
-				setState(95); 
+				setState(98); 
 				match(OP_BRACE);
-				setState(96); 
+				setState(99); 
 				var_type();
-				setState(97); 
+				setState(100); 
 				match(NAME);
-				setState(104);
+				setState(107);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==COMMA) {
 					{
 					{
-					setState(98); 
+					setState(101); 
 					match(COMMA);
-					setState(99); 
+					setState(102); 
 					var_type();
-					setState(100); 
+					setState(103); 
 					match(NAME);
 					}
 					}
-					setState(106);
+					setState(109);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(107); 
+				setState(110); 
 				match(CLO_BRACE);
 				}
 				}
@@ -592,9 +631,9 @@ public class ProstyJezykParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				{
-				setState(109); 
+				setState(112); 
 				match(OP_BRACE);
-				setState(110); 
+				setState(113); 
 				match(CLO_BRACE);
 				}
 				}
@@ -646,37 +685,37 @@ public class ProstyJezykParser extends Parser {
 
 	public final Funct_bodyContext funct_body() throws RecognitionException {
 		Funct_bodyContext _localctx = new Funct_bodyContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_funct_body);
+		enterRule(_localctx, 10, RULE_funct_body);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(113); 
+			setState(116); 
 			match(START_FUNCT);
-			setState(120);
+			setState(123);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << READ) | (1L << PRINT) | (1L << ID_NAME) | (1L << NEWLINE))) != 0)) {
 				{
 				{
-				setState(115);
+				setState(118);
 				_la = _input.LA(1);
 				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << READ) | (1L << PRINT) | (1L << ID_NAME))) != 0)) {
 					{
-					setState(114); 
+					setState(117); 
 					start();
 					}
 				}
 
-				setState(117); 
+				setState(120); 
 				match(NEWLINE);
 				}
 				}
-				setState(122);
+				setState(125);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(123); 
+			setState(126); 
 			match(END_FUNCT);
 			}
 		}
@@ -723,28 +762,28 @@ public class ProstyJezykParser extends Parser {
 
 	public final If_definitionContext if_definition() throws RecognitionException {
 		If_definitionContext _localctx = new If_definitionContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_if_definition);
+		enterRule(_localctx, 12, RULE_if_definition);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(125); 
+			setState(128); 
 			if_condition();
-			setState(129);
+			setState(132);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==NEWLINE) {
 				{
 				{
-				setState(126); 
+				setState(129); 
 				match(NEWLINE);
 				}
 				}
-				setState(131);
+				setState(134);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(132); 
+			setState(135); 
 			if_body();
 			}
 		}
@@ -792,21 +831,21 @@ public class ProstyJezykParser extends Parser {
 
 	public final If_conditionContext if_condition() throws RecognitionException {
 		If_conditionContext _localctx = new If_conditionContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_if_condition);
+		enterRule(_localctx, 14, RULE_if_condition);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(134); 
-			match(T__3);
-			setState(135); 
-			match(OP_BRACE);
-			setState(136); 
-			value();
 			setState(137); 
-			compare_sign();
+			match(T__3);
 			setState(138); 
-			value();
+			match(OP_BRACE);
 			setState(139); 
+			value();
+			setState(140); 
+			compare_sign();
+			setState(141); 
+			value();
+			setState(142); 
 			match(CLO_BRACE);
 			}
 		}
@@ -855,37 +894,37 @@ public class ProstyJezykParser extends Parser {
 
 	public final If_bodyContext if_body() throws RecognitionException {
 		If_bodyContext _localctx = new If_bodyContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_if_body);
+		enterRule(_localctx, 16, RULE_if_body);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(141); 
+			setState(144); 
 			match(START_FUNCT);
-			setState(148);
+			setState(151);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << READ) | (1L << PRINT) | (1L << ID_NAME) | (1L << NEWLINE))) != 0)) {
 				{
 				{
-				setState(143);
+				setState(146);
 				_la = _input.LA(1);
 				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << READ) | (1L << PRINT) | (1L << ID_NAME))) != 0)) {
 					{
-					setState(142); 
+					setState(145); 
 					start();
 					}
 				}
 
-				setState(145); 
+				setState(148); 
 				match(NEWLINE);
 				}
 				}
-				setState(150);
+				setState(153);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(151); 
+			setState(154); 
 			match(END_FUNCT);
 			}
 		}
@@ -928,13 +967,13 @@ public class ProstyJezykParser extends Parser {
 
 	public final While_definitionContext while_definition() throws RecognitionException {
 		While_definitionContext _localctx = new While_definitionContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_while_definition);
+		enterRule(_localctx, 18, RULE_while_definition);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(153); 
+			setState(156); 
 			while_cond();
-			setState(154); 
+			setState(157); 
 			while_body();
 			}
 		}
@@ -982,21 +1021,21 @@ public class ProstyJezykParser extends Parser {
 
 	public final While_condContext while_cond() throws RecognitionException {
 		While_condContext _localctx = new While_condContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_while_cond);
+		enterRule(_localctx, 20, RULE_while_cond);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(156); 
-			match(T__4);
-			setState(157); 
-			match(OP_BRACE);
-			setState(158); 
-			compare_first();
 			setState(159); 
-			compare_sign();
+			match(T__4);
 			setState(160); 
-			compare_second();
+			match(OP_BRACE);
 			setState(161); 
+			compare_first();
+			setState(162); 
+			compare_sign();
+			setState(163); 
+			compare_second();
+			setState(164); 
 			match(CLO_BRACE);
 			}
 		}
@@ -1045,37 +1084,37 @@ public class ProstyJezykParser extends Parser {
 
 	public final While_bodyContext while_body() throws RecognitionException {
 		While_bodyContext _localctx = new While_bodyContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_while_body);
+		enterRule(_localctx, 22, RULE_while_body);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(163); 
+			setState(166); 
 			match(START_FUNCT);
-			setState(170);
+			setState(173);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << READ) | (1L << PRINT) | (1L << ID_NAME) | (1L << NEWLINE))) != 0)) {
 				{
 				{
-				setState(165);
+				setState(168);
 				_la = _input.LA(1);
 				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << READ) | (1L << PRINT) | (1L << ID_NAME))) != 0)) {
 					{
-					setState(164); 
+					setState(167); 
 					start();
 					}
 				}
 
-				setState(167); 
+				setState(170); 
 				match(NEWLINE);
 				}
 				}
-				setState(172);
+				setState(175);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(173); 
+			setState(176); 
 			match(END_FUNCT);
 			}
 		}
@@ -1115,12 +1154,12 @@ public class ProstyJezykParser extends Parser {
 
 	public final Compare_firstContext compare_first() throws RecognitionException {
 		Compare_firstContext _localctx = new Compare_firstContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_compare_first);
+		enterRule(_localctx, 24, RULE_compare_first);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(175);
+			setState(178);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << ID_NAME) | (1L << INT) | (1L << REAL))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -1164,12 +1203,12 @@ public class ProstyJezykParser extends Parser {
 
 	public final Compare_secondContext compare_second() throws RecognitionException {
 		Compare_secondContext _localctx = new Compare_secondContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_compare_second);
+		enterRule(_localctx, 26, RULE_compare_second);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(177);
+			setState(180);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << ID_NAME) | (1L << INT) | (1L << REAL))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -1213,12 +1252,12 @@ public class ProstyJezykParser extends Parser {
 
 	public final Compare_signContext compare_sign() throws RecognitionException {
 		Compare_signContext _localctx = new Compare_signContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_compare_sign);
+		enterRule(_localctx, 28, RULE_compare_sign);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(179);
+			setState(182);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << LESS) | (1L << MORE) | (1L << EQUAL_S))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -1266,42 +1305,42 @@ public class ProstyJezykParser extends Parser {
 
 	public final ValueContext value() throws RecognitionException {
 		ValueContext _localctx = new ValueContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_value);
+		enterRule(_localctx, 30, RULE_value);
 		try {
-			setState(186);
+			setState(189);
 			switch (_input.LA(1)) {
 			case INT:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(181); 
+				setState(184); 
 				match(INT);
 				}
 				break;
 			case REAL:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(182); 
+				setState(185); 
 				match(REAL);
 				}
 				break;
 			case STRING:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(183); 
+				setState(186); 
 				match(STRING);
 				}
 				break;
 			case OP_BRACKET:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(184); 
+				setState(187); 
 				array();
 				}
 				break;
 			case ID_NAME:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(185); 
+				setState(188); 
 				match(ID_NAME);
 				}
 				break;
@@ -1354,36 +1393,36 @@ public class ProstyJezykParser extends Parser {
 
 	public final ArrayContext array() throws RecognitionException {
 		ArrayContext _localctx = new ArrayContext(_ctx, getState());
-		enterRule(_localctx, 30, RULE_array);
+		enterRule(_localctx, 32, RULE_array);
 		int _la;
 		try {
-			setState(201);
+			setState(204);
 			switch ( getInterpreter().adaptivePredict(_input,15,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
 				{
-				setState(188); 
+				setState(191); 
 				match(OP_BRACKET);
-				setState(189); 
+				setState(192); 
 				value();
-				setState(194);
+				setState(197);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==COMMA) {
 					{
 					{
-					setState(190); 
+					setState(193); 
 					match(COMMA);
-					setState(191); 
+					setState(194); 
 					value();
 					}
 					}
-					setState(196);
+					setState(199);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(197); 
+				setState(200); 
 				match(CLO_BRACKET);
 				}
 				}
@@ -1392,9 +1431,9 @@ public class ProstyJezykParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				{
-				setState(199); 
+				setState(202); 
 				match(OP_BRACKET);
-				setState(200); 
+				setState(203); 
 				match(CLO_BRACKET);
 				}
 				}
@@ -1438,17 +1477,17 @@ public class ProstyJezykParser extends Parser {
 
 	public final El_in_arrayContext el_in_array() throws RecognitionException {
 		El_in_arrayContext _localctx = new El_in_arrayContext(_ctx, getState());
-		enterRule(_localctx, 32, RULE_el_in_array);
+		enterRule(_localctx, 34, RULE_el_in_array);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(203); 
-			match(NAME);
-			setState(204); 
-			match(OP_BRACKET);
-			setState(205); 
-			match(INT);
 			setState(206); 
+			match(NAME);
+			setState(207); 
+			match(OP_BRACKET);
+			setState(208); 
+			match(INT);
+			setState(209); 
 			match(CLO_BRACKET);
 			}
 		}
@@ -1500,42 +1539,42 @@ public class ProstyJezykParser extends Parser {
 
 	public final Var_typeContext var_type() throws RecognitionException {
 		Var_typeContext _localctx = new Var_typeContext(_ctx, getState());
-		enterRule(_localctx, 34, RULE_var_type);
+		enterRule(_localctx, 36, RULE_var_type);
 		try {
-			setState(213);
+			setState(216);
 			switch (_input.LA(1)) {
 			case T__5:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(208); 
+				setState(211); 
 				t_STRING();
 				}
 				break;
 			case T__6:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(209); 
+				setState(212); 
 				t_INT();
 				}
 				break;
 			case T__7:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(210); 
+				setState(213); 
 				t_REAL();
 				}
 				break;
 			case T__8:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(211); 
+				setState(214); 
 				t_ARRAY();
 				}
 				break;
 			case T__9:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(212); 
+				setState(215); 
 				t_VOID();
 				}
 				break;
@@ -1633,15 +1672,15 @@ public class ProstyJezykParser extends Parser {
 
 	public final Ex_0Context ex_0() throws RecognitionException {
 		Ex_0Context _localctx = new Ex_0Context(_ctx, getState());
-		enterRule(_localctx, 36, RULE_ex_0);
+		enterRule(_localctx, 38, RULE_ex_0);
 		try {
-			setState(224);
+			setState(227);
 			switch ( getInterpreter().adaptivePredict(_input,17,_ctx) ) {
 			case 1:
 				_localctx = new Blabla_1Context(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(215); 
+				setState(218); 
 				ex_1();
 				}
 				break;
@@ -1649,11 +1688,11 @@ public class ProstyJezykParser extends Parser {
 				_localctx = new AddContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(216); 
+				setState(219); 
 				ex_1();
-				setState(217); 
+				setState(220); 
 				match(ADD);
-				setState(218); 
+				setState(221); 
 				ex_1();
 				}
 				break;
@@ -1661,11 +1700,11 @@ public class ProstyJezykParser extends Parser {
 				_localctx = new SubstractContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(220); 
+				setState(223); 
 				ex_1();
-				setState(221); 
+				setState(224); 
 				match(SUBS);
-				setState(222); 
+				setState(225); 
 				ex_1();
 				}
 				break;
@@ -1761,15 +1800,15 @@ public class ProstyJezykParser extends Parser {
 
 	public final Ex_1Context ex_1() throws RecognitionException {
 		Ex_1Context _localctx = new Ex_1Context(_ctx, getState());
-		enterRule(_localctx, 38, RULE_ex_1);
+		enterRule(_localctx, 40, RULE_ex_1);
 		try {
-			setState(235);
+			setState(238);
 			switch ( getInterpreter().adaptivePredict(_input,18,_ctx) ) {
 			case 1:
 				_localctx = new Blabla_2Context(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(226); 
+				setState(229); 
 				ex_2();
 				}
 				break;
@@ -1777,11 +1816,11 @@ public class ProstyJezykParser extends Parser {
 				_localctx = new MultContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(227); 
+				setState(230); 
 				ex_2();
-				setState(228); 
+				setState(231); 
 				match(MULT);
-				setState(229); 
+				setState(232); 
 				ex_2();
 				}
 				break;
@@ -1789,11 +1828,11 @@ public class ProstyJezykParser extends Parser {
 				_localctx = new DivContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(231); 
+				setState(234); 
 				ex_2();
-				setState(232); 
+				setState(235); 
 				match(DIV);
-				setState(233); 
+				setState(236); 
 				ex_2();
 				}
 				break;
@@ -1934,15 +1973,15 @@ public class ProstyJezykParser extends Parser {
 
 	public final Ex_2Context ex_2() throws RecognitionException {
 		Ex_2Context _localctx = new Ex_2Context(_ctx, getState());
-		enterRule(_localctx, 40, RULE_ex_2);
+		enterRule(_localctx, 42, RULE_ex_2);
 		try {
-			setState(248);
+			setState(251);
 			switch (_input.LA(1)) {
 			case INT:
 				_localctx = new IntContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(237); 
+				setState(240); 
 				match(INT);
 				}
 				break;
@@ -1950,7 +1989,7 @@ public class ProstyJezykParser extends Parser {
 				_localctx = new RealContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(238); 
+				setState(241); 
 				match(REAL);
 				}
 				break;
@@ -1958,9 +1997,9 @@ public class ProstyJezykParser extends Parser {
 				_localctx = new TointContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(239); 
+				setState(242); 
 				match(TOINT);
-				setState(240); 
+				setState(243); 
 				ex_2();
 				}
 				break;
@@ -1968,9 +2007,9 @@ public class ProstyJezykParser extends Parser {
 				_localctx = new TorealContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(241); 
+				setState(244); 
 				match(TOREAL);
-				setState(242); 
+				setState(245); 
 				ex_2();
 				}
 				break;
@@ -1978,11 +2017,11 @@ public class ProstyJezykParser extends Parser {
 				_localctx = new ParContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(243); 
+				setState(246); 
 				match(OP_BRACE);
-				setState(244); 
+				setState(247); 
 				ex_0();
-				setState(245); 
+				setState(248); 
 				match(CLO_BRACE);
 				}
 				break;
@@ -1990,7 +2029,7 @@ public class ProstyJezykParser extends Parser {
 				_localctx = new Ex_id_nameContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(247); 
+				setState(250); 
 				match(ID_NAME);
 				}
 				break;
@@ -2031,11 +2070,11 @@ public class ProstyJezykParser extends Parser {
 
 	public final T_STRINGContext t_STRING() throws RecognitionException {
 		T_STRINGContext _localctx = new T_STRINGContext(_ctx, getState());
-		enterRule(_localctx, 42, RULE_t_STRING);
+		enterRule(_localctx, 44, RULE_t_STRING);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(250); 
+			setState(253); 
 			match(T__5);
 			}
 		}
@@ -2072,11 +2111,11 @@ public class ProstyJezykParser extends Parser {
 
 	public final T_INTContext t_INT() throws RecognitionException {
 		T_INTContext _localctx = new T_INTContext(_ctx, getState());
-		enterRule(_localctx, 44, RULE_t_INT);
+		enterRule(_localctx, 46, RULE_t_INT);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(252); 
+			setState(255); 
 			match(T__6);
 			}
 		}
@@ -2113,11 +2152,11 @@ public class ProstyJezykParser extends Parser {
 
 	public final T_REALContext t_REAL() throws RecognitionException {
 		T_REALContext _localctx = new T_REALContext(_ctx, getState());
-		enterRule(_localctx, 46, RULE_t_REAL);
+		enterRule(_localctx, 48, RULE_t_REAL);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(254); 
+			setState(257); 
 			match(T__7);
 			}
 		}
@@ -2154,11 +2193,11 @@ public class ProstyJezykParser extends Parser {
 
 	public final T_ARRAYContext t_ARRAY() throws RecognitionException {
 		T_ARRAYContext _localctx = new T_ARRAYContext(_ctx, getState());
-		enterRule(_localctx, 48, RULE_t_ARRAY);
+		enterRule(_localctx, 50, RULE_t_ARRAY);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(256); 
+			setState(259); 
 			match(T__8);
 			}
 		}
@@ -2195,11 +2234,11 @@ public class ProstyJezykParser extends Parser {
 
 	public final T_VOIDContext t_VOID() throws RecognitionException {
 		T_VOIDContext _localctx = new T_VOIDContext(_ctx, getState());
-		enterRule(_localctx, 50, RULE_t_VOID);
+		enterRule(_localctx, 52, RULE_t_VOID);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(258); 
+			setState(261); 
 			match(T__9);
 			}
 		}
@@ -2236,11 +2275,11 @@ public class ProstyJezykParser extends Parser {
 
 	public final F_PRINTContext f_PRINT() throws RecognitionException {
 		F_PRINTContext _localctx = new F_PRINTContext(_ctx, getState());
-		enterRule(_localctx, 52, RULE_f_PRINT);
+		enterRule(_localctx, 54, RULE_f_PRINT);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(260); 
+			setState(263); 
 			match(PRINT);
 			}
 		}
@@ -2277,11 +2316,11 @@ public class ProstyJezykParser extends Parser {
 
 	public final F_READContext f_READ() throws RecognitionException {
 		F_READContext _localctx = new F_READContext(_ctx, getState());
-		enterRule(_localctx, 54, RULE_f_READ);
+		enterRule(_localctx, 56, RULE_f_READ);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(262); 
+			setState(265); 
 			match(READ);
 			}
 		}
@@ -2297,92 +2336,93 @@ public class ProstyJezykParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\'\u010b\4\2\t\2\4"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\'\u010e\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
-		"\4\32\t\32\4\33\t\33\4\34\t\34\4\35\t\35\3\2\5\2<\n\2\3\2\7\2?\n\2\f\2"+
-		"\16\2B\13\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
-		"\3\3\3\5\3T\n\3\3\4\3\4\3\4\3\4\3\4\7\4[\n\4\f\4\16\4^\13\4\3\4\3\4\3"+
-		"\5\3\5\3\5\3\5\3\5\3\5\3\5\7\5i\n\5\f\5\16\5l\13\5\3\5\3\5\3\5\3\5\5\5"+
-		"r\n\5\3\6\3\6\5\6v\n\6\3\6\7\6y\n\6\f\6\16\6|\13\6\3\6\3\6\3\7\3\7\7\7"+
-		"\u0082\n\7\f\7\16\7\u0085\13\7\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\t"+
-		"\3\t\5\t\u0092\n\t\3\t\7\t\u0095\n\t\f\t\16\t\u0098\13\t\3\t\3\t\3\n\3"+
-		"\n\3\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\f\3\f\5\f\u00a8\n\f\3\f\7"+
-		"\f\u00ab\n\f\f\f\16\f\u00ae\13\f\3\f\3\f\3\r\3\r\3\16\3\16\3\17\3\17\3"+
-		"\20\3\20\3\20\3\20\3\20\5\20\u00bd\n\20\3\21\3\21\3\21\3\21\7\21\u00c3"+
-		"\n\21\f\21\16\21\u00c6\13\21\3\21\3\21\3\21\3\21\5\21\u00cc\n\21\3\22"+
-		"\3\22\3\22\3\22\3\22\3\23\3\23\3\23\3\23\3\23\5\23\u00d8\n\23\3\24\3\24"+
-		"\3\24\3\24\3\24\3\24\3\24\3\24\3\24\5\24\u00e3\n\24\3\25\3\25\3\25\3\25"+
-		"\3\25\3\25\3\25\3\25\3\25\5\25\u00ee\n\25\3\26\3\26\3\26\3\26\3\26\3\26"+
-		"\3\26\3\26\3\26\3\26\3\26\5\26\u00fb\n\26\3\27\3\27\3\30\3\30\3\31\3\31"+
-		"\3\32\3\32\3\33\3\33\3\34\3\34\3\35\3\35\3\35\2\2\36\2\4\6\b\n\f\16\20"+
-		"\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\668\2\4\4\2\24\24\32\33\3\2\r"+
-		"\17\u0114\2@\3\2\2\2\4S\3\2\2\2\6U\3\2\2\2\bq\3\2\2\2\ns\3\2\2\2\f\177"+
-		"\3\2\2\2\16\u0088\3\2\2\2\20\u008f\3\2\2\2\22\u009b\3\2\2\2\24\u009e\3"+
-		"\2\2\2\26\u00a5\3\2\2\2\30\u00b1\3\2\2\2\32\u00b3\3\2\2\2\34\u00b5\3\2"+
-		"\2\2\36\u00bc\3\2\2\2 \u00cb\3\2\2\2\"\u00cd\3\2\2\2$\u00d7\3\2\2\2&\u00e2"+
-		"\3\2\2\2(\u00ed\3\2\2\2*\u00fa\3\2\2\2,\u00fc\3\2\2\2.\u00fe\3\2\2\2\60"+
-		"\u0100\3\2\2\2\62\u0102\3\2\2\2\64\u0104\3\2\2\2\66\u0106\3\2\2\28\u0108"+
-		"\3\2\2\2:<\5\4\3\2;:\3\2\2\2;<\3\2\2\2<=\3\2\2\2=?\7&\2\2>;\3\2\2\2?B"+
-		"\3\2\2\2@>\3\2\2\2@A\3\2\2\2A\3\3\2\2\2B@\3\2\2\2CD\7\24\2\2DE\7\35\2"+
-		"\2ET\5&\24\2FT\5\6\4\2GH\7\21\2\2HT\7\24\2\2IJ\7\20\2\2JK\5$\23\2KL\7"+
-		"\24\2\2LT\3\2\2\2MT\5\f\7\2NT\5\22\n\2OP\7\24\2\2PT\7\3\2\2QR\7\24\2\2"+
-		"RT\7\4\2\2SC\3\2\2\2SF\3\2\2\2SG\3\2\2\2SI\3\2\2\2SM\3\2\2\2SN\3\2\2\2"+
-		"SO\3\2\2\2SQ\3\2\2\2T\5\3\2\2\2UV\7\5\2\2VW\5$\23\2WX\7\24\2\2X\\\5\b"+
-		"\5\2Y[\7&\2\2ZY\3\2\2\2[^\3\2\2\2\\Z\3\2\2\2\\]\3\2\2\2]_\3\2\2\2^\\\3"+
-		"\2\2\2_`\5\n\6\2`\7\3\2\2\2ab\7\"\2\2bc\5$\23\2cj\7\31\2\2de\7!\2\2ef"+
-		"\5$\23\2fg\7\31\2\2gi\3\2\2\2hd\3\2\2\2il\3\2\2\2jh\3\2\2\2jk\3\2\2\2"+
-		"km\3\2\2\2lj\3\2\2\2mn\7#\2\2nr\3\2\2\2op\7\"\2\2pr\7#\2\2qa\3\2\2\2q"+
-		"o\3\2\2\2r\t\3\2\2\2sz\7$\2\2tv\5\4\3\2ut\3\2\2\2uv\3\2\2\2vw\3\2\2\2"+
-		"wy\7&\2\2xu\3\2\2\2y|\3\2\2\2zx\3\2\2\2z{\3\2\2\2{}\3\2\2\2|z\3\2\2\2"+
-		"}~\7%\2\2~\13\3\2\2\2\177\u0083\5\16\b\2\u0080\u0082\7&\2\2\u0081\u0080"+
-		"\3\2\2\2\u0082\u0085\3\2\2\2\u0083\u0081\3\2\2\2\u0083\u0084\3\2\2\2\u0084"+
-		"\u0086\3\2\2\2\u0085\u0083\3\2\2\2\u0086\u0087\5\20\t\2\u0087\r\3\2\2"+
-		"\2\u0088\u0089\7\6\2\2\u0089\u008a\7\"\2\2\u008a\u008b\5\36\20\2\u008b"+
-		"\u008c\5\34\17\2\u008c\u008d\5\36\20\2\u008d\u008e\7#\2\2\u008e\17\3\2"+
-		"\2\2\u008f\u0096\7$\2\2\u0090\u0092\5\4\3\2\u0091\u0090\3\2\2\2\u0091"+
-		"\u0092\3\2\2\2\u0092\u0093\3\2\2\2\u0093\u0095\7&\2\2\u0094\u0091\3\2"+
-		"\2\2\u0095\u0098\3\2\2\2\u0096\u0094\3\2\2\2\u0096\u0097\3\2\2\2\u0097"+
-		"\u0099\3\2\2\2\u0098\u0096\3\2\2\2\u0099\u009a\7%\2\2\u009a\21\3\2\2\2"+
-		"\u009b\u009c\5\24\13\2\u009c\u009d\5\26\f\2\u009d\23\3\2\2\2\u009e\u009f"+
-		"\7\7\2\2\u009f\u00a0\7\"\2\2\u00a0\u00a1\5\30\r\2\u00a1\u00a2\5\34\17"+
-		"\2\u00a2\u00a3\5\32\16\2\u00a3\u00a4\7#\2\2\u00a4\25\3\2\2\2\u00a5\u00ac"+
-		"\7$\2\2\u00a6\u00a8\5\4\3\2\u00a7\u00a6\3\2\2\2\u00a7\u00a8\3\2\2\2\u00a8"+
-		"\u00a9\3\2\2\2\u00a9\u00ab\7&\2\2\u00aa\u00a7\3\2\2\2\u00ab\u00ae\3\2"+
-		"\2\2\u00ac\u00aa\3\2\2\2\u00ac\u00ad\3\2\2\2\u00ad\u00af\3\2\2\2\u00ae"+
-		"\u00ac\3\2\2\2\u00af\u00b0\7%\2\2\u00b0\27\3\2\2\2\u00b1\u00b2\t\2\2\2"+
-		"\u00b2\31\3\2\2\2\u00b3\u00b4\t\2\2\2\u00b4\33\3\2\2\2\u00b5\u00b6\t\3"+
-		"\2\2\u00b6\35\3\2\2\2\u00b7\u00bd\7\32\2\2\u00b8\u00bd\7\33\2\2\u00b9"+
-		"\u00bd\7\34\2\2\u00ba\u00bd\5 \21\2\u00bb\u00bd\7\24\2\2\u00bc\u00b7\3"+
-		"\2\2\2\u00bc\u00b8\3\2\2\2\u00bc\u00b9\3\2\2\2\u00bc\u00ba\3\2\2\2\u00bc"+
-		"\u00bb\3\2\2\2\u00bd\37\3\2\2\2\u00be\u00bf\7\37\2\2\u00bf\u00c4\5\36"+
-		"\20\2\u00c0\u00c1\7!\2\2\u00c1\u00c3\5\36\20\2\u00c2\u00c0\3\2\2\2\u00c3"+
-		"\u00c6\3\2\2\2\u00c4\u00c2\3\2\2\2\u00c4\u00c5\3\2\2\2\u00c5\u00c7\3\2"+
-		"\2\2\u00c6\u00c4\3\2\2\2\u00c7\u00c8\7 \2\2\u00c8\u00cc\3\2\2\2\u00c9"+
-		"\u00ca\7\37\2\2\u00ca\u00cc\7 \2\2\u00cb\u00be\3\2\2\2\u00cb\u00c9\3\2"+
-		"\2\2\u00cc!\3\2\2\2\u00cd\u00ce\7\31\2\2\u00ce\u00cf\7\37\2\2\u00cf\u00d0"+
-		"\7\32\2\2\u00d0\u00d1\7 \2\2\u00d1#\3\2\2\2\u00d2\u00d8\5,\27\2\u00d3"+
-		"\u00d8\5.\30\2\u00d4\u00d8\5\60\31\2\u00d5\u00d8\5\62\32\2\u00d6\u00d8"+
-		"\5\64\33\2\u00d7\u00d2\3\2\2\2\u00d7\u00d3\3\2\2\2\u00d7\u00d4\3\2\2\2"+
-		"\u00d7\u00d5\3\2\2\2\u00d7\u00d6\3\2\2\2\u00d8%\3\2\2\2\u00d9\u00e3\5"+
-		"(\25\2\u00da\u00db\5(\25\2\u00db\u00dc\7\25\2\2\u00dc\u00dd\5(\25\2\u00dd"+
-		"\u00e3\3\2\2\2\u00de\u00df\5(\25\2\u00df\u00e0\7\27\2\2\u00e0\u00e1\5"+
-		"(\25\2\u00e1\u00e3\3\2\2\2\u00e2\u00d9\3\2\2\2\u00e2\u00da\3\2\2\2\u00e2"+
-		"\u00de\3\2\2\2\u00e3\'\3\2\2\2\u00e4\u00ee\5*\26\2\u00e5\u00e6\5*\26\2"+
-		"\u00e6\u00e7\7\26\2\2\u00e7\u00e8\5*\26\2\u00e8\u00ee\3\2\2\2\u00e9\u00ea"+
-		"\5*\26\2\u00ea\u00eb\7\30\2\2\u00eb\u00ec\5*\26\2\u00ec\u00ee\3\2\2\2"+
-		"\u00ed\u00e4\3\2\2\2\u00ed\u00e5\3\2\2\2\u00ed\u00e9\3\2\2\2\u00ee)\3"+
-		"\2\2\2\u00ef\u00fb\7\32\2\2\u00f0\u00fb\7\33\2\2\u00f1\u00f2\7\22\2\2"+
-		"\u00f2\u00fb\5*\26\2\u00f3\u00f4\7\23\2\2\u00f4\u00fb\5*\26\2\u00f5\u00f6"+
-		"\7\"\2\2\u00f6\u00f7\5&\24\2\u00f7\u00f8\7#\2\2\u00f8\u00fb\3\2\2\2\u00f9"+
-		"\u00fb\7\24\2\2\u00fa\u00ef\3\2\2\2\u00fa\u00f0\3\2\2\2\u00fa\u00f1\3"+
-		"\2\2\2\u00fa\u00f3\3\2\2\2\u00fa\u00f5\3\2\2\2\u00fa\u00f9\3\2\2\2\u00fb"+
-		"+\3\2\2\2\u00fc\u00fd\7\b\2\2\u00fd-\3\2\2\2\u00fe\u00ff\7\t\2\2\u00ff"+
-		"/\3\2\2\2\u0100\u0101\7\n\2\2\u0101\61\3\2\2\2\u0102\u0103\7\13\2\2\u0103"+
-		"\63\3\2\2\2\u0104\u0105\7\f\2\2\u0105\65\3\2\2\2\u0106\u0107\7\21\2\2"+
-		"\u0107\67\3\2\2\2\u0108\u0109\7\20\2\2\u01099\3\2\2\2\26;@S\\jquz\u0083"+
-		"\u0091\u0096\u00a7\u00ac\u00bc\u00c4\u00cb\u00d7\u00e2\u00ed\u00fa";
+		"\4\32\t\32\4\33\t\33\4\34\t\34\4\35\t\35\4\36\t\36\3\2\5\2>\n\2\3\2\7"+
+		"\2A\n\2\f\2\16\2D\13\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
+		"\3\3\3\3\3\3\3\3\5\3V\n\3\3\4\3\4\3\4\3\4\7\4\\\n\4\f\4\16\4_\13\4\3\4"+
+		"\3\4\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6\7\6l\n\6\f\6\16\6o\13\6\3\6\3"+
+		"\6\3\6\3\6\5\6u\n\6\3\7\3\7\5\7y\n\7\3\7\7\7|\n\7\f\7\16\7\177\13\7\3"+
+		"\7\3\7\3\b\3\b\7\b\u0085\n\b\f\b\16\b\u0088\13\b\3\b\3\b\3\t\3\t\3\t\3"+
+		"\t\3\t\3\t\3\t\3\n\3\n\5\n\u0095\n\n\3\n\7\n\u0098\n\n\f\n\16\n\u009b"+
+		"\13\n\3\n\3\n\3\13\3\13\3\13\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\r\3\r\5\r\u00ab"+
+		"\n\r\3\r\7\r\u00ae\n\r\f\r\16\r\u00b1\13\r\3\r\3\r\3\16\3\16\3\17\3\17"+
+		"\3\20\3\20\3\21\3\21\3\21\3\21\3\21\5\21\u00c0\n\21\3\22\3\22\3\22\3\22"+
+		"\7\22\u00c6\n\22\f\22\16\22\u00c9\13\22\3\22\3\22\3\22\3\22\5\22\u00cf"+
+		"\n\22\3\23\3\23\3\23\3\23\3\23\3\24\3\24\3\24\3\24\3\24\5\24\u00db\n\24"+
+		"\3\25\3\25\3\25\3\25\3\25\3\25\3\25\3\25\3\25\5\25\u00e6\n\25\3\26\3\26"+
+		"\3\26\3\26\3\26\3\26\3\26\3\26\3\26\5\26\u00f1\n\26\3\27\3\27\3\27\3\27"+
+		"\3\27\3\27\3\27\3\27\3\27\3\27\3\27\5\27\u00fe\n\27\3\30\3\30\3\31\3\31"+
+		"\3\32\3\32\3\33\3\33\3\34\3\34\3\35\3\35\3\36\3\36\3\36\2\2\37\2\4\6\b"+
+		"\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\668:\2\4\4\2\24\24\32"+
+		"\33\3\2\r\17\u0116\2B\3\2\2\2\4U\3\2\2\2\6W\3\2\2\2\bb\3\2\2\2\nt\3\2"+
+		"\2\2\fv\3\2\2\2\16\u0082\3\2\2\2\20\u008b\3\2\2\2\22\u0092\3\2\2\2\24"+
+		"\u009e\3\2\2\2\26\u00a1\3\2\2\2\30\u00a8\3\2\2\2\32\u00b4\3\2\2\2\34\u00b6"+
+		"\3\2\2\2\36\u00b8\3\2\2\2 \u00bf\3\2\2\2\"\u00ce\3\2\2\2$\u00d0\3\2\2"+
+		"\2&\u00da\3\2\2\2(\u00e5\3\2\2\2*\u00f0\3\2\2\2,\u00fd\3\2\2\2.\u00ff"+
+		"\3\2\2\2\60\u0101\3\2\2\2\62\u0103\3\2\2\2\64\u0105\3\2\2\2\66\u0107\3"+
+		"\2\2\28\u0109\3\2\2\2:\u010b\3\2\2\2<>\5\4\3\2=<\3\2\2\2=>\3\2\2\2>?\3"+
+		"\2\2\2?A\7&\2\2@=\3\2\2\2AD\3\2\2\2B@\3\2\2\2BC\3\2\2\2C\3\3\2\2\2DB\3"+
+		"\2\2\2EF\7\24\2\2FG\7\35\2\2GV\5(\25\2HV\5\6\4\2IJ\7\21\2\2JV\7\24\2\2"+
+		"KL\7\20\2\2LM\5&\24\2MN\7\24\2\2NV\3\2\2\2OV\5\16\b\2PV\5\24\13\2QR\7"+
+		"\24\2\2RV\7\3\2\2ST\7\24\2\2TV\7\4\2\2UE\3\2\2\2UH\3\2\2\2UI\3\2\2\2U"+
+		"K\3\2\2\2UO\3\2\2\2UP\3\2\2\2UQ\3\2\2\2US\3\2\2\2V\5\3\2\2\2WX\7\5\2\2"+
+		"XY\5&\24\2Y]\5\b\5\2Z\\\7&\2\2[Z\3\2\2\2\\_\3\2\2\2][\3\2\2\2]^\3\2\2"+
+		"\2^`\3\2\2\2_]\3\2\2\2`a\5\f\7\2a\7\3\2\2\2bc\7\24\2\2c\t\3\2\2\2de\7"+
+		"\"\2\2ef\5&\24\2fm\7\31\2\2gh\7!\2\2hi\5&\24\2ij\7\31\2\2jl\3\2\2\2kg"+
+		"\3\2\2\2lo\3\2\2\2mk\3\2\2\2mn\3\2\2\2np\3\2\2\2om\3\2\2\2pq\7#\2\2qu"+
+		"\3\2\2\2rs\7\"\2\2su\7#\2\2td\3\2\2\2tr\3\2\2\2u\13\3\2\2\2v}\7$\2\2w"+
+		"y\5\4\3\2xw\3\2\2\2xy\3\2\2\2yz\3\2\2\2z|\7&\2\2{x\3\2\2\2|\177\3\2\2"+
+		"\2}{\3\2\2\2}~\3\2\2\2~\u0080\3\2\2\2\177}\3\2\2\2\u0080\u0081\7%\2\2"+
+		"\u0081\r\3\2\2\2\u0082\u0086\5\20\t\2\u0083\u0085\7&\2\2\u0084\u0083\3"+
+		"\2\2\2\u0085\u0088\3\2\2\2\u0086\u0084\3\2\2\2\u0086\u0087\3\2\2\2\u0087"+
+		"\u0089\3\2\2\2\u0088\u0086\3\2\2\2\u0089\u008a\5\22\n\2\u008a\17\3\2\2"+
+		"\2\u008b\u008c\7\6\2\2\u008c\u008d\7\"\2\2\u008d\u008e\5 \21\2\u008e\u008f"+
+		"\5\36\20\2\u008f\u0090\5 \21\2\u0090\u0091\7#\2\2\u0091\21\3\2\2\2\u0092"+
+		"\u0099\7$\2\2\u0093\u0095\5\4\3\2\u0094\u0093\3\2\2\2\u0094\u0095\3\2"+
+		"\2\2\u0095\u0096\3\2\2\2\u0096\u0098\7&\2\2\u0097\u0094\3\2\2\2\u0098"+
+		"\u009b\3\2\2\2\u0099\u0097\3\2\2\2\u0099\u009a\3\2\2\2\u009a\u009c\3\2"+
+		"\2\2\u009b\u0099\3\2\2\2\u009c\u009d\7%\2\2\u009d\23\3\2\2\2\u009e\u009f"+
+		"\5\26\f\2\u009f\u00a0\5\30\r\2\u00a0\25\3\2\2\2\u00a1\u00a2\7\7\2\2\u00a2"+
+		"\u00a3\7\"\2\2\u00a3\u00a4\5\32\16\2\u00a4\u00a5\5\36\20\2\u00a5\u00a6"+
+		"\5\34\17\2\u00a6\u00a7\7#\2\2\u00a7\27\3\2\2\2\u00a8\u00af\7$\2\2\u00a9"+
+		"\u00ab\5\4\3\2\u00aa\u00a9\3\2\2\2\u00aa\u00ab\3\2\2\2\u00ab\u00ac\3\2"+
+		"\2\2\u00ac\u00ae\7&\2\2\u00ad\u00aa\3\2\2\2\u00ae\u00b1\3\2\2\2\u00af"+
+		"\u00ad\3\2\2\2\u00af\u00b0\3\2\2\2\u00b0\u00b2\3\2\2\2\u00b1\u00af\3\2"+
+		"\2\2\u00b2\u00b3\7%\2\2\u00b3\31\3\2\2\2\u00b4\u00b5\t\2\2\2\u00b5\33"+
+		"\3\2\2\2\u00b6\u00b7\t\2\2\2\u00b7\35\3\2\2\2\u00b8\u00b9\t\3\2\2\u00b9"+
+		"\37\3\2\2\2\u00ba\u00c0\7\32\2\2\u00bb\u00c0\7\33\2\2\u00bc\u00c0\7\34"+
+		"\2\2\u00bd\u00c0\5\"\22\2\u00be\u00c0\7\24\2\2\u00bf\u00ba\3\2\2\2\u00bf"+
+		"\u00bb\3\2\2\2\u00bf\u00bc\3\2\2\2\u00bf\u00bd\3\2\2\2\u00bf\u00be\3\2"+
+		"\2\2\u00c0!\3\2\2\2\u00c1\u00c2\7\37\2\2\u00c2\u00c7\5 \21\2\u00c3\u00c4"+
+		"\7!\2\2\u00c4\u00c6\5 \21\2\u00c5\u00c3\3\2\2\2\u00c6\u00c9\3\2\2\2\u00c7"+
+		"\u00c5\3\2\2\2\u00c7\u00c8\3\2\2\2\u00c8\u00ca\3\2\2\2\u00c9\u00c7\3\2"+
+		"\2\2\u00ca\u00cb\7 \2\2\u00cb\u00cf\3\2\2\2\u00cc\u00cd\7\37\2\2\u00cd"+
+		"\u00cf\7 \2\2\u00ce\u00c1\3\2\2\2\u00ce\u00cc\3\2\2\2\u00cf#\3\2\2\2\u00d0"+
+		"\u00d1\7\31\2\2\u00d1\u00d2\7\37\2\2\u00d2\u00d3\7\32\2\2\u00d3\u00d4"+
+		"\7 \2\2\u00d4%\3\2\2\2\u00d5\u00db\5.\30\2\u00d6\u00db\5\60\31\2\u00d7"+
+		"\u00db\5\62\32\2\u00d8\u00db\5\64\33\2\u00d9\u00db\5\66\34\2\u00da\u00d5"+
+		"\3\2\2\2\u00da\u00d6\3\2\2\2\u00da\u00d7\3\2\2\2\u00da\u00d8\3\2\2\2\u00da"+
+		"\u00d9\3\2\2\2\u00db\'\3\2\2\2\u00dc\u00e6\5*\26\2\u00dd\u00de\5*\26\2"+
+		"\u00de\u00df\7\25\2\2\u00df\u00e0\5*\26\2\u00e0\u00e6\3\2\2\2\u00e1\u00e2"+
+		"\5*\26\2\u00e2\u00e3\7\27\2\2\u00e3\u00e4\5*\26\2\u00e4\u00e6\3\2\2\2"+
+		"\u00e5\u00dc\3\2\2\2\u00e5\u00dd\3\2\2\2\u00e5\u00e1\3\2\2\2\u00e6)\3"+
+		"\2\2\2\u00e7\u00f1\5,\27\2\u00e8\u00e9\5,\27\2\u00e9\u00ea\7\26\2\2\u00ea"+
+		"\u00eb\5,\27\2\u00eb\u00f1\3\2\2\2\u00ec\u00ed\5,\27\2\u00ed\u00ee\7\30"+
+		"\2\2\u00ee\u00ef\5,\27\2\u00ef\u00f1\3\2\2\2\u00f0\u00e7\3\2\2\2\u00f0"+
+		"\u00e8\3\2\2\2\u00f0\u00ec\3\2\2\2\u00f1+\3\2\2\2\u00f2\u00fe\7\32\2\2"+
+		"\u00f3\u00fe\7\33\2\2\u00f4\u00f5\7\22\2\2\u00f5\u00fe\5,\27\2\u00f6\u00f7"+
+		"\7\23\2\2\u00f7\u00fe\5,\27\2\u00f8\u00f9\7\"\2\2\u00f9\u00fa\5(\25\2"+
+		"\u00fa\u00fb\7#\2\2\u00fb\u00fe\3\2\2\2\u00fc\u00fe\7\24\2\2\u00fd\u00f2"+
+		"\3\2\2\2\u00fd\u00f3\3\2\2\2\u00fd\u00f4\3\2\2\2\u00fd\u00f6\3\2\2\2\u00fd"+
+		"\u00f8\3\2\2\2\u00fd\u00fc\3\2\2\2\u00fe-\3\2\2\2\u00ff\u0100\7\b\2\2"+
+		"\u0100/\3\2\2\2\u0101\u0102\7\t\2\2\u0102\61\3\2\2\2\u0103\u0104\7\n\2"+
+		"\2\u0104\63\3\2\2\2\u0105\u0106\7\13\2\2\u0106\65\3\2\2\2\u0107\u0108"+
+		"\7\f\2\2\u0108\67\3\2\2\2\u0109\u010a\7\21\2\2\u010a9\3\2\2\2\u010b\u010c"+
+		"\7\20\2\2\u010c;\3\2\2\2\26=BU]mtx}\u0086\u0094\u0099\u00aa\u00af\u00bf"+
+		"\u00c7\u00ce\u00da\u00e5\u00f0\u00fd";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

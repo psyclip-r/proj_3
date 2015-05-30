@@ -12,7 +12,10 @@ start :
     ID_NAME '++' #increase |
     ID_NAME '--' #decrease ;
 
-function : 'fun' var_type ID_NAME funct_arg NEWLINE* funct_body;
+function : 'fun' var_type fname NEWLINE* funct_body;
+//function : 'fun' var_type ID_NAME funct_arg NEWLINE* funct_body;
+fname : ID_NAME;
+
 funct_arg : ( OP_BRACE var_type NAME (COMMA var_type NAME)* CLO_BRACE ) | (OP_BRACE CLO_BRACE) ;
 funct_body : START_FUNCT ( start? NEWLINE )* END_FUNCT;
 

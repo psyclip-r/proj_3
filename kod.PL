@@ -1,5 +1,6 @@
-read real x
-while(10.0>x){
-x++
+x = 12
 print x
+fun int nazwaFunkcji
+{
+nazwaFunkcji = 4343
 }
