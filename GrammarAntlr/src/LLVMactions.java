@@ -10,7 +10,7 @@ import java.util.Stack;
 
 enum VarType{ INT, REAL, UNKNOWN }
 
-enum Sign{EQUAL, LESS, MORE}
+//enum Sign{EQUAL, LESS, MORE}
 
 class Value{
     public String name;
@@ -32,7 +32,19 @@ public class LLVMactions extends ProstyJezykBaseListener {
         String value = ctx.compare_second().INT().getText();
         String id = ctx.compare_first().ID_NAME().getText();
         //LLVMGenerator.declareWhileCond(value);
-        LLVMGenerator.declareWhileCondMore(id, value);
+
+        Sign sign = Sign.MORE;
+        if( ctx.compare_sign().EQUAL_S() != null ){
+            sign = Sign.EQUAL;
+        }
+        if( ctx.compare_sign().MORE() != null ){
+            sign = Sign.MORE;
+        }
+        if( ctx.compare_sign().LESS() != null ){
+            sign = Sign.LESS;
+        }
+
+        LLVMGenerator.declareWhileCondMore(id, value, sign);
 
     }
     @Override public void exitWhile_body(@NotNull ProstyJezykParser.While_bodyContext ctx) {
