@@ -53,7 +53,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
             sign = Sign.LESS;
         }
 
-        // INT licza <znak> zmienna
+        // INT liczba <znak> zmienna
         if( ctx.value(0).INT() != null && ctx.value(1).ID_NAME() != null ){
             // System.out.println("Zmieniona kolejność");
             String ID = ctx.value(1).ID_NAME().getText();
@@ -167,6 +167,46 @@ public class LLVMactions extends ProstyJezykBaseListener {
             }
         }
 
+        if( (ctx.value(0).ID_NAME() != null) && (ctx.value(1).ID_NAME() != null) ){
+            VarType var_1 = variables.get(ctx.value(0).ID_NAME().getText());
+            VarType var_2 = variables.get(ctx.value(1).ID_NAME().getText());
+
+            if(var_1 == null || var_2 == null ){
+                System.err.println("Line "+ ctx.getStart().getLine()+", podana zmienna nie istnieje: " + var_1 + var_2);
+            }
+
+            if( var_1 != var_2 ){
+                System.err.println("Line "+ ctx.getStart().getLine()+", porownywane sa liczby z roznymi typami: ");
+            }
+
+            String ID_1 = ctx.value(0).ID_NAME().getText();
+            String ID_2 = ctx.value(1).ID_NAME().getText();
+
+            if(var_1 == VarType.REAL){
+                if(sign == Sign.EQUAL){
+                    LLVMGenerator.icmpRealEquallIdId(ID_1, ID_2);
+                }
+                if(sign == Sign.LESS){
+                    LLVMGenerator.icmpRealMoreIdId(ID_1, ID_2);
+                }
+                if(sign == Sign.MORE){
+                    LLVMGenerator.icmpRealLessIdId(ID_1, ID_2);
+                }
+            }
+            if(var_1 == VarType.INT){
+                if(sign == Sign.EQUAL){
+                    LLVMGenerator.icmpRealEquallIdId(ID_1, ID_2);
+                }
+                if(sign == Sign.LESS){
+                    LLVMGenerator.icmpRealMoreIdId(ID_1, ID_2);
+                }
+                if(sign == Sign.MORE){
+                    LLVMGenerator.icmpRealLessIdId(ID_1, ID_2);
+                }
+            }
+
+            }
+
 
     }
 
@@ -175,6 +215,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
         String ID = ctx.ID_NAME().getText();
         Value v = stack.pop();
         // to po to, żeby sprawdzic czy juz takiem zmiennej nie mamy
+        // inaczej bysmy probowali drugi raz zadeklarowac zmienna o tej samej nazwie
         VarType varExistsCheck = variables.get(ID);
 
         if(varExistsCheck == null){
@@ -215,11 +256,13 @@ public class LLVMactions extends ProstyJezykBaseListener {
 
     @Override
     public void exitInt(ProstyJezykParser.IntContext ctx) {
+        // po prostu na stos wrzucamy liczbe
         stack.push(new Value(ctx.INT().getText(), VarType.INT));
     }
 
     @Override
     public void exitReal(ProstyJezykParser.RealContext ctx) {
+        // po prostu na stos wrzucamy liczbe
         stack.push( new Value(ctx.REAL().getText(), VarType.REAL) );
     }
 
@@ -254,7 +297,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
                 stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL) );
             }
         } else {
-            printError(ctx.getStart().getLine(), "zle typy w dodawaniu");
+            printError(ctx.getStart().getLine(), "zle typy w odejmowaniu");
         }
     }
 

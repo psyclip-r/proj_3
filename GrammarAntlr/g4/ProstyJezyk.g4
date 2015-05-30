@@ -10,7 +10,7 @@ start :
     if_definition #enter_if |
     while_definition #enter_while ;
 
-function : 'fun' var_type NAME funct_arg NEWLINE* funct_body;
+function : 'fun' var_type ID_NAME funct_arg NEWLINE* funct_body;
 funct_arg : ( OP_BRACE var_type NAME (COMMA var_type NAME)* CLO_BRACE ) | (OP_BRACE CLO_BRACE) ;
 funct_body : START_FUNCT ( start? NEWLINE )* END_FUNCT;
 

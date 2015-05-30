@@ -386,7 +386,7 @@ public class ProstyJezykParser extends Parser {
 		public Var_typeContext var_type() {
 			return getRuleContext(Var_typeContext.class,0);
 		}
-		public TerminalNode NAME() { return getToken(ProstyJezykParser.NAME, 0); }
+		public TerminalNode ID_NAME() { return getToken(ProstyJezykParser.ID_NAME, 0); }
 		public Funct_argContext funct_arg() {
 			return getRuleContext(Funct_argContext.class,0);
 		}
@@ -428,7 +428,7 @@ public class ProstyJezykParser extends Parser {
 			setState(80); 
 			var_type();
 			setState(81); 
-			match(NAME);
+			match(ID_NAME);
 			setState(82); 
 			funct_arg();
 			setState(86);
@@ -2269,7 +2269,7 @@ public class ProstyJezykParser extends Parser {
 		"\2\2\2B@\3\2\2\2CD\7\22\2\2DE\7\33\2\2EP\5&\24\2FP\5\6\4\2GH\7\17\2\2"+
 		"HP\7\22\2\2IJ\7\16\2\2JK\5$\23\2KL\7\22\2\2LP\3\2\2\2MP\5\f\7\2NP\5\22"+
 		"\n\2OC\3\2\2\2OF\3\2\2\2OG\3\2\2\2OI\3\2\2\2OM\3\2\2\2ON\3\2\2\2P\5\3"+
-		"\2\2\2QR\7\3\2\2RS\5$\23\2ST\7\27\2\2TX\5\b\5\2UW\7$\2\2VU\3\2\2\2WZ\3"+
+		"\2\2\2QR\7\3\2\2RS\5$\23\2ST\7\22\2\2TX\5\b\5\2UW\7$\2\2VU\3\2\2\2WZ\3"+
 		"\2\2\2XV\3\2\2\2XY\3\2\2\2Y[\3\2\2\2ZX\3\2\2\2[\\\5\n\6\2\\\7\3\2\2\2"+
 		"]^\7 \2\2^_\5$\23\2_f\7\27\2\2`a\7\37\2\2ab\5$\23\2bc\7\27\2\2ce\3\2\2"+
 		"\2d`\3\2\2\2eh\3\2\2\2fd\3\2\2\2fg\3\2\2\2gi\3\2\2\2hf\3\2\2\2ij\7!\2"+

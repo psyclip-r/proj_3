@@ -138,7 +138,37 @@ class LLVMGenerator{
         content += "false"+b+":\n";
     }
 
-    // A == B REAL
+    // A == B REAL ID ID
+    static void icmpRealEquallIdId(String id_1, String id_2){
+        content += "%"+register+" = load double* %"+id_1+"\n";
+        register++;
+        content += "%"+register+" = load double* %"+id_2+"\n";
+        register++;
+        content += "%"+register+" = fcmp oeq double %"+(register-1)+", %" +(register-2)+ "\n";
+        register++;
+    }
+
+    // A > B REAL ID ID
+    static void icmpRealMoreIdId(String id_1, String id_2){
+        content += "%"+register+" = load double* %"+id_1+"\n";
+        register++;
+        content += "%"+register+" = load double* %"+id_2+"\n";
+        register++;
+        content += "%"+register+" = fcmp ogt double %"+(register-1)+", %" +(register-2)+ "\n";
+        register++;
+    }
+
+    // A > B REAL ID ID
+    static void icmpRealLessIdId(String id_1, String id_2){
+        content += "%"+register+" = load double* %"+id_1+"\n";
+        register++;
+        content += "%"+register+" = load double* %"+id_2+"\n";
+        register++;
+        content += "%"+register+" = fcmp olt double %"+(register-1)+", %" +(register-2)+ "\n";
+        register++;
+    }
+
+    // A == B REAL ID VAL
     static void icmpRealEquall(String id, String value){
         content += "%"+register+" = load double* %"+id+"\n";
         register++;
@@ -146,7 +176,7 @@ class LLVMGenerator{
         register++;
     }
 
-    // A > B REAL
+    // A > B REAL ID VAL
     static void icmpRealMore(String id, String value){
         content += "%"+register+" = load double* %"+id+"\n";
         register++;
@@ -154,7 +184,7 @@ class LLVMGenerator{
         register++;
     }
 
-    // A < B REAL
+    // A < B REAL ID VAL
     static void icmpRealLess(String id, String value){
         content += "%"+register+" = load double* %"+id+"\n";
         register++;
@@ -163,7 +193,7 @@ class LLVMGenerator{
     }
 
 
-    // A == B INT
+    // A == B INT ID VAL
     static void icmpIntEquall(String id, String value){
         content += "%"+register+" = load i32* %"+id+"\n";
         register++;
@@ -171,7 +201,7 @@ class LLVMGenerator{
         register++;
     }
 
-    // A > B INT
+    // A > B INT ID VAL
     static void icmpIntMore(String id, String value){
         content += "%"+register+" = load i32* %"+id+"\n";
         register++;
@@ -179,7 +209,7 @@ class LLVMGenerator{
         register++;
     }
 
-    // A < B INT
+    // A < B INT ID VAL
     static void icmpIntLess(String id, String value){
         content += "%"+register+" = load i32* %"+id+"\n";
         register++;
