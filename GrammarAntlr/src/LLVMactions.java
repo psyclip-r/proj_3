@@ -70,6 +70,48 @@ public class LLVMactions extends ProstyJezykBaseListener {
             LLVMGenerator.declareWhileCondDouble(id, value, sign);
         }
 
+
+        if( ctx.compare_second().ID_NAME() != null && ctx.compare_first().INT() != null ){
+            String id = ctx.compare_second().ID_NAME().getText();
+            VarType varType = variables.get(id);
+            if(varType != VarType.INT){
+                printError(ctx.getStart().getLine(), "porownywanie roznych typow");
+            }
+            String value = ctx.compare_first().INT().getText();
+            Sign sign = Sign.MORE;
+            if( ctx.compare_sign().EQUAL_S() != null ){
+                sign = Sign.EQUAL;
+            }
+            if( ctx.compare_sign().MORE() != null ){
+                sign = Sign.LESS;
+            }
+            if( ctx.compare_sign().LESS() != null ){
+                sign = Sign.MORE;
+            }
+            LLVMGenerator.declareWhileCondInt(id, value, sign);
+        }
+
+        if( ctx.compare_second().ID_NAME() != null && ctx.compare_first().REAL() != null ){
+            String id = ctx.compare_second().ID_NAME().getText();
+            VarType varType = variables.get(id);
+            if(varType != VarType.REAL){
+                printError(ctx.getStart().getLine(), "porownywanie roznych typow");
+            }
+            String value = ctx.compare_first().REAL().getText();
+            Sign sign = Sign.MORE;
+            if( ctx.compare_sign().EQUAL_S() != null ){
+                sign = Sign.EQUAL;
+            }
+            if( ctx.compare_sign().MORE() != null ){
+                sign = Sign.LESS;
+            }
+            if( ctx.compare_sign().LESS() != null ){
+                sign = Sign.MORE;
+            }
+            LLVMGenerator.declareWhileCondDouble(id, value, sign);
+        }
+
+
     }
     @Override public void exitWhile_body(@NotNull ProstyJezykParser.While_bodyContext ctx) {
         LLVMGenerator.declateWhileEnd();

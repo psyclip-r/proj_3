@@ -1,5 +1,5 @@
 read real x
-while(x<10.0){
+while(10.0>x){
 x++
 print x
 }
