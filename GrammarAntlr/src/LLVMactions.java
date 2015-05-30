@@ -30,7 +30,10 @@ public class LLVMactions extends ProstyJezykBaseListener {
 
     @Override public void exitWhile_cond(@NotNull ProstyJezykParser.While_condContext ctx) {
         String value = ctx.compare_second().INT().getText();
-        LLVMGenerator.declareWhileCond(value);
+        String id = ctx.compare_first().ID_NAME().getText();
+        //LLVMGenerator.declareWhileCond(value);
+        LLVMGenerator.declareWhileCondMore(id, value);
+
     }
     @Override public void exitWhile_body(@NotNull ProstyJezykParser.While_bodyContext ctx) {
         LLVMGenerator.declateWhileEnd();

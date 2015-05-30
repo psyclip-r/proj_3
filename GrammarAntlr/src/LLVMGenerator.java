@@ -34,6 +34,27 @@ class LLVMGenerator{
         brstack.push(br);
     }
 
+    static void declareWhileCondMore(String id, String val){
+        content += "br label %cond"+br+"\n";
+        content += "cond"+br+":\n";
+
+        content += "%"+register+" = load i32* %"+id+"\n";
+        register++;
+
+        content += "%"+register+" = icmp sgt i32 %"+(register-1)+", " + val + "\n";
+        register++;
+
+        content += "br i1 %"+(register-1)+", label %true"+br+", label %false"+br+"\n";
+        content += "true"+br+":\n";
+        brstack.push(br);
+
+        /*
+        content += "%"+register+" = load i32* %"+id+"\n";
+        register++;
+        content += "%"+register+" = icmp sgt i32 %"+(register-1)+", "+value+"\n";
+        register++;
+        */
+    }
 
     static void add(String val1, String val2){
         content += "%"+register+" = add i32 "+val1+", "+val2+"\n";
