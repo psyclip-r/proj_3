@@ -10,7 +10,9 @@ start :
     if_definition #enter_if |
     while_definition #enter_while |
     ID_NAME '++' #increase |
-    ID_NAME '--' #decrease ;
+    ID_NAME '--' #decrease |
+    'ffun' ID_NAME #run_fun
+    ;
 
 function : 'fun' var_type fname NEWLINE* funct_body;
 //function : 'fun' var_type ID_NAME funct_arg NEWLINE* funct_body;

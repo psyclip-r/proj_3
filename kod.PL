@@ -1,6 +1,16 @@
-x = 12
-print x
-fun int nazwaFunkcji
+fun void nazwaFunkcji
 {
-nazwaFunkcji = 4343
+t = 111
+print t
 }
+fun void nazwaFunkcjiNowa
+{
+u = 222
+print u
+}
+x = 12/4
+print x
+x = 3232.1
+print x
+ffun  nazwaFunkcji
+ffun  nazwaFunkcjiNowa

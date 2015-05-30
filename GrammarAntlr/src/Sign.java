@@ -4,5 +4,6 @@
 public enum Sign {
     EQUAL,
     LESS,
-    MORE
+    MORE,
+    VOID
 }

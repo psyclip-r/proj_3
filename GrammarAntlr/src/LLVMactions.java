@@ -1,6 +1,7 @@
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Stack;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Stack;
  */
 
 
-enum VarType{ INT, REAL, UNKNOWN }
+enum VarType{ INT, REAL, UNKNOWN, VOID }
 
 //enum Sign{EQUAL, LESS, MORE}
 
@@ -26,7 +27,50 @@ class Value{
 public class LLVMactions extends ProstyJezykBaseListener {
 
     HashMap<String, VarType> variables = new HashMap<String, VarType>();
+    LinkedList<String> funList = new LinkedList<String>();
+    String function;
     Stack<Value> stack = new Stack<Value>();
+    boolean main = true;
+
+    @Override public void exitRun_fun(@NotNull ProstyJezykParser.Run_funContext ctx) {
+        String funName = ctx.ID_NAME().getText();
+        if( funList.contains(funName)){
+            LLVMGenerator.callFun(funName, main);
+        }else{
+            //System.out.println("BLad lol");
+            printError(ctx.getStart().getLine(), "nie ma funkcji o takiej nazwie: " + funName);
+        }
+    }
+
+
+
+    @Override public void enterFunction(@NotNull ProstyJezykParser.FunctionContext ctx) {
+        VarType type = null;
+        if(ctx.var_type().t_INT() != null){
+            type = VarType.INT;
+        }
+        if(ctx.var_type().t_REAL() != null){
+            type = VarType.REAL;
+        }
+        if(ctx.var_type().t_VOID() != null){
+            type = VarType.VOID;
+        }
+        String f_name = ctx.fname().ID_NAME().getText();
+        funList.add(f_name);
+        LLVMGenerator.defineFun(f_name, type);
+    }
+
+
+    @Override public void enterFunct_body(@NotNull ProstyJezykParser.Funct_bodyContext ctx) {
+        main = false;
+    }
+
+    @Override public void exitFunct_body(@NotNull ProstyJezykParser.Funct_bodyContext ctx) {
+        main = true;
+        LLVMGenerator.closeFun();
+    }
+
+
 
     @Override public void exitWhile_cond(@NotNull ProstyJezykParser.While_condContext ctx) {
 
@@ -316,14 +360,14 @@ public class LLVMactions extends ProstyJezykBaseListener {
         if( v.type == VarType.INT ){
             // zabezpieczenie, zeby mozna bylo przypisac do "y" pare wartosci wkilku liniach
             if( varExistsCheck == null ){
-                LLVMGenerator.declareInt(ID);
+                LLVMGenerator.declareInt(ID, main);
             }else{
                 if(varExistsCheck != VarType.INT){
                     printError(ctx.getStart().getLine(), ID +  " : przedtem zmienna byla innego typu.");
                 }
             }
             // System.out.println("name: " + v.name);
-            LLVMGenerator.assignInt(ID, v.name);
+            LLVMGenerator.assignInt(ID, v.name, main);
         }
         if( v.type == VarType.REAL ){
             if( varExistsCheck == null ){
@@ -477,7 +521,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
         VarType type = variables.get(ID);
         if( type != null ) {
             if( type == VarType.INT ){
-                LLVMGenerator.printfInt(ID);
+                LLVMGenerator.printfInt(ID, main);
             }
             if( type == VarType.REAL ){
                 LLVMGenerator.printfDouble(ID);

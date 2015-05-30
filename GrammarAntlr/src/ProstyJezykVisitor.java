@@ -73,6 +73,13 @@ public interface ProstyJezykVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDecrease(@NotNull ProstyJezykParser.DecreaseContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code run_fun}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRun_fun(@NotNull ProstyJezykParser.Run_funContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ProstyJezykParser#function}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

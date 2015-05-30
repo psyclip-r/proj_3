@@ -12,26 +12,30 @@ class LLVMGenerator{
     static int register = 1;
     static int br = 0;
     static Stack<Integer> brstack = new Stack<Integer>();
+    static String fun = "";
+    static String allFuns = "";
+    static int fun_reg = 1;
 
-    static void declareWhileCond(String repetitions){
-        declareInt(Integer.toString(register));
-        int counter = register;
-        register++;
-        assignInt(Integer.toString(counter), "0");
-        br++;
-        content += "br label %cond"+br+"\n";
-        content += "cond"+br+":\n";
+    static void callFun(String funName, boolean main){
+        if(main){
+            content += "  call void @" + funName + "()\n";
+        }else{
+            fun += "  call void @" + funName + "()\n";
+        }
+    }
 
-        load_i32(Integer.toString(counter));
-        add("%" + (register - 1), "1");
-        assignInt(Integer.toString(counter), "%" + (register-1));
+    static void closeFun(){
+        fun += "  ret void\n" +
+                "}\n";
 
-        content += "%"+register+" = icmp slt i32 %"+(register-2)+", "+repetitions+"\n";
-        register++;
+        // tutaj rzeczy niezwiazane z generowaniem kodu bezposrednio
+        fun_reg = 1;
+        allFuns += LLVMGenerator.fun;
+        fun = "";
+    }
 
-        content += "br i1 %"+(register-1)+", label %true"+br+", label %false"+br+"\n";
-        content += "true"+br+":\n";
-        brstack.push(br);
+    static void defineFun(String funName, VarType type){
+        fun += "define void @" + funName + "() #0 {\n";
     }
 
     static void declareWhileCondInt(String id, String val, Sign sign){
@@ -93,18 +97,26 @@ class LLVMGenerator{
         br++;
     }
 
-    static void add(String val1, String val2){
-        content += "%"+register+" = add i32 "+val1+", "+val2+"\n";
-        register++;
-    }
-
-
 
     static void printfInt(String id){
         content += "%"+ register +" = load i32* %"+id+"\n";
         register++;
         content += "%"+ register +" = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @strpi, i32 0, i32 0), i32 %"+(register -1)+")\n";
         register++;
+    }
+
+    static void printfInt(String id, boolean main){
+        if(main){
+            content += "%"+ register +" = load i32* %"+id+"\n";
+            register++;
+            content += "%"+ register +" = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @strpi, i32 0, i32 0), i32 %"+(register -1)+")\n";
+            register++;
+        }else{
+            fun += "%"+ fun_reg +" = load i32* %"+id+"\n";
+            fun_reg++;
+            fun += "%"+ fun_reg +" = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @strpi, i32 0, i32 0), i32 %"+(fun_reg -1)+")\n";
+            fun_reg++;
+        }
     }
 
     static void printfDouble(String id){
@@ -118,12 +130,29 @@ class LLVMGenerator{
         content += "%"+id+" = alloca i32\n";
     }
 
+    static void declareInt(String id, boolean main){
+        if(main){
+            content += "%"+id+" = alloca i32\n";
+        }else{
+            fun += "%"+id+" = alloca i32\n";
+        }
+    }
+
+
     static void declareDOuble(String id){
         content += "%"+id+" = alloca double\n";
     }
 
     static void assignInt(String id, String value){
         content += "store i32 "+value+", i32* %"+id+"\n";
+    }
+
+    static void assignInt(String id, String value, boolean main){
+        if(main){
+            content += "store i32 "+value+", i32* %"+id+"\n";
+        }else{
+            fun += "store i32 "+value+", i32* %"+id+"\n";
+        }
     }
 
     static void assignDouble(String id, String value){
@@ -374,8 +403,13 @@ class LLVMGenerator{
         text += "@strpd = constant [4 x i8] c\"%f\\0A\\00\"\n";
         text += "@strs = constant [3 x i8] c\"%d\\00\"\n";
         text += "@.str = private unnamed_addr constant [3 x i8] c\"%d\\00\", align 1\n" +
-                "@.str1 = private unnamed_addr constant [4 x i8] c\"%lf\\00\", align 1";
+                "@.str1 = private unnamed_addr constant [4 x i8] c\"%lf\\00\", align 1\n";
         text += header;
+
+        //
+        text += allFuns;
+        //
+
         text += "define i32 @main() nounwind{\n";
         text += content;
         text += "ret i32 0 }\n";
