@@ -240,7 +240,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
                 LLVMGenerator.declareDOuble(ID);
             }else{
                 if(varExistsCheck != VarType.REAL){
-                    printError(ctx.getStart().getLine(), ID +  " : przedtem zmienna byla innego typu.");
+                    printError(ctx.getStart().getLine(), ID + " : przedtem zmienna byla innego typu.");
                 }
             }
 
@@ -264,6 +264,20 @@ public class LLVMactions extends ProstyJezykBaseListener {
     public void exitReal(ProstyJezykParser.RealContext ctx) {
         // po prostu na stos wrzucamy liczbe
         stack.push( new Value(ctx.REAL().getText(), VarType.REAL) );
+    }
+
+    @Override public void exitIncrease(@NotNull ProstyJezykParser.IncreaseContext ctx) {
+        String ID = ctx.ID_NAME().getText();
+        VarType varExists = variables.get(ID);
+        if( varExists == null ){
+            printError(ctx.getStart().getLine(), "nie istnieje zmienna: " + ID);
+        }
+        if(varExists == VarType.INT){
+            LLVMGenerator.increaseInt(ID);
+        }
+        if(varExists == VarType.REAL){
+            //LLVMGenerator.addInt(v1.name, v2.name);
+        }
     }
 
     @Override
@@ -342,7 +356,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
     public void exitToint(ProstyJezykParser.TointContext ctx) {
         Value v = stack.pop();
         LLVMGenerator.doubleToInt(v.name);
-        stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.INT) );
+        stack.push(new Value("%" + (LLVMGenerator.register - 1), VarType.INT));
     }
 
     @Override

@@ -59,6 +59,13 @@ public interface ProstyJezykVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitEnter_while(@NotNull ProstyJezykParser.Enter_whileContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code increase}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIncrease(@NotNull ProstyJezykParser.IncreaseContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ProstyJezykParser#function}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

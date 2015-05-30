@@ -8,7 +8,8 @@ start :
     PRINT ID_NAME #printID |
     READ var_type ID_NAME #read   |
     if_definition #enter_if |
-    while_definition #enter_while ;
+    while_definition #enter_while |
+    ID_NAME '++' #increase;
 
 function : 'fun' var_type ID_NAME funct_arg NEWLINE* funct_body;
 funct_arg : ( OP_BRACE var_type NAME (COMMA var_type NAME)* CLO_BRACE ) | (OP_BRACE CLO_BRACE) ;
@@ -20,11 +21,12 @@ if_body : START_FUNCT ( start? NEWLINE )* END_FUNCT;
 
 
 while_definition : while_cond while_body;
-while_cond : 'while' OP_BRACE compare_first compare_sign compare_second CLO_BRACE;
+// while_cond : 'loop' OP_BRACE compare_first compare_sign compare_second CLO_BRACE;
+while_cond : 'loop' OP_BRACE compare_second CLO_BRACE;
 while_body : START_FUNCT ( start? NEWLINE )* END_FUNCT;
 
-compare_first : NAME;
-compare_second : NAME | INT | REAL;
+compare_first : ID_NAME;
+compare_second : ID_NAME | INT | REAL;
 
 compare_sign :
     LESS    |
