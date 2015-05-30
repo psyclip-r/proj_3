@@ -29,22 +29,46 @@ public class LLVMactions extends ProstyJezykBaseListener {
     Stack<Value> stack = new Stack<Value>();
 
     @Override public void exitWhile_cond(@NotNull ProstyJezykParser.While_condContext ctx) {
-        String value = ctx.compare_second().INT().getText();
-        String id = ctx.compare_first().ID_NAME().getText();
-        //LLVMGenerator.declareWhileCond(value);
 
-        Sign sign = Sign.MORE;
-        if( ctx.compare_sign().EQUAL_S() != null ){
-            sign = Sign.EQUAL;
-        }
-        if( ctx.compare_sign().MORE() != null ){
-            sign = Sign.MORE;
-        }
-        if( ctx.compare_sign().LESS() != null ){
-            sign = Sign.LESS;
+        if( ctx.compare_first().ID_NAME() != null && ctx.compare_second().INT() != null ){
+            String id = ctx.compare_first().ID_NAME().getText();
+            VarType varType = variables.get(id);
+            if(varType != VarType.INT){
+                printError(ctx.getStart().getLine(), "porownywanie roznych typow");
+            }
+            String value = ctx.compare_second().INT().getText();
+            Sign sign = Sign.MORE;
+            if( ctx.compare_sign().EQUAL_S() != null ){
+                sign = Sign.EQUAL;
+            }
+            if( ctx.compare_sign().MORE() != null ){
+                sign = Sign.MORE;
+            }
+            if( ctx.compare_sign().LESS() != null ){
+                sign = Sign.LESS;
+            }
+            LLVMGenerator.declareWhileCondInt(id, value, sign);
         }
 
-        LLVMGenerator.declareWhileCondMore(id, value, sign);
+        if( ctx.compare_first().ID_NAME() != null && ctx.compare_second().REAL() != null ){
+            String id = ctx.compare_first().ID_NAME().getText();
+            VarType varType = variables.get(id);
+            if(varType != VarType.REAL){
+                printError(ctx.getStart().getLine(), "porownywanie roznych typow");
+            }
+            String value = ctx.compare_second().REAL().getText();
+            Sign sign = Sign.MORE;
+            if( ctx.compare_sign().EQUAL_S() != null ){
+                sign = Sign.EQUAL;
+            }
+            if( ctx.compare_sign().MORE() != null ){
+                sign = Sign.MORE;
+            }
+            if( ctx.compare_sign().LESS() != null ){
+                sign = Sign.LESS;
+            }
+            LLVMGenerator.declareWhileCondDouble(id, value, sign);
+        }
 
     }
     @Override public void exitWhile_body(@NotNull ProstyJezykParser.While_bodyContext ctx) {

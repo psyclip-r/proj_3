@@ -34,7 +34,7 @@ class LLVMGenerator{
         brstack.push(br);
     }
 
-    static void declareWhileCondMore(String id, String val, Sign sign){
+    static void declareWhileCondInt(String id, String val, Sign sign){
         String signType = "";
         if(sign == Sign.EQUAL){
             signType = "eq";
@@ -58,13 +58,32 @@ class LLVMGenerator{
         content += "br i1 %"+(register-1)+", label %true"+br+", label %false"+br+"\n";
         content += "true"+br+":\n";
         brstack.push(br);
+    }
 
-        /*
-        content += "%"+register+" = load i32* %"+id+"\n";
+    static void declareWhileCondDouble(String id, String val, Sign sign){
+        String signType = "";
+        if(sign == Sign.EQUAL){
+            signType = "oeq";
+        }
+        if(sign == Sign.MORE){
+            signType = "ogt";
+        }
+        if(sign == Sign.LESS){
+            signType = "olt";
+        }
+
+        content += "br label %cond"+br+"\n";
+        content += "cond"+br+":\n";
+
+        content += "%"+register+" = load double* %"+id+"\n";
         register++;
-        content += "%"+register+" = icmp sgt i32 %"+(register-1)+", "+value+"\n";
+
+        content += "%"+register+" = fcmp " + signType +  " double %"+(register-1)+", " + val + "\n";
         register++;
-        */
+
+        content += "br i1 %"+(register-1)+", label %true"+br+", label %false"+br+"\n";
+        content += "true"+br+":\n";
+        brstack.push(br);
     }
 
     static void declateWhileEnd(){
