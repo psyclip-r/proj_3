@@ -195,13 +195,13 @@ public class LLVMactions extends ProstyJezykBaseListener {
             }
             if(var_1 == VarType.INT){
                 if(sign == Sign.EQUAL){
-                    LLVMGenerator.icmpRealEquallIdId(ID_1, ID_2);
+                    LLVMGenerator.icmpIntEquallIdId(ID_1, ID_2);
                 }
                 if(sign == Sign.LESS){
-                    LLVMGenerator.icmpRealMoreIdId(ID_1, ID_2);
+                    LLVMGenerator.icmpIntMoreIdId(ID_1, ID_2);
                 }
                 if(sign == Sign.MORE){
-                    LLVMGenerator.icmpRealLessIdId(ID_1, ID_2);
+                    LLVMGenerator.icmpIntLessIdId(ID_1, ID_2);
                 }
             }
 

@@ -193,6 +193,36 @@ class LLVMGenerator{
     }
 
 
+    // A == B INT ID ID
+    static void icmpIntEquallIdId(String id_1, String id_2){
+        content += "%"+register+" = load i32* %"+id_1+"\n";
+        register++;
+        content += "%"+register+" = load i32* %"+id_2+"\n";
+        register++;
+        content += "%"+register+" = icmp eq i32 %"+(register-1)+", %" +(register-2)+ "\n";
+        register++;
+    }
+
+    // A == B INT ID ID
+    static void icmpIntMoreIdId(String id_1, String id_2){
+        content += "%"+register+" = load i32* %"+id_1+"\n";
+        register++;
+        content += "%"+register+" = load i32* %"+id_2+"\n";
+        register++;
+        content += "%"+register+" = icmp sgt i32 %"+(register-1)+", %" +(register-2)+ "\n";
+        register++;
+    }
+
+    // A == B INT ID ID
+    static void icmpIntLessIdId(String id_1, String id_2){
+        content += "%"+register+" = load i32* %"+id_1+"\n";
+        register++;
+        content += "%"+register+" = load i32* %"+id_2+"\n";
+        register++;
+        content += "%"+register+" = icmp slt i32 %"+(register-1)+", %" +(register-2)+ "\n";
+        register++;
+    }
+
     // A == B INT ID VAL
     static void icmpIntEquall(String id, String value){
         content += "%"+register+" = load i32* %"+id+"\n";
