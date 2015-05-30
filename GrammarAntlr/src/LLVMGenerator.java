@@ -14,17 +14,17 @@ class LLVMGenerator{
     static Stack<Integer> brstack = new Stack<Integer>();
 
     static void declareWhileCond(String repetitions){
-        declare(Integer.toString(register));
+        declareInt(Integer.toString(register));
         int counter = register;
         register++;
-        assign(Integer.toString(counter), "0");
+        assignInt(Integer.toString(counter), "0");
         br++;
         content += "br label %cond"+br+"\n";
         content += "cond"+br+":\n";
 
-        load(Integer.toString(counter));
+        load_i32(Integer.toString(counter));
         add("%" + (register - 1), "1");
-        assign(Integer.toString(counter), "%" + (register-1));
+        assignInt(Integer.toString(counter), "%" + (register-1));
 
         content += "%"+register+" = icmp slt i32 %"+(register-2)+", "+repetitions+"\n";
         register++;
@@ -34,18 +34,6 @@ class LLVMGenerator{
         brstack.push(br);
     }
 
-    static void declare(String id){
-        content += "%"+id+" = alloca i32\n";
-    }
-
-    static void assign(String id, String value){
-        content += "store i32 "+value+", i32* %"+id+"\n";
-    }
-
-    static void load(String id){
-        content += "%"+register+" = load i32* %"+id+"\n";
-        register++;
-    }
 
     static void add(String val1, String val2){
         content += "%"+register+" = add i32 "+val1+", "+val2+"\n";
