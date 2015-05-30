@@ -276,7 +276,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
             LLVMGenerator.increaseInt(ID);
         }
         if(varExists == VarType.REAL){
-            //LLVMGenerator.addInt(v1.name, v2.name);
+            LLVMGenerator.increaseDouble(ID);
         }
     }
 
@@ -290,7 +290,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
             LLVMGenerator.decreaseInt(ID);
         }
         if(varExists == VarType.REAL){
-            //LLVMGenerator.addInt(v1.name, v2.name);
+            LLVMGenerator.decreaseDouble(ID);
         }
     }
 

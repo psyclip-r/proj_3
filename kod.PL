@@ -5,7 +5,7 @@ read int u
 if(t < u){
     print t
 }
-a = 10
+a = 10.1
 print a
 a--
 print a
