@@ -105,16 +105,23 @@ class LLVMGenerator{
         register++;
     }
 
-    static void printfInt(String id, boolean main){
+    static void printfInt(String id, boolean main, boolean isGlobal){
+        //System.out.println(id + " is global? " + isGlobal);
+        String varType;
+        if(isGlobal){
+            varType = "@";
+        }else{
+            varType = "%";
+        }
         if(main){
-            content += "%"+ register +" = load i32* %"+id+"\n";
+            content += "%" + register +" = load i32* " + varType +id+"\n";
             register++;
-            content += "%"+ register +" = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @strpi, i32 0, i32 0), i32 %"+(register -1)+")\n";
+            content += "%"+ register +" = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @strpi, i32 0, i32 0), i32 %" +(register -1)+")\n";
             register++;
         }else{
-            fun += "%"+ fun_reg +" = load i32* %"+id+"\n";
+            fun += "%"+ fun_reg +" = load i32* " + varType +id+"\n";
             fun_reg++;
-            fun += "%"+ fun_reg +" = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @strpi, i32 0, i32 0), i32 %"+(fun_reg -1)+")\n";
+            fun += "%"+ fun_reg +" = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @strpi, i32 0, i32 0), i32 %" +(fun_reg -1)+")\n";
             fun_reg++;
         }
     }
@@ -132,7 +139,7 @@ class LLVMGenerator{
 
     static void declareInt(String id, boolean main){
         if(main){
-            content += "%"+id+" = alloca i32\n";
+            header += "@"+id+" = common global i32 0, align 4\n";
         }else{
             fun += "%"+id+" = alloca i32\n";
         }
@@ -147,11 +154,18 @@ class LLVMGenerator{
         content += "store i32 "+value+", i32* %"+id+"\n";
     }
 
-    static void assignInt(String id, String value, boolean main){
-        if(main){
-            content += "store i32 "+value+", i32* %"+id+"\n";
+    static void assignInt(String id, String value, boolean main, boolean isGlobal){
+        String globalOrLocal;
+        if(isGlobal){
+            globalOrLocal = "@";
         }else{
-            fun += "store i32 "+value+", i32* %"+id+"\n";
+            globalOrLocal = "%";
+        }
+
+        if(main){
+            content += "store i32 "+value+", i32* "+globalOrLocal+id+"\n";
+        }else{
+            fun += "store i32 "+value+", i32* "+globalOrLocal+id+"\n";
         }
     }
 

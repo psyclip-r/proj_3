@@ -8,9 +8,9 @@ fun void nazwaFunkcjiNowa
 u = 222
 print u
 }
-x = 12/4
+x = 12
 print x
-x = 3232.1
+x = 323
 print x
 ffun  nazwaFunkcji
 ffun  nazwaFunkcjiNowa

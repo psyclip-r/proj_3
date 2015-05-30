@@ -16,9 +16,11 @@ enum VarType{ INT, REAL, UNKNOWN, VOID }
 class Value{
     public String name;
     public VarType type;
-    public Value( String name, VarType type ){
+    public boolean isGlobal;
+    public Value( String name, VarType type, boolean isGlobal ){
         this.name = name;
         this.type = type;
+        this.isGlobal = isGlobal;
     }
 }
 
@@ -27,7 +29,12 @@ class Value{
 public class LLVMactions extends ProstyJezykBaseListener {
 
     HashMap<String, VarType> variables = new HashMap<String, VarType>();
+    HashMap<String, VarType> global_variables = new HashMap<String, VarType>();
+    HashMap<String, VarType> fun_variables = new HashMap<String, VarType>();
     LinkedList<String> funList = new LinkedList<String>();
+
+
+
     String function;
     Stack<Value> stack = new Stack<Value>();
     boolean main = true;
@@ -67,6 +74,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
 
     @Override public void exitFunct_body(@NotNull ProstyJezykParser.Funct_bodyContext ctx) {
         main = true;
+        fun_variables = new HashMap<String, VarType>();
         LLVMGenerator.closeFun();
     }
 
@@ -356,8 +364,17 @@ public class LLVMactions extends ProstyJezykBaseListener {
             // jak nie ma to ja deklarujemy
             variables.put(ID, v.type);
         }
-
+        boolean isGlobal;
         if( v.type == VarType.INT ){
+            if(v.isGlobal){
+                //System.out.println("Wrzucam: " +ID + " do globalnych");
+                global_variables.put(ID, VarType.INT);
+                isGlobal = true;
+            }else{
+                //System.out.println("Wrzucam: " + ID+ " do lokalnych");
+                fun_variables.put(ID, VarType.INT);
+                isGlobal = false;
+            }
             // zabezpieczenie, zeby mozna bylo przypisac do "y" pare wartosci wkilku liniach
             if( varExistsCheck == null ){
                 LLVMGenerator.declareInt(ID, main);
@@ -367,7 +384,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
                 }
             }
             // System.out.println("name: " + v.name);
-            LLVMGenerator.assignInt(ID, v.name, main);
+            LLVMGenerator.assignInt(ID, v.name, main, isGlobal);
         }
         if( v.type == VarType.REAL ){
             if( varExistsCheck == null ){
@@ -385,19 +402,21 @@ public class LLVMactions extends ProstyJezykBaseListener {
 
     @Override
     public void exitProg(ProstyJezykParser.ProgContext ctx) {
-        System.out.println( LLVMGenerator.generateLLVMcode() );
+        System.out.println(LLVMGenerator.generateLLVMcode());
     }
 
     @Override
     public void exitInt(ProstyJezykParser.IntContext ctx) {
         // po prostu na stos wrzucamy liczbe
-        stack.push(new Value(ctx.INT().getText(), VarType.INT));
+
+        stack.push(new Value(ctx.INT().getText(), VarType.INT, main));
+
     }
 
     @Override
     public void exitReal(ProstyJezykParser.RealContext ctx) {
         // po prostu na stos wrzucamy liczbe
-        stack.push( new Value(ctx.REAL().getText(), VarType.REAL) );
+        stack.push( new Value(ctx.REAL().getText(), VarType.REAL, main) );
     }
 
     @Override public void exitIncrease(@NotNull ProstyJezykParser.IncreaseContext ctx) {
@@ -436,11 +455,11 @@ public class LLVMactions extends ProstyJezykBaseListener {
         if( v1.type == v2.type ) {
             if( v1.type == VarType.INT ){
                 LLVMGenerator.addInt(v1.name, v2.name);
-                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.INT) );
+                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.INT, main) );
             }
             if( v1.type == VarType.REAL ){
                 LLVMGenerator.addDouble(v1.name, v2.name);
-                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL) );
+                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL, main) );
             }
         } else {
             printError(ctx.getStart().getLine(), "zle typy w dodawaniu");
@@ -453,11 +472,11 @@ public class LLVMactions extends ProstyJezykBaseListener {
         if( v1.type == v2.type ) {
             if( v1.type == VarType.INT ){
                 LLVMGenerator.substractInt(v1.name, v2.name);
-                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.INT) );
+                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.INT, main) );
             }
             if( v1.type == VarType.REAL ){
                 LLVMGenerator.substractDouble(v1.name, v2.name);
-                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL) );
+                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL, main) );
             }
         } else {
             printError(ctx.getStart().getLine(), "zle typy w odejmowaniu");
@@ -471,11 +490,11 @@ public class LLVMactions extends ProstyJezykBaseListener {
         if( v1.type == v2.type ) {
             if( v1.type == VarType.INT ){
                 LLVMGenerator.multInt(v1.name, v2.name);
-                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.INT) );
+                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.INT, main) );
             }
             if( v1.type == VarType.REAL ){
                 LLVMGenerator.multDouble(v1.name, v2.name);
-                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL) );
+                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL, main) );
             }
         } else {
             printError(ctx.getStart().getLine(), "zle typy w mnozeniu");
@@ -488,11 +507,11 @@ public class LLVMactions extends ProstyJezykBaseListener {
         if( v1.type == v2.type ) {
             if( v1.type == VarType.INT ){
                 LLVMGenerator.divInt(v1.name, v2.name);
-                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL) );
+                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL, main) );
             }
             if( v1.type == VarType.REAL ){
                 LLVMGenerator.divDouble(v1.name, v2.name);
-                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL) );
+                stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL, main) );
             }
         } else {
             printError(ctx.getStart().getLine(), "zle typy w mnozeniu");
@@ -505,14 +524,15 @@ public class LLVMactions extends ProstyJezykBaseListener {
     public void exitToint(ProstyJezykParser.TointContext ctx) {
         Value v = stack.pop();
         LLVMGenerator.doubleToInt(v.name);
-        stack.push(new Value("%" + (LLVMGenerator.register - 1), VarType.INT));
+        stack.push(new Value("%" + (LLVMGenerator.register - 1), VarType.INT, main));
+
     }
 
     @Override
     public void exitToreal(ProstyJezykParser.TorealContext ctx) {
         Value v = stack.pop();
         LLVMGenerator.intToDouble(v.name);
-        stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL) );
+        stack.push( new Value("%"+(LLVMGenerator.register -1), VarType.REAL, main) );
     }
 
     @Override
@@ -520,11 +540,26 @@ public class LLVMactions extends ProstyJezykBaseListener {
         String ID = ctx.ID_NAME().getText();
         VarType type = variables.get(ID);
         if( type != null ) {
-            if( type == VarType.INT ){
-                LLVMGenerator.printfInt(ID, main);
+            VarType isFun = fun_variables.get(ID);
+            VarType isGlobal = global_variables.get(ID);
+            if(isFun != null){
+                if( type == VarType.INT ){
+                    //System.out.println("Zmienna: " + ID + "czy globalna? " + false);
+                    LLVMGenerator.printfInt(ID, main, false);
+                }
+                if( type == VarType.REAL ){
+                    LLVMGenerator.printfDouble(ID);
+                }
+
             }
-            if( type == VarType.REAL ){
-                LLVMGenerator.printfDouble(ID);
+            if(isGlobal != null){
+                if( type == VarType.INT ){
+                    //System.out.println("Zmienna: " + ID + "  Czy globalna? " + true + "fun_variables size: " + fun_variables.size() );
+                    LLVMGenerator.printfInt(ID, main, true);
+                }
+                if( type == VarType.REAL ){
+                    LLVMGenerator.printfDouble(ID);
+                }
             }
         } else {
             printError(ctx.getStart().getLine(), "unknown variable " + ID);
