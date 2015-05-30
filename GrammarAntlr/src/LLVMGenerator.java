@@ -73,11 +73,14 @@ class LLVMGenerator{
         content += "%" + register + " = add nsw i32 %" + (register - 1) + ", 1\n" +
                 "  store i32 %" + register + ", i32* %" + id + ", align 4\n";
         register++;
-    /*
-        content += " %1 = load i32* %a, align 4\n" +
-            "  %2 = add nsw i32 %1, 1\n" +
-            "  store i32 %2, i32* %a, align 4";
-            */
+    }
+
+    static void decreaseInt(String id){
+        content += "%" + register + " = load i32* %" + id + ", align 4\n";
+        register++;
+        content += "%" + register + " = sub nsw i32 %" + (register - 1) + ", 1\n" +
+                "  store i32 %" + register + ", i32* %" + id + ", align 4\n";
+        register++;
     }
 
     static void addDouble(String val1, String val2){

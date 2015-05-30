@@ -5,7 +5,11 @@ read int u
 if(t < u){
     print t
 }
-a = 3
+a = 10
 print a
-a++
-
+a--
+print a
+a--
+print a
+a--
+print a

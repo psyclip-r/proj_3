@@ -102,6 +102,18 @@ public interface ProstyJezykListener extends ParseTreeListener {
 	 */
 	void exitIncrease(@NotNull ProstyJezykParser.IncreaseContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code decrease}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
+	 * @param ctx the parse tree
+	 */
+	void enterDecrease(@NotNull ProstyJezykParser.DecreaseContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code decrease}
+	 * labeled alternative in {@link ProstyJezykParser#start}.
+	 * @param ctx the parse tree
+	 */
+	void exitDecrease(@NotNull ProstyJezykParser.DecreaseContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ProstyJezykParser#function}.
 	 * @param ctx the parse tree
 	 */

@@ -280,6 +280,21 @@ public class LLVMactions extends ProstyJezykBaseListener {
         }
     }
 
+    @Override public void exitDecrease(@NotNull ProstyJezykParser.DecreaseContext ctx) {
+        String ID = ctx.ID_NAME().getText();
+        VarType varExists = variables.get(ID);
+        if( varExists == null ){
+            printError(ctx.getStart().getLine(), "nie istnieje zmienna: " + ID);
+        }
+        if(varExists == VarType.INT){
+            LLVMGenerator.decreaseInt(ID);
+        }
+        if(varExists == VarType.REAL){
+            //LLVMGenerator.addInt(v1.name, v2.name);
+        }
+    }
+
+
     @Override
     public void exitAdd(ProstyJezykParser.AddContext ctx) {
         Value v1 = stack.pop();

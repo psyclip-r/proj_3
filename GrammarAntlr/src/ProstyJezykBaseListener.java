@@ -112,6 +112,18 @@ public class ProstyJezykBaseListener implements ProstyJezykListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterDecrease(@NotNull ProstyJezykParser.DecreaseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDecrease(@NotNull ProstyJezykParser.DecreaseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterFunction(@NotNull ProstyJezykParser.FunctionContext ctx) { }
 	/**
 	 * {@inheritDoc}
