@@ -115,7 +115,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
             if (ctx.compare_sign().LESS() != null) {
                 sign = Sign.LESS;
             }
-            LLVMGenerator.declareWhileCondInt(id, value, sign, main);
+            LLVMGenerator.declareWhileCondInt(id, value, sign, main, checkVarScope(id));
         }
 
         if (ctx.compare_first().ID_NAME() != null && ctx.compare_second().REAL() != null) {
@@ -156,7 +156,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
             if (ctx.compare_sign().LESS() != null) {
                 sign = Sign.MORE;
             }
-            LLVMGenerator.declareWhileCondInt(id, value, sign, main);
+            LLVMGenerator.declareWhileCondInt(id, value, sign, main,checkVarScope(id));
         }
 
         if (ctx.compare_second().ID_NAME() != null && ctx.compare_first().REAL() != null) {

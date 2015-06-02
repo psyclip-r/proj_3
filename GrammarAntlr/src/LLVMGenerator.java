@@ -62,7 +62,7 @@ class LLVMGenerator{
         br++;
     }
 
-    static void declareWhileCondInt(String id, String val, Sign sign, boolean main){
+    static void declareWhileCondInt(String id, String val, Sign sign, boolean main, VarScope scope){
         br++;
         String signType = "";
         if(sign == Sign.EQUAL){
@@ -74,6 +74,15 @@ class LLVMGenerator{
         if(sign == Sign.LESS){
             signType = "slt";
         }
+
+
+        String varType;
+        if(scope == VarScope.GLOBAL){
+            varType = "@";
+        }else{
+            varType = "%";
+        }
+
 
         /*
         content += "br label %cond"+br+"\n";
@@ -90,11 +99,13 @@ class LLVMGenerator{
         brstack.push(br);
         */
 
+
+
         if(main){
             content += "br label %cond"+br+"\n";
             content += "cond"+br+":\n";
 
-            content += "%"+register+" = load i32* %"+id+"\n";
+            content += "%"+register+" = load i32* "+varType+id+"\n";
             register++;
 
             content += "%"+register+" = icmp " + signType +  " i32 %"+(register-1)+", " + val + "\n";
@@ -106,7 +117,7 @@ class LLVMGenerator{
             fun += "br label %cond"+br+"\n";
             fun += "cond"+br+":\n";
 
-            fun += "%"+fun_reg+" = load i32* %"+id+"\n";
+            fun += "%"+fun_reg+" = load i32* "+varType+id+"\n";
             fun_reg++;
 
             fun += "%"+fun_reg+" = icmp " + signType +  " i32 %"+(fun_reg-1)+", " + val + "\n";

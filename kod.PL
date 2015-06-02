@@ -2,8 +2,13 @@
 x = 11
 fun void nazwaFunkcji{
     read int i
-    while(i < 15){
-        read int i
+    if(i == 5){
+        while(i < 15){
+            read int i
+            if(i>10){
+                print i
+            }
+        }
     }
     u = 111
     print u
@@ -28,9 +33,13 @@ ww = 20+(29*30)*21
 print ww
 bb = (20.1+32.32)/43.1+12.32
 print bb
-bb = 9999.99
-print bb
+
 ffun  nazwaFunkcji
 ffun  nazwaFunkcjiNowa
-
+bb = 999.0
+print bb
+read int q
+while(q<10){
+    read int q
+}
 
