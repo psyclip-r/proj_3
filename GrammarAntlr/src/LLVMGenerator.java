@@ -168,20 +168,6 @@ class LLVMGenerator{
         }
         brstack.push(br);
 
-        /*
-        content += "br label %cond"+br+"\n";
-        content += "cond"+br+":\n";
-
-        content += "%"+register+" = load double* %"+id+"\n";
-        register++;
-
-        content += "%"+register+" = fcmp " + signType +  " double %"+(register-1)+", " + val + "\n";
-        register++;
-
-        content += "br i1 %"+(register-1)+", label %true"+br+", label %false"+br+"\n";
-        content += "true"+br+":\n";
-
-        */
     }
 
     static void declateWhileEnd(boolean main){
