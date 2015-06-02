@@ -119,11 +119,26 @@ class LLVMGenerator{
         }
     }
 
-    static void printfDouble(String id){
-        content += "%"+ register +" = load double* %"+id+"\n";
-        register++;
-        content += "%"+ register +" = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @strpd, i32 0, i32 0), double %"+(register -1)+")\n";
-        register++;
+    static void printfDouble(String id, boolean main, boolean isGlobal){
+        //System.out.println(id + " is global? " + isGlobal);
+        String varType;
+        if(isGlobal){
+            varType = "@";
+        }else{
+            varType = "%";
+        }
+
+        if(main){
+            content += "%" + register +" = load double* " + varType +id+"\n";
+            register++;
+            content += "%"+ register +" = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @strpd, i32 0, i32 0), double %" +(register -1)+")\n";
+            register++;
+        }else{
+            fun += "%"+ fun_reg +" = load double* " + varType +id+"\n";
+            fun_reg++;
+            fun += "%"+ fun_reg +" = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @strpd, i32 0, i32 0), double %" +(fun_reg -1)+")\n";
+            fun_reg++;
+        }
     }
 
 
@@ -315,9 +330,21 @@ class LLVMGenerator{
         }
     }
 
-    static void scanfDouble(String id){
-        content += "%" + register + " = call i32 (i8*, ...)* @__isoc99_scanf(i8* getelementptr inbounds ([4 x i8]* @.str1, i32 0, i32 0), double* %" + id + ") \n";
-        register++;
+    static void scanfDouble(String id, VarScope scope, boolean isMain){
+        String varType;
+        if(scope == VarScope.GLOBAL){
+            varType = "@";
+        }else{
+            varType = "%";
+        }
+        if(isMain){
+            content += "%" + register + " = call i32 (i8*, ...)* @__isoc99_scanf(i8* getelementptr inbounds ([4 x i8]* @.str1, i32 0, i32 0), double* " + varType + id + ") \n";
+            register++;
+        }else{
+            fun += "%" + fun_reg + " = call i32 (i8*, ...)* @__isoc99_scanf(i8* getelementptr inbounds ([4 x i8]* @.str1, i32 0, i32 0), double* " + varType + id + ") \n";
+            fun_reg++;
+        }
+
     }
 
     static void ifstart(boolean main){

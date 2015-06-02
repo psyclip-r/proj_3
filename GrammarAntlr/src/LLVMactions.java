@@ -417,7 +417,6 @@ public class LLVMactions extends ProstyJezykBaseListener {
     public void exitAssignValue(ProstyJezykParser.AssignValueContext ctx) {
         String ID = ctx.ID_NAME().getText();
         Value v = stack.pop();
-
         if(block){
             if (v.type == VarType.INT) {
                 if (checkVarScope(ID) == VarScope.NOTEXISTS) {
@@ -434,8 +433,13 @@ public class LLVMactions extends ProstyJezykBaseListener {
                     if (checkVarType(ID) != VarType.INT) {
                         printError(ctx.getStart().getLine(), ID + " : przedtem zmienna byla innego typu.");
                     }
+                    if(checkVarScope(ID) == VarScope.BLOCK){
+                        Value tmp = getValueFromBlock(ID);
+                        v.declaredName = tmp.declaredName;
+                    }else{
+                        v.declaredName = ID;
+                    }
                 }
-
                 // System.out.println("Zmienna: " + ID + " z wartoscia: " + v.value + " czy w main: " + main + " czy globalna: " + isGlobal);
                 LLVMGenerator.assignInt(v.declaredName, v.value, main, false);
             }
@@ -454,8 +458,15 @@ public class LLVMactions extends ProstyJezykBaseListener {
                     if (checkVarType(ID) != VarType.REAL) {
                         printError(ctx.getStart().getLine(), ID + " : przedtem zmienna byla innego typu.");
                     }
+                    if(checkVarScope(ID) == VarScope.BLOCK){
+                        Value tmp = getValueFromBlock(ID);
+                        v.declaredName = tmp.declaredName;
+                    }else{
+                        v.declaredName = ID;
+                    }
                 }
-                // System.out.println("Zmienna: " + ID + " z wartoscia: " + v.value + " czy w main: " + main + " czy globalna: " + isGlobal);
+                //System.out.println("Zmienna: " + ID + " declaredname: " + v.declaredName + " name: " + v.name + " typ: " + v.type + " value: " + v.value);
+
                 LLVMGenerator.assignDouble(v.declaredName, v.value, main, false);
             }
         }else {
@@ -673,7 +684,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
                 LLVMGenerator.printfInt(ID, main, false);
             }
             if (varType == VarType.REAL) {
-                LLVMGenerator.printfDouble(ID);
+                LLVMGenerator.printfDouble(ID, main, false);
             }
         }
         if (varScope == VarScope.GLOBAL) {
@@ -681,7 +692,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
                 LLVMGenerator.printfInt(ID, main, true);
             }
             if (varType == VarType.REAL) {
-                LLVMGenerator.printfDouble(ID);
+                LLVMGenerator.printfDouble(ID, main, true);
             }
         }
         if (varScope == VarScope.BLOCK) {
@@ -690,7 +701,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
                 LLVMGenerator.printfInt(v.declaredName, main, false);
             }
             if (varType == VarType.REAL) {
-                LLVMGenerator.printfDouble(ID);
+                LLVMGenerator.printfDouble(v.declaredName, main, false);
             }
         }
     }
@@ -699,43 +710,207 @@ public class LLVMactions extends ProstyJezykBaseListener {
     public void exitRead(@NotNull ProstyJezykParser.ReadContext ctx) {
         String ID = ctx.ID_NAME().getText();
         VarScope varScope;
-        if (ctx.var_type().t_INT() != null) {
-            //if (variables.get(ID) == null) {
+        if(block){
+            VarType type = null;
             if (checkVarScope(ID) == VarScope.NOTEXISTS) {
-                if(main){
-                    varScope = VarScope.GLOBAL;
-                }else{
-                    varScope = VarScope.LOCAL;
-                }
-                variables.put(ID, VarType.INT);
-                if(main){
-                    global_variables.put(ID, VarType.INT);
-                }else{
-                    fun_variables.put(ID, VarType.INT);
-                }
-                LLVMGenerator.declareInt(ID, main);
-            } else {
-                varScope = checkVarScope(ID);
-                if (checkVarType(ID) != VarType.INT) {
-                    printError(ctx.getStart().getLine(), "variable has a different type ");
-                }
-            }
-            LLVMGenerator.scanfInt(ID, varScope, main);
-        }
 
-        if (ctx.var_type().t_REAL() != null) {
-            if (variables.get(ID) == null) {
-                variables.put(ID, VarType.REAL);
-                LLVMGenerator.declareDOuble(ID);
+                Integer counter = valCounter.pop();
+                counter++;
+                valCounter.push(counter);
+                Random randomGenerator = new Random();
+                int randomInt = randomGenerator.nextInt(1000000);
+                type = null;
+                if (ctx.var_type().t_REAL() != null){
+                    type = VarType.REAL;
+                }
+                if(ctx.var_type().t_INT() != null){
+                    type = VarType.INT;
+                }
+                Value v = new Value(ID, type, false);
+                v.isGlobal = false;
+                v.name = ID;
+                v.declaredName = v.name + randomInt;
+                ID = v.declaredName;
+                if(type == VarType.INT){
+                    LLVMGenerator.declareInt(v.declaredName, main, false);
+                }
+                if(type == VarType.REAL){
+                    LLVMGenerator.declareDouble(v.declaredName, main, false);
+                }
+                blockValues.push(v);
             } else {
-                VarType v = variables.get(ID);
-                if (v == VarType.INT) {
-                    printError(ctx.getStart().getLine(), "variable has a different type ");
+                if (ctx.var_type().t_REAL() != null){
+                    type = VarType.REAL;
+                }
+                if(ctx.var_type().t_INT() != null){
+                    type = VarType.INT;
+                }
+                if (checkVarType(ID) != type) {
+                    printError(ctx.getStart().getLine(), ctx.ID_NAME().getText() + " : przedtem zmienna byla innego typu.");
                 }
             }
-            //LLVMGenerator.assignInt(ID, v.value);
-            LLVMGenerator.scanfDouble(ID);
+            if(checkVarScope(ID) == VarScope.BLOCK){
+                Value v = getValueFromBlock(ID);
+                ID = v.declaredName;
+                //System.out.println("Name: " + v.name + " declared name: " + v.declaredName);
+            }
+            // System.out.println("Zmienna: " + ID + " z wartoscia: " + v.value + " czy w main: " + main + " czy globalna: " + isGlobal);
+            if (ctx.var_type().t_REAL() != null){
+                LLVMGenerator.scanfDouble(ID, VarScope.BLOCK, main);
+            }
+            if(ctx.var_type().t_INT() != null){
+                LLVMGenerator.scanfInt(ID, VarScope.BLOCK, main);
+            }
+        }else{
+            if (ctx.var_type().t_INT() != null) {
+                //if (variables.get(ID) == null) {
+                if (checkVarScope(ID) == VarScope.NOTEXISTS) {
+                    if (main) {
+                        varScope = VarScope.GLOBAL;
+                    } else {
+                        varScope = VarScope.LOCAL;
+                    }
+                    variables.put(ID, VarType.INT);
+                    if (main) {
+                        global_variables.put(ID, VarType.INT);
+                    } else {
+                        fun_variables.put(ID, VarType.INT);
+                    }
+                    LLVMGenerator.declareInt(ID, main);
+                } else {
+                    varScope = checkVarScope(ID);
+                    if (checkVarType(ID) != VarType.INT) {
+                        printError(ctx.getStart().getLine(), "variable has a different type ");
+                    }
+                }
+                LLVMGenerator.scanfInt(ID, varScope, main);
+            }
+
+            if (ctx.var_type().t_REAL() != null) {
+                //if (variables.get(ID) == null) {
+                if (checkVarScope(ID) == VarScope.NOTEXISTS) {
+                    if (main) {
+                        varScope = VarScope.GLOBAL;
+                    } else {
+                        varScope = VarScope.LOCAL;
+                    }
+                    variables.put(ID, VarType.REAL);
+                    if (main) {
+                        global_variables.put(ID, VarType.REAL);
+                    } else {
+                        fun_variables.put(ID, VarType.REAL);
+                    }
+                    LLVMGenerator.declareDouble(ID, main);
+                } else {
+                    varScope = checkVarScope(ID);
+                    if (checkVarType(ID) != VarType.REAL) {
+                        printError(ctx.getStart().getLine(), "variable has a different type ");
+                    }
+                }
+                LLVMGenerator.scanfDouble(ID, varScope, main);
+            }
         }
+            /*
+            if(block){
+                if (ctx.var_type().t_INT() != null) {
+                    if (checkVarScope(ID) == VarScope.NOTEXISTS) {
+                        Integer counter = valCounter.pop();
+                        counter++;
+                        valCounter.push(counter);
+                        Random randomGenerator = new Random();
+                        int randomInt = randomGenerator.nextInt(1000000);
+                        v.name = ID;
+                        v.declaredName = v.name + randomInt;
+                        LLVMGenerator.declareInt(v.declaredName, main, false);
+                        blockValues.push(v);
+                    } else {
+                        if (checkVarType(ID) != VarType.INT) {
+                            printError(ctx.getStart().getLine(), ID + " : przedtem zmienna byla innego typu.");
+                        }
+                    }
+
+                    // System.out.println("Zmienna: " + ID + " z wartoscia: " + v.value + " czy w main: " + main + " czy globalna: " + isGlobal);
+                    LLVMGenerator.assignInt(v.declaredName, v.value, main, false);
+                }
+                if(ctx.var_type().t_REAL() != null){
+                    if (checkVarScope(ID) == VarScope.NOTEXISTS) {
+                        Integer counter = valCounter.pop();
+                        counter++;
+                        valCounter.push(counter);
+                        Random randomGenerator = new Random();
+                        int randomInt = randomGenerator.nextInt(1000000);
+                        v.name = ID;
+                        v.declaredName = v.name + randomInt;
+                        LLVMGenerator.declareDouble(v.declaredName, main, false);
+                        blockValues.push(v);
+                    } else {
+                        if (checkVarType(ID) != VarType.REAL) {
+                            printError(ctx.getStart().getLine(), ID + " : przedtem zmienna byla innego typu.");
+                        }
+                    }
+                    // System.out.println("Zmienna: " + ID + " z wartoscia: " + v.value + " czy w main: " + main + " czy globalna: " + isGlobal);
+                    LLVMGenerator.assignDouble(v.declaredName, v.value, main, false);
+                }
+            }else {
+                if (ctx.var_type().t_INT() != null) {
+                    // zabezpieczenie, zeby mozna bylo przypisac do "y" pare wartosci wkilku liniach
+                    // System.out.println("Zmienna: " + ID + " jest: " + checkVarScope(ID));
+                    if (checkVarScope(ID) == VarScope.NOTEXISTS) {
+                        // deklaruje albo lokalnie, albo globalnie -> zaleznie od tego jaka to zmienna
+                        // System.out.println("Deklaruje zmienna: " + ID + " czy globalna: " + main + " czy istnieje: " +checkVarScope(ID));
+                        LLVMGenerator.declareInt(ID, main);
+                    } else {
+                        if (checkVarType(ID) != VarType.INT) {
+                            printError(ctx.getStart().getLine(), ID + " : przedtem zmienna byla innego typu.");
+                        }
+                    }
+                    if (v.isGlobal) {
+                        global_variables.put(ID, VarType.INT);
+                    } else {
+                        fun_variables.put(ID, VarType.INT);
+                    }
+                    boolean isGlobal;
+                    if (checkVarScope(ID) == VarScope.GLOBAL) {
+                        isGlobal = true;
+                    } else {
+                        isGlobal = false;
+                    }
+
+                    // System.out.println("Zmienna: " + ID + " z wartoscia: " + v.value + " czy w main: " + main + " czy globalna: " + isGlobal);
+
+                    LLVMGenerator.assignInt(ID, v.value, main, isGlobal);
+                }
+                if(ctx.var_type().t_REAL() != null){
+                    // zabezpieczenie, zeby mozna bylo przypisac do "y" pare wartosci wkilku liniach
+                    // System.out.println("Zmienna: " + ID + " jest: " + checkVarScope(ID));
+                    if (checkVarScope(ID) == VarScope.NOTEXISTS) {
+                        // deklaruje albo lokalnie, albo globalnie -> zaleznie od tego jaka to zmienna
+                        // System.out.println("Deklaruje zmienna: " + ID + " czy globalna: " + main + " czy istnieje: " +checkVarScope(ID));
+                        LLVMGenerator.declareDouble(ID, main);
+                    } else {
+                        if (checkVarType(ID) != VarType.REAL) {
+                            printError(ctx.getStart().getLine(), ID + " : przedtem zmienna byla innego typu.");
+                        }
+                    }
+                    if (v.isGlobal) {
+                        global_variables.put(ID, VarType.REAL);
+                    } else {
+                        fun_variables.put(ID, VarType.REAL);
+                    }
+                    boolean isGlobal;
+                    if (checkVarScope(ID) == VarScope.GLOBAL) {
+                        isGlobal = true;
+                    } else {
+                        isGlobal = false;
+                    }
+
+                    // System.out.println("Zmienna: " + ID + " z wartoscia: " + v.value + " czy w main: " + main + " czy globalna: " + isGlobal);
+
+                    LLVMGenerator.assignDouble(ID, v.value, main, isGlobal);
+
+                }
+            }
+        }*/
 
 
     }
