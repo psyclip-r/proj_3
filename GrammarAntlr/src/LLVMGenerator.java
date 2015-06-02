@@ -97,13 +97,14 @@ class LLVMGenerator{
         br++;
     }
 
-
+    /*
     static void printfInt(String id){
         content += "%"+ register +" = load i32* %"+id+"\n";
         register++;
         content += "%"+ register +" = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([4 x i8]* @strpi, i32 0, i32 0), i32 %"+(register -1)+")\n";
         register++;
     }
+    */
 
     static void printfInt(String id, boolean main, boolean isGlobal){
         //System.out.println(id + " is global? " + isGlobal);
@@ -147,6 +148,15 @@ class LLVMGenerator{
         }
     }
 
+    static void declareDouble(String id, boolean main){
+        // System.out.println("declareInt: Deklaruje zmienna: " + id + " czy globalna: " + main);
+        if(main){
+            header += "@"+id+" = common global double 0.000000e+00, align 8\n";
+        }else{
+            fun += "%"+id+" = alloca double\n";
+        }
+    }
+
     static void declareInt(String id, boolean main, boolean isGlobal){
         String globalOrLocal;
         if(isGlobal){
@@ -160,6 +170,22 @@ class LLVMGenerator{
             content += globalOrLocal+id+" = alloca i32\n";
         }else{
             fun += globalOrLocal+id+" = alloca i32\n";
+        }
+    }
+
+    static void declareDouble(String id, boolean main, boolean isGlobal){
+        String globalOrLocal;
+        if(isGlobal){
+            globalOrLocal = "@";
+        }else{
+            globalOrLocal = "%";
+        }
+        if(main == true && isGlobal == true){
+            header += globalOrLocal+id+" = common global double 0.000000e+00, align 8\n";
+        }else if(main == true && isGlobal == false){
+            content += globalOrLocal+id+" = alloca double\n";
+        }else{
+            fun += globalOrLocal+id+" = alloca double\n";
         }
     }
 
@@ -184,6 +210,20 @@ class LLVMGenerator{
         }else{
             fun += "store i32 "+value+", i32* "+globalOrLocal+id+"\n";
             // fun += "store i32 "+value+", i32* %"+id+"\n";
+        }
+    }
+
+    static void assignDouble(String id, String value, boolean main, boolean isGlobal){
+        String globalOrLocal;
+        if(isGlobal){
+            globalOrLocal = "@";
+        }else{
+            globalOrLocal = "%";
+        }
+        if(main){
+            content += "store double "+value+", double* "+ globalOrLocal +id+"\n";
+        }else{
+            fun += "store double "+value+", double* "+globalOrLocal+id+"\n";
         }
     }
 

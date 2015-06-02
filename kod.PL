@@ -1,4 +1,5 @@
 x = 11
+b = 12.12
 read int y
 if(y>4){
     r = 2
@@ -15,12 +16,15 @@ fun void nazwaFunkcji
     {
     u = 111
     print u
+    a = 321.123
 }
 fun void nazwaFunkcjiNowa
     {
     u = 222
     print u
+    pp = 321.32
 }
+pp = 32.12
 x = 323
 print x
 ffun  nazwaFunkcji
