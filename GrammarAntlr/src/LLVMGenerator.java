@@ -278,9 +278,23 @@ class LLVMGenerator{
         register++;
     }
 
-    static void scanfInt(String id){
-        content += "%" + register + " = call i32 (i8*, ...)* @__isoc99_scanf(i8* getelementptr inbounds ([3 x i8]* @.str, i32 0, i32 0), i32* %" + id + ") \n";
-        register++;
+    static void scanfInt(String id, VarScope scope, boolean isMain){
+        //content += "%" + register + " = call i32 (i8*, ...)* @__isoc99_scanf(i8* getelementptr inbounds ([3 x i8]* @.str, i32 0, i32 0), i32* %" + id + ") \n";
+        //register++;
+
+        String varType;
+        if(scope == VarScope.GLOBAL){
+            varType = "@";
+        }else{
+            varType = "%";
+        }
+        if(isMain){
+            content += "%" + register + " = call i32 (i8*, ...)* @__isoc99_scanf(i8* getelementptr inbounds ([3 x i8]* @.str, i32 0, i32 0), i32* " + varType + id + ") \n";
+            register++;
+        }else{
+            fun += "%" + fun_reg + " = call i32 (i8*, ...)* @__isoc99_scanf(i8* getelementptr inbounds ([3 x i8]* @.str, i32 0, i32 0), i32* " + varType + id + ") \n";
+            fun_reg++;
+        }
     }
 
     static void scanfDouble(String id){

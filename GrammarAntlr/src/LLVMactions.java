@@ -612,19 +612,29 @@ public class LLVMactions extends ProstyJezykBaseListener {
     @Override
     public void exitRead(@NotNull ProstyJezykParser.ReadContext ctx) {
         String ID = ctx.ID_NAME().getText();
-
+        VarScope varScope;
         if (ctx.var_type().t_INT() != null) {
-            if (variables.get(ID) == null) {
+            //if (variables.get(ID) == null) {
+            if (checkVarScope(ID) == VarScope.NOTEXISTS) {
+                if(main){
+                    varScope = VarScope.GLOBAL;
+                }else{
+                    varScope = VarScope.LOCAL;
+                }
                 variables.put(ID, VarType.INT);
-                LLVMGenerator.declareInt(ID);
+                if(main){
+                    global_variables.put(ID, VarType.INT);
+                }else{
+                    fun_variables.put(ID, VarType.INT);
+                }
+                LLVMGenerator.declareInt(ID, main);
             } else {
-                VarType v = variables.get(ID);
-                if (v == VarType.REAL) {
+                varScope = checkVarScope(ID);
+                if (checkVarType(ID) != VarType.INT) {
                     printError(ctx.getStart().getLine(), "variable has a different type ");
                 }
             }
-            //LLVMGenerator.assignInt(ID, v.name);
-            LLVMGenerator.scanfInt(ID);
+            LLVMGenerator.scanfInt(ID, varScope, main);
         }
 
         if (ctx.var_type().t_REAL() != null) {
