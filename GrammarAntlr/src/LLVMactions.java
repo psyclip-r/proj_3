@@ -93,10 +93,14 @@ public class LLVMactions extends ProstyJezykBaseListener {
 
     @Override
     public void exitWhile_cond(@NotNull ProstyJezykParser.While_condContext ctx) {
+        block = true;
+        blockStack.push("while");
+        valCounter.push(0);
 
         if (ctx.compare_first().ID_NAME() != null && ctx.compare_second().INT() != null) {
             String id = ctx.compare_first().ID_NAME().getText();
-            VarType varType = variables.get(id);
+            //VarType varType = variables.get(id);
+            VarType varType = checkVarType(id);
             if (varType != VarType.INT) {
                 printError(ctx.getStart().getLine(), "porownywanie roznych typow");
             }
@@ -111,7 +115,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
             if (ctx.compare_sign().LESS() != null) {
                 sign = Sign.LESS;
             }
-            LLVMGenerator.declareWhileCondInt(id, value, sign);
+            LLVMGenerator.declareWhileCondInt(id, value, sign, main);
         }
 
         if (ctx.compare_first().ID_NAME() != null && ctx.compare_second().REAL() != null) {
@@ -152,7 +156,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
             if (ctx.compare_sign().LESS() != null) {
                 sign = Sign.MORE;
             }
-            LLVMGenerator.declareWhileCondInt(id, value, sign);
+            LLVMGenerator.declareWhileCondInt(id, value, sign, main);
         }
 
         if (ctx.compare_second().ID_NAME() != null && ctx.compare_first().REAL() != null) {
@@ -181,6 +185,14 @@ public class LLVMactions extends ProstyJezykBaseListener {
     @Override
     public void exitWhile_body(@NotNull ProstyJezykParser.While_bodyContext ctx) {
         LLVMGenerator.declateWhileEnd();
+        Integer numOfVars = valCounter.pop();
+        for(int i = 0; i < numOfVars; i++){
+            blockValues.pop();
+        }
+        blockStack.pop();
+        if(blockStack.isEmpty()){
+            block = false;
+        }
     }
 
 
@@ -466,7 +478,6 @@ public class LLVMactions extends ProstyJezykBaseListener {
                     }
                 }
                 //System.out.println("Zmienna: " + ID + " declaredname: " + v.declaredName + " name: " + v.name + " typ: " + v.type + " value: " + v.value);
-
                 LLVMGenerator.assignDouble(v.declaredName, v.value, main, false);
             }
         }else {
@@ -713,7 +724,6 @@ public class LLVMactions extends ProstyJezykBaseListener {
         if(block){
             VarType type = null;
             if (checkVarScope(ID) == VarScope.NOTEXISTS) {
-
                 Integer counter = valCounter.pop();
                 counter++;
                 valCounter.push(counter);
@@ -738,7 +748,8 @@ public class LLVMactions extends ProstyJezykBaseListener {
                     LLVMGenerator.declareDouble(v.declaredName, main, false);
                 }
                 blockValues.push(v);
-            } else {
+                varScope = VarScope.BLOCK;
+            } else { //to tutaj wchodze, jak jest ZMIENNA ZADEKLAROWANA
                 if (ctx.var_type().t_REAL() != null){
                     type = VarType.REAL;
                 }
@@ -748,6 +759,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
                 if (checkVarType(ID) != type) {
                     printError(ctx.getStart().getLine(), ctx.ID_NAME().getText() + " : przedtem zmienna byla innego typu.");
                 }
+                varScope = checkVarScope(ID);
             }
             if(checkVarScope(ID) == VarScope.BLOCK){
                 Value v = getValueFromBlock(ID);
@@ -756,10 +768,10 @@ public class LLVMactions extends ProstyJezykBaseListener {
             }
             // System.out.println("Zmienna: " + ID + " z wartoscia: " + v.value + " czy w main: " + main + " czy globalna: " + isGlobal);
             if (ctx.var_type().t_REAL() != null){
-                LLVMGenerator.scanfDouble(ID, VarScope.BLOCK, main);
+                LLVMGenerator.scanfDouble(ID, varScope, main);
             }
             if(ctx.var_type().t_INT() != null){
-                LLVMGenerator.scanfInt(ID, VarScope.BLOCK, main);
+                LLVMGenerator.scanfInt(ID, varScope, main);
             }
         }else{
             if (ctx.var_type().t_INT() != null) {

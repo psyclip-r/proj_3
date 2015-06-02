@@ -38,7 +38,7 @@ class LLVMGenerator{
         fun += "define void @" + funName + "() #0 {\n";
     }
 
-    static void declareWhileCondInt(String id, String val, Sign sign){
+    static void declareWhileCondInt(String id, String val, Sign sign, boolean main){
         String signType = "";
         if(sign == Sign.EQUAL){
             signType = "eq";
@@ -50,6 +50,7 @@ class LLVMGenerator{
             signType = "slt";
         }
 
+        /*
         content += "br label %cond"+br+"\n";
         content += "cond"+br+":\n";
 
@@ -62,6 +63,40 @@ class LLVMGenerator{
         content += "br i1 %"+(register-1)+", label %true"+br+", label %false"+br+"\n";
         content += "true"+br+":\n";
         brstack.push(br);
+        */
+
+        if(main){
+            content += "br label %cond"+br+"\n";
+            content += "cond"+br+":\n";
+
+            content += "%"+register+" = load i32* %"+id+"\n";
+            register++;
+
+            content += "%"+register+" = icmp " + signType +  " i32 %"+(register-1)+", " + val + "\n";
+            register++;
+
+            content += "br i1 %"+(register-1)+", label %true"+br+", label %false"+br+"\n";
+            content += "true"+br+":\n";
+        }else{
+            fun += "br label %cond"+br+"\n";
+            fun += "cond"+br+":\n";
+
+            fun += "%"+fun_reg+" = load i32* %"+id+"\n";
+            fun_reg++;
+
+            fun += "%"+fun_reg+" = icmp " + signType +  " i32 %"+(fun_reg-1)+", " + val + "\n";
+            fun_reg++;
+
+            fun += "br i1 %"+(fun_reg-1)+", label %true"+br+", label %false"+br+"\n";
+            fun += "true"+br+":\n";
+
+
+            fun += "br i1 %"+(fun_reg-1)+", label %true"+br+", label %false"+br+"\n";
+            fun += "true"+br+":\n";
+        }
+
+        brstack.push(br);
+
     }
 
     static void declareWhileCondDouble(String id, String val, Sign sign){

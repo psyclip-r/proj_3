@@ -34,10 +34,17 @@ if(ee<yy){
 }
 gg = 8787.312
 print gg
-ffun  nazwaFunkcji
-ffun  nazwaFunkcjiNowa
 ww = 20+(29*30)*21
 print ww
 bb = (20.1+32.32)/43.1+12.32
 print bb
+bb = 9999.99
+print bb
+ffun  nazwaFunkcji
+ffun  nazwaFunkcjiNowa
+read int a
+while(a > 10){
+    print a
+    read int a
+}
 
