@@ -40,15 +40,10 @@ compare_sign :
     EQUAL_S
     ;
 
-value : INT | REAL | STRING | array | ID_NAME ;
+value : INT | REAL | ID_NAME ;
 
-array : ( OP_BRACKET value (COMMA value)* CLO_BRACKET ) | (OP_BRACKET CLO_BRACKET) ;
-el_in_array : NAME OP_BRACKET INT CLO_BRACKET;
-
-var_type : t_STRING |
-           t_INT    |
+var_type : t_INT    |
            t_REAL   |
-           t_ARRAY  |
            t_VOID;
 
 ex_0:  ex_1			    #blabla_1
