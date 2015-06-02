@@ -17,12 +17,21 @@ fun void nazwaFunkcji
     u = 111
     print u
     a = 321.123
+    read int r
+    if(r==15){
+        print r
+    }
 }
 fun void nazwaFunkcjiNowa
     {
     u = 222
     print u
     pp = 321.32
+    read int r
+        if(r<11){
+            print r
+            q = 11
+        }
 }
 pp = 32.12
 x = 323

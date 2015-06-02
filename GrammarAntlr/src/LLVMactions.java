@@ -32,9 +32,6 @@ class Value {
 
 }
 
-
-
-
 public class LLVMactions extends ProstyJezykBaseListener {
 
     HashMap<String, VarType> variables = new HashMap<String, VarType>();
@@ -192,13 +189,13 @@ public class LLVMactions extends ProstyJezykBaseListener {
         block = true;
         blockStack.push("if");
         valCounter.push(0);
-        LLVMGenerator.ifstart();
+        LLVMGenerator.ifstart(main);
     }
 
 
     @Override
     public void exitIf_body(@NotNull ProstyJezykParser.If_bodyContext ctx) {
-        LLVMGenerator.ifend();
+        LLVMGenerator.ifend(main);
         Integer numOfVars = valCounter.pop();
         for(int i = 0; i < numOfVars; i++){
             blockValues.pop();
@@ -231,16 +228,16 @@ public class LLVMactions extends ProstyJezykBaseListener {
             // System.out.println("Zmieniona kolejność");
             String ID = ctx.value(1).ID_NAME().getText();
             String INT = ctx.value(0).INT().getText();
-            VarType varExistsCheck = variables.get(ID);
-            if (varExistsCheck != null) {
+            VarScope scope = checkVarScope(ID);
+            if (scope != VarScope.NOTEXISTS) {
                 if (sign == Sign.EQUAL) {
-                    LLVMGenerator.icmpIntEquall(ID, INT);
+                    LLVMGenerator.icmpIntEquall(ID, INT, scope, main);
                 }
                 if (sign == Sign.LESS) {
-                    LLVMGenerator.icmpIntMore(ID, INT);
+                    LLVMGenerator.icmpIntMore(ID, INT, scope, main);
                 }
                 if (sign == Sign.MORE) {
-                    LLVMGenerator.icmpIntLess(ID, INT);
+                    LLVMGenerator.icmpIntLess(ID, INT, scope, main);
                 }
             } else {
                 System.err.println("Line " + ctx.getStart().getLine() + ", unknown variable: " + ID);
@@ -249,29 +246,19 @@ public class LLVMactions extends ProstyJezykBaseListener {
 
         // INT  zmienna <znak> liczba
         if ((ctx.value(0).ID_NAME() != null) && (ctx.value(1).INT() != null)) {
-            /*
-            System.out.println(ctx.value(0).ID_NAME());
-            System.out.println(ctx.value(1).INT() );
-
-            System.out.println(ctx.value(1).ID_NAME());
-            System.out.println(ctx.value(0).INT() );
-
-
-            System.out.println("Kolejność ok");
-            */
 
             String ID = ctx.value(0).ID_NAME().getText();
             String INT = ctx.value(1).INT().getText();
-            VarType varExistsCheck = variables.get(ID);
-            if (varExistsCheck != null) {
+            VarScope scope = checkVarScope(ID);
+            if (scope != VarScope.NOTEXISTS) {
                 if (sign == Sign.EQUAL) {
-                    LLVMGenerator.icmpIntEquall(ID, INT);
+                    LLVMGenerator.icmpIntEquall(ID, INT, scope, main);
                 }
                 if (sign == Sign.MORE) {
-                    LLVMGenerator.icmpIntMore(ID, INT);
+                    LLVMGenerator.icmpIntMore(ID, INT, scope, main);
                 }
                 if (sign == Sign.LESS) {
-                    LLVMGenerator.icmpIntLess(ID, INT);
+                    LLVMGenerator.icmpIntLess(ID, INT, scope, main);
                 }
             } else {
                 System.err.println("Line " + ctx.getStart().getLine() + ", unknown variable: " + ID);
@@ -455,7 +442,6 @@ public class LLVMactions extends ProstyJezykBaseListener {
                     int randomInt = randomGenerator.nextInt(1000000);
                     v.name = ID;
                     v.declaredName = v.name + randomInt;
-                    System.out.println("Teraz deklaruje zmienna: " + v.declaredName);
                     LLVMGenerator.declareInt(v.declaredName, main, false);
                     blockValues.push(v);
                 } else {
@@ -476,7 +462,6 @@ public class LLVMactions extends ProstyJezykBaseListener {
                     int randomInt = randomGenerator.nextInt(1000000);
                     v.name = ID;
                     v.declaredName = v.name + randomInt;
-                    System.out.println("Teraz deklaruje zmienna: " + v.declaredName);
                     LLVMGenerator.declareDouble(v.declaredName, main, false);
                     blockValues.push(v);
                 } else {

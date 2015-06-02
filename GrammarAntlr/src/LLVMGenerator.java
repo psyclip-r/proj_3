@@ -320,18 +320,27 @@ class LLVMGenerator{
         register++;
     }
 
-    static void ifstart(){
+    static void ifstart(boolean main){
         br++;
-        content += "br i1 %"+(register-1)+", label %true"+br+", label %false"+br+"\n";
-        content += "true"+br+":\n";
+        if(main){
+            content += "br i1 %"+(register-1)+", label %true"+br+", label %false"+br+"\n";
+            content += "true"+br+":\n";
+        }else{
+            fun += "br i1 %"+(fun_reg-1)+", label %true"+br+", label %false"+br+"\n";
+            fun += "true"+br+":\n";
+        }
         brstack.push(br);
-
     }
 
-    static void ifend(){
+    static void ifend(boolean main){
         int b = brstack.pop();
-        content += "br label %false"+b+"\n";
-        content += "false"+b+":\n";
+        if(main){
+            content += "br label %false"+b+"\n";
+            content += "false"+b+":\n";
+        }else{
+            fun += "br label %false"+b+"\n";
+            fun += "false"+b+":\n";
+        }
         br++;
     }
 
@@ -421,27 +430,66 @@ class LLVMGenerator{
     }
 
     // A == B INT ID VAL
-    static void icmpIntEquall(String id, String value){
-        content += "%"+register+" = load i32* %"+id+"\n";
-        register++;
-        content += "%"+register+" = icmp eq i32 %"+(register-1)+", "+value+"\n";
-        register++;
+    static void icmpIntEquall(String id, String value, VarScope scope, boolean main){
+        String varType;
+        if(scope == VarScope.GLOBAL){
+            varType = "@";
+        }else{
+            varType = "%";
+        }
+        if(main){
+            content += "%"+register+" = load i32* "+varType+id+"\n";
+            register++;
+            content += "%"+register+" = icmp eq i32 %"+(register-1)+", "+value+"\n";
+            register++;
+        }else{
+            fun += "%"+fun_reg+" = load i32* "+varType+id+"\n";
+            fun_reg++;
+            fun += "%"+fun_reg+" = icmp eq i32 %"+(fun_reg-1)+", "+value+"\n";
+            fun_reg++;
+        }
     }
 
     // A > B INT ID VAL
-    static void icmpIntMore(String id, String value){
-        content += "%"+register+" = load i32* %"+id+"\n";
-        register++;
-        content += "%"+register+" = icmp sgt i32 %"+(register-1)+", "+value+"\n";
-        register++;
+    static void icmpIntMore(String id, String value, VarScope scope, boolean main){
+        String varType;
+        if(scope == VarScope.GLOBAL){
+            varType = "@";
+        }else{
+            varType = "%";
+        }
+        if(main){
+            content += "%"+register+" = load i32* "+varType+id+"\n";
+            register++;
+            content += "%"+register+" = icmp sgt i32 %"+(register-1)+", "+value+"\n";
+            register++;
+        }else{
+            fun += "%"+fun_reg+" = load i32* "+varType+id+"\n";
+            fun_reg++;
+            fun += "%"+fun_reg+" = icmp sgt i32 %"+(fun_reg-1)+", "+value+"\n";
+            fun_reg++;
+        }
     }
 
     // A < B INT ID VAL
-    static void icmpIntLess(String id, String value){
-        content += "%"+register+" = load i32* %"+id+"\n";
-        register++;
-        content += "%"+register+" = icmp slt i32 %"+(register-1)+", "+value+"\n";
-        register++;
+    static void icmpIntLess(String id, String value, VarScope scope, boolean main){
+        String varType;
+        if(scope == VarScope.GLOBAL){
+            varType = "@";
+        }else{
+            varType = "%";
+        }
+        if(main){
+            content += "%"+register+" = load i32* "+varType+id+"\n";
+            register++;
+            content += "%"+register+" = icmp slt i32 %"+(register-1)+", "+value+"\n";
+            register++;
+        }else{
+            fun += "%"+fun_reg+" = load i32* "+varType+id+"\n";
+            fun_reg++;
+            fun += "%"+fun_reg+" = icmp slt i32 %"+(fun_reg-1)+", "+value+"\n";
+            fun_reg++;
+        }
     }
 
     static String generateLLVMcode(){
