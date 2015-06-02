@@ -38,7 +38,32 @@ class LLVMGenerator{
         fun += "define void @" + funName + "() #0 {\n";
     }
 
+    static void ifstart(boolean main){
+        br++;
+        if(main){
+            content += "br i1 %"+(register-1)+", label %true"+br+", label %false"+br+"\n";
+            content += "true"+br+":\n";
+        }else{
+            fun += "br i1 %"+(fun_reg-1)+", label %true"+br+", label %false"+br+"\n";
+            fun += "true"+br+":\n";
+        }
+        brstack.push(br);
+    }
+
+    static void ifend(boolean main){
+        int b = brstack.pop();
+        if(main){
+            content += "br label %false"+b+"\n";
+            content += "false"+b+":\n";
+        }else{
+            fun += "br label %false"+b+"\n";
+            fun += "false"+b+":\n";
+        }
+        br++;
+    }
+
     static void declareWhileCondInt(String id, String val, Sign sign, boolean main){
+        br++;
         String signType = "";
         if(sign == Sign.EQUAL){
             signType = "eq";
@@ -90,9 +115,10 @@ class LLVMGenerator{
             fun += "br i1 %"+(fun_reg-1)+", label %true"+br+", label %false"+br+"\n";
             fun += "true"+br+":\n";
 
-
+            /*
             fun += "br i1 %"+(fun_reg-1)+", label %true"+br+", label %false"+br+"\n";
             fun += "true"+br+":\n";
+            */
         }
 
         brstack.push(br);
@@ -125,10 +151,15 @@ class LLVMGenerator{
         brstack.push(br);
     }
 
-    static void declateWhileEnd(){
+    static void declateWhileEnd(boolean main){
         int b = brstack.pop();
-        content += "br label %cond"+b+"\n";
-        content += "false"+b+":\n";
+        if(main){
+            content += "br label %cond"+b+"\n";
+            content += "false"+b+":\n";
+        }else{
+            fun += "br label %cond"+b+"\n";
+            fun += "false"+b+":\n";
+        }
         br++;
     }
 
@@ -382,29 +413,7 @@ class LLVMGenerator{
 
     }
 
-    static void ifstart(boolean main){
-        br++;
-        if(main){
-            content += "br i1 %"+(register-1)+", label %true"+br+", label %false"+br+"\n";
-            content += "true"+br+":\n";
-        }else{
-            fun += "br i1 %"+(fun_reg-1)+", label %true"+br+", label %false"+br+"\n";
-            fun += "true"+br+":\n";
-        }
-        brstack.push(br);
-    }
 
-    static void ifend(boolean main){
-        int b = brstack.pop();
-        if(main){
-            content += "br label %false"+b+"\n";
-            content += "false"+b+":\n";
-        }else{
-            fun += "br label %false"+b+"\n";
-            fun += "false"+b+":\n";
-        }
-        br++;
-    }
 
     // A == B REAL ID ID
     static void icmpRealEquallIdId(String id_1, String id_2, VarScope s_1, VarScope s_2, boolean main){

@@ -184,7 +184,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
 
     @Override
     public void exitWhile_body(@NotNull ProstyJezykParser.While_bodyContext ctx) {
-        LLVMGenerator.declateWhileEnd();
+        LLVMGenerator.declateWhileEnd(main);
         Integer numOfVars = valCounter.pop();
         for(int i = 0; i < numOfVars; i++){
             blockValues.pop();

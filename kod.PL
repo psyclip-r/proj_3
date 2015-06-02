@@ -1,5 +1,10 @@
+
 x = 11
 fun void nazwaFunkcji{
+    read int i
+    while(i < 15){
+        read int i
+    }
     u = 111
     print u
     }
@@ -8,14 +13,6 @@ fun void nazwaFunkcjiNowa{
     print u
     s = 10.1
     e = 11.1
-
-    if(e>s){
-        a = 1122222
-        print a
-        read real r
-        print r
-    }
-
     print e
 }
 x = 323
@@ -24,14 +21,7 @@ ee = 10.111
 
 
 yy = 121.213312
-if(ee<yy){
-    read real gg
-    print gg
-    read real gg
-    print gg
-    gg = 123.123
-    print gg
-}
+
 gg = 8787.312
 print gg
 ww = 20+(29*30)*21
@@ -42,9 +32,5 @@ bb = 9999.99
 print bb
 ffun  nazwaFunkcji
 ffun  nazwaFunkcjiNowa
-read int a
-while(a > 10){
-    print a
-    read int a
-}
+
 
