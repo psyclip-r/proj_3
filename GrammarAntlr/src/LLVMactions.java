@@ -289,8 +289,6 @@ public class LLVMactions extends ProstyJezykBaseListener {
 
         // REAL    liczba <znak> zmienna
         if ((ctx.value(1).ID_NAME() != null) && (ctx.value(0).REAL() != null)) {
-
-
             String ID = ctx.value(1).ID_NAME().getText();
             String REAL = ctx.value(0).REAL().getText();
             VarScope scope = checkVarScope(ID);
@@ -311,8 +309,12 @@ public class LLVMactions extends ProstyJezykBaseListener {
 
         // ZMIENNA dowolny znak ZMIENNA
         if ((ctx.value(0).ID_NAME() != null) && (ctx.value(1).ID_NAME() != null)) {
-            VarType var_1 = variables.get(ctx.value(0).ID_NAME().getText());
-            VarType var_2 = variables.get(ctx.value(1).ID_NAME().getText());
+
+            String ID_1 = ctx.value(0).ID_NAME().getText();
+            String ID_2 = ctx.value(1).ID_NAME().getText();
+
+            VarType var_1 = checkVarType(ID_1);
+            VarType var_2 = checkVarType(ID_2);
 
             if (var_1 == null || var_2 == null) {
                 System.err.println("Line " + ctx.getStart().getLine() + ", podana zmienna nie istnieje: " + var_1 + var_2);
@@ -322,29 +324,30 @@ public class LLVMactions extends ProstyJezykBaseListener {
                 System.err.println("Line " + ctx.getStart().getLine() + ", porownywane sa liczby z roznymi typami: ");
             }
 
-            String ID_1 = ctx.value(0).ID_NAME().getText();
-            String ID_2 = ctx.value(1).ID_NAME().getText();
+
+            VarScope scope_1 = checkVarScope(ID_1);
+            VarScope scope_2 = checkVarScope(ID_2);
 
             if (var_1 == VarType.REAL) {
                 if (sign == Sign.EQUAL) {
-                    LLVMGenerator.icmpRealEquallIdId(ID_1, ID_2);
+                    LLVMGenerator.icmpRealEquallIdId(ID_1, ID_2, scope_1, scope_2, main);
                 }
                 if (sign == Sign.LESS) {
-                    LLVMGenerator.icmpRealMoreIdId(ID_1, ID_2);
+                    LLVMGenerator.icmpRealMoreIdId(ID_1, ID_2, scope_1, scope_2, main);
                 }
                 if (sign == Sign.MORE) {
-                    LLVMGenerator.icmpRealLessIdId(ID_1, ID_2);
+                    LLVMGenerator.icmpRealLessIdId(ID_1, ID_2, scope_1, scope_2, main);
                 }
             }
             if (var_1 == VarType.INT) {
                 if (sign == Sign.EQUAL) {
-                    LLVMGenerator.icmpIntEquallIdId(ID_1, ID_2);
+                    LLVMGenerator.icmpIntEquallIdId(ID_1, ID_2, scope_1, scope_2, main);
                 }
                 if (sign == Sign.LESS) {
-                    LLVMGenerator.icmpIntMoreIdId(ID_1, ID_2);
+                    LLVMGenerator.icmpIntMoreIdId(ID_1, ID_2, scope_1, scope_2, main);
                 }
                 if (sign == Sign.MORE) {
-                    LLVMGenerator.icmpIntLessIdId(ID_1, ID_2);
+                    LLVMGenerator.icmpIntLessIdId(ID_1, ID_2, scope_1, scope_2, main);
                 }
             }
 

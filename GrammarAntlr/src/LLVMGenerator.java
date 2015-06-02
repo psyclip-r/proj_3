@@ -345,33 +345,107 @@ class LLVMGenerator{
     }
 
     // A == B REAL ID ID
-    static void icmpRealEquallIdId(String id_1, String id_2){
-        content += "%"+register+" = load double* %"+id_1+"\n";
-        register++;
-        content += "%"+register+" = load double* %"+id_2+"\n";
-        register++;
-        content += "%"+register+" = fcmp oeq double %"+(register-1)+", %" +(register-2)+ "\n";
-        register++;
+    static void icmpRealEquallIdId(String id_1, String id_2, VarScope s_1, VarScope s_2, boolean main){
+        String varType_1;
+        String varType_2;
+
+        if(s_1 == VarScope.GLOBAL){
+            varType_1 = "@";
+        }else{
+            varType_1 = "%";
+        }
+
+        if(s_2 == VarScope.GLOBAL){
+            varType_2 = "@";
+        }else{
+            varType_2 = "%";
+        }
+
+        if(main){
+            content += "%"+register+" = load double* " + varType_1 + id_1 + "\n";
+            register++;
+            content += "%"+register+" = load double* "+ varType_2 + id_2 +"\n";
+            register++;
+            content += "%"+register+" = fcmp oeq double %"+(register-1)+", %" +(register-2)+ "\n";
+            register++;
+        }else{
+            fun += "%"+fun_reg+" = load double* " + varType_1 + id_1 + "\n";
+            fun_reg++;
+            fun += "%"+fun_reg+" = load double* "+ varType_2 + id_2 +"\n";
+            fun_reg++;
+            fun += "%"+fun_reg+" = fcmp oeq double %"+(fun_reg-1)+", %" +(fun_reg-2)+ "\n";
+            fun_reg++;
+        }
     }
 
     // A > B REAL ID ID
-    static void icmpRealMoreIdId(String id_1, String id_2){
-        content += "%"+register+" = load double* %"+id_1+"\n";
-        register++;
-        content += "%"+register+" = load double* %"+id_2+"\n";
-        register++;
-        content += "%"+register+" = fcmp ogt double %"+(register-1)+", %" +(register-2)+ "\n";
-        register++;
+    static void icmpRealMoreIdId(String id_1, String id_2, VarScope s_1, VarScope s_2, boolean main){
+        String varType_1;
+        String varType_2;
+
+        if(s_1 == VarScope.GLOBAL){
+            varType_1 = "@";
+        }else{
+            varType_1 = "%";
+        }
+
+        if(s_2 == VarScope.GLOBAL){
+            varType_2 = "@";
+        }else{
+            varType_2 = "%";
+        }
+
+        if(main){
+            content += "%"+register+" = load double* " + varType_1 + id_1 + "\n";
+            register++;
+            content += "%"+register+" = load double* "+ varType_2 + id_2 +"\n";
+            register++;
+            content += "%"+register+" = fcmp ogt double %"+(register-1)+", %" +(register-2)+ "\n";
+            register++;
+        }else{
+            fun += "%"+fun_reg+" = load double* " + varType_1 + id_1 + "\n";
+            fun_reg++;
+            fun += "%"+fun_reg+" = load double* "+ varType_2 + id_2 +"\n";
+            fun_reg++;
+            fun += "%"+fun_reg+" = fcmp ogt double %"+(fun_reg-1)+", %" +(fun_reg-2)+ "\n";
+            fun_reg++;
+        }
+
     }
 
     // A > B REAL ID ID
-    static void icmpRealLessIdId(String id_1, String id_2){
-        content += "%"+register+" = load double* %"+id_1+"\n";
-        register++;
-        content += "%"+register+" = load double* %"+id_2+"\n";
-        register++;
-        content += "%"+register+" = fcmp olt double %"+(register-1)+", %" +(register-2)+ "\n";
-        register++;
+    static void icmpRealLessIdId(String id_1, String id_2, VarScope s_1, VarScope s_2, boolean main){
+        String varType_1;
+        String varType_2;
+
+        if(s_1 == VarScope.GLOBAL){
+            varType_1 = "@";
+        }else{
+            varType_1 = "%";
+        }
+
+        if(s_2 == VarScope.GLOBAL){
+            varType_2 = "@";
+        }else{
+            varType_2 = "%";
+        }
+
+        if(main){
+            content += "%"+register+" = load double* " + varType_1 + id_1 + "\n";
+            register++;
+            content += "%"+register+" = load double* "+ varType_2 + id_2 +"\n";
+            register++;
+            content += "%"+register+" = fcmp olt double %"+(register-1)+", %" +(register-2)+ "\n";
+            register++;
+        }else{
+            fun += "%"+fun_reg+" = load double* " + varType_1 + id_1 + "\n";
+            fun_reg++;
+            fun += "%"+fun_reg+" = load double* "+ varType_2 + id_2 +"\n";
+            fun_reg++;
+            fun += "%"+fun_reg+" = fcmp olt double %"+(fun_reg-1)+", %" +(fun_reg-2)+ "\n";
+            fun_reg++;
+        }
+
     }
 
     // A == B REAL ID VAL
@@ -442,33 +516,106 @@ class LLVMGenerator{
 
 
     // A == B INT ID ID
-    static void icmpIntEquallIdId(String id_1, String id_2){
-        content += "%"+register+" = load i32* %"+id_1+"\n";
-        register++;
-        content += "%"+register+" = load i32* %"+id_2+"\n";
-        register++;
-        content += "%"+register+" = icmp eq i32 %"+(register-1)+", %" +(register-2)+ "\n";
-        register++;
+    static void icmpIntEquallIdId(String id_1, String id_2, VarScope s_1, VarScope s_2, boolean main){
+        String varType_1;
+        String varType_2;
+
+        if(s_1 == VarScope.GLOBAL){
+            varType_1 = "@";
+        }else{
+            varType_1 = "%";
+        }
+
+        if(s_2 == VarScope.GLOBAL){
+            varType_2 = "@";
+        }else{
+            varType_2 = "%";
+        }
+
+        if(main){
+            content += "%"+register+" = load i32* " + varType_1 + id_1 + "\n";
+            register++;
+            content += "%"+register+" = load i32* "+ varType_2 + id_2 +"\n";
+            register++;
+            content += "%"+register+" = icmp eq i32 %"+(register-1)+", %" +(register-2)+ "\n";
+            register++;
+        }else{
+            fun += "%"+fun_reg+" = load i32* " + varType_1 + id_1 + "\n";
+            fun_reg++;
+            fun += "%"+fun_reg+" = load i32* "+ varType_2 + id_2 +"\n";
+            fun_reg++;
+            fun += "%"+fun_reg+" = icmp eq i32 %"+(fun_reg-1)+", %" +(fun_reg-2)+ "\n";
+            fun_reg++;
+        }
     }
 
     // A == B INT ID ID
-    static void icmpIntMoreIdId(String id_1, String id_2){
-        content += "%"+register+" = load i32* %"+id_1+"\n";
-        register++;
-        content += "%"+register+" = load i32* %"+id_2+"\n";
-        register++;
-        content += "%"+register+" = icmp sgt i32 %"+(register-1)+", %" +(register-2)+ "\n";
-        register++;
+    static void icmpIntMoreIdId(String id_1, String id_2, VarScope s_1, VarScope s_2, boolean main){
+        String varType_1;
+        String varType_2;
+
+        if(s_1 == VarScope.GLOBAL){
+            varType_1 = "@";
+        }else{
+            varType_1 = "%";
+        }
+
+        if(s_2 == VarScope.GLOBAL){
+            varType_2 = "@";
+        }else{
+            varType_2 = "%";
+        }
+
+        if(main){
+            content += "%"+register+" = load i32* " + varType_1 + id_1 + "\n";
+            register++;
+            content += "%"+register+" = load i32* "+ varType_2 + id_2 +"\n";
+            register++;
+            content += "%"+register+" = icmp sgt i32 %"+(register-1)+", %" +(register-2)+ "\n";
+            register++;
+        }else{
+            fun += "%"+fun_reg+" = load i32* " + varType_1 + id_1 + "\n";
+            fun_reg++;
+            fun += "%"+fun_reg+" = load i32* "+ varType_2 + id_2 +"\n";
+            fun_reg++;
+            fun += "%"+fun_reg+" = icmp sgt i32 %"+(fun_reg-1)+", %" +(fun_reg-2)+ "\n";
+            fun_reg++;
+        }
+
     }
 
     // A == B INT ID ID
-    static void icmpIntLessIdId(String id_1, String id_2){
-        content += "%"+register+" = load i32* %"+id_1+"\n";
-        register++;
-        content += "%"+register+" = load i32* %"+id_2+"\n";
-        register++;
-        content += "%"+register+" = icmp slt i32 %"+(register-1)+", %" +(register-2)+ "\n";
-        register++;
+    static void icmpIntLessIdId(String id_1, String id_2, VarScope s_1, VarScope s_2, boolean main){
+        String varType_1;
+        String varType_2;
+
+        if(s_1 == VarScope.GLOBAL){
+            varType_1 = "@";
+        }else{
+            varType_1 = "%";
+        }
+
+        if(s_2 == VarScope.GLOBAL){
+            varType_2 = "@";
+        }else{
+            varType_2 = "%";
+        }
+
+        if(main){
+            content += "%"+register+" = load i32* " + varType_1 + id_1 + "\n";
+            register++;
+            content += "%"+register+" = load i32* "+ varType_2 + id_2 +"\n";
+            register++;
+            content += "%"+register+" = icmp slt i32 %"+(register-1)+", %" +(register-2)+ "\n";
+            register++;
+        }else{
+            fun += "%"+fun_reg+" = load i32* " + varType_1 + id_1 + "\n";
+            fun_reg++;
+            fun += "%"+fun_reg+" = load i32* "+ varType_2 + id_2 +"\n";
+            fun_reg++;
+            fun += "%"+fun_reg+" = icmp slt i32 %"+(fun_reg-1)+", %" +(fun_reg-2)+ "\n";
+            fun_reg++;
+        }
     }
 
     // A == B INT ID VAL

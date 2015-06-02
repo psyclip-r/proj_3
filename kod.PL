@@ -8,8 +8,9 @@ fun void nazwaFunkcjiNowa
     {
     u = 222
     print u
-    s = 11.1
-    if(s==11.1){
+    s = 10.1
+    e = 11.1
+    if(s<e){
         q = 11
         print q
     }
