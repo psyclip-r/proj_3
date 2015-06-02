@@ -11,6 +11,8 @@ import java.util.Stack;
 
 enum VarType{ INT, REAL, UNKNOWN, VOID }
 
+enum VarScope{ GLOBAL, LOCAL, NOTEXISTS }
+
 //enum Sign{EQUAL, LESS, MORE}
 
 class Value{
@@ -352,6 +354,30 @@ public class LLVMactions extends ProstyJezykBaseListener {
 
     }
 
+    private VarScope checkVarScope(String ID){
+        VarType isGLobal = global_variables.get(ID);
+        if(isGLobal != null){
+            return VarScope.GLOBAL;
+        }
+        VarType isLocal = fun_variables.get(ID);
+        if(isLocal != null){
+            return VarScope.LOCAL;
+        }
+        return VarScope.NOTEXISTS;
+    }
+
+    private VarType checkVarType(String ID){
+        VarType isGlobal = global_variables.get(ID);
+        if(isGlobal != null){
+            return isGlobal;
+        }
+        VarType isLocal = fun_variables.get(ID);
+        if(isLocal != null){
+            return isLocal;
+        }
+        return VarType.UNKNOWN;
+    }
+
     @Override
     public void exitAssignValue(ProstyJezykParser.AssignValueContext ctx) {
         String ID = ctx.ID_NAME().getText();
@@ -359,31 +385,39 @@ public class LLVMactions extends ProstyJezykBaseListener {
         // to po to, żeby sprawdzic czy juz takiem zmiennej nie mamy
         // inaczej bysmy probowali drugi raz zadeklarowac zmienna o tej samej nazwie
         VarType varExistsCheck = variables.get(ID);
-
         if(varExistsCheck == null){
             // jak nie ma to ja deklarujemy
             variables.put(ID, v.type);
         }
-        boolean isGlobal;
+
+
         if( v.type == VarType.INT ){
-            if(v.isGlobal){
-                //System.out.println("Wrzucam: " +ID + " do globalnych");
-                global_variables.put(ID, VarType.INT);
-                isGlobal = true;
-            }else{
-                //System.out.println("Wrzucam: " + ID+ " do lokalnych");
-                fun_variables.put(ID, VarType.INT);
-                isGlobal = false;
-            }
             // zabezpieczenie, zeby mozna bylo przypisac do "y" pare wartosci wkilku liniach
-            if( varExistsCheck == null ){
+            // System.out.println("Zmienna: " + ID + " jest: " + checkVarScope(ID));
+            if( checkVarScope(ID) == VarScope.NOTEXISTS ){
+                // deklaruje albo lokalnie, albo globalnie -> zaleznie od tego jaka to zmienna
+                // System.out.println("Deklaruje zmienna: " + ID + " czy globalna: " + main + " czy istnieje: " +checkVarScope(ID));
                 LLVMGenerator.declareInt(ID, main);
             }else{
-                if(varExistsCheck != VarType.INT){
+                if(checkVarType(ID) != VarType.INT){
                     printError(ctx.getStart().getLine(), ID +  " : przedtem zmienna byla innego typu.");
                 }
             }
-            // System.out.println("name: " + v.name);
+            if(v.isGlobal){
+                global_variables.put(ID, VarType.INT);
+            }else{
+                fun_variables.put(ID, VarType.INT);
+            }
+
+            boolean isGlobal;
+            if(checkVarScope(ID) == VarScope.GLOBAL){
+                isGlobal = true;
+            }else{
+                isGlobal = false;
+            }
+
+            // System.out.println("Zmienna: " + ID + " z wartoscia: " + v.name + " czy w main: " + main + " czy globalna: " + isGlobal);
+
             LLVMGenerator.assignInt(ID, v.name, main, isGlobal);
         }
         if( v.type == VarType.REAL ){
@@ -394,7 +428,6 @@ public class LLVMactions extends ProstyJezykBaseListener {
                     printError(ctx.getStart().getLine(), ID + " : przedtem zmienna byla innego typu.");
                 }
             }
-
             // System.out.println("name: " + v.name);
             LLVMGenerator.assignDouble(ID, v.name);
         }

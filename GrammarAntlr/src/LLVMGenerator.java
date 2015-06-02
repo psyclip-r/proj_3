@@ -135,9 +135,11 @@ class LLVMGenerator{
 
     static void declareInt(String id){
         content += "%"+id+" = alloca i32\n";
+        // System.out.println("Stara funkcja deklarowania!!! : " + id);
     }
 
     static void declareInt(String id, boolean main){
+        // System.out.println("declareInt: Deklaruje zmienna: " + id + " czy globalna: " + main);
         if(main){
             header += "@"+id+" = common global i32 0, align 4\n";
         }else{
@@ -161,11 +163,12 @@ class LLVMGenerator{
         }else{
             globalOrLocal = "%";
         }
-
         if(main){
-            content += "store i32 "+value+", i32* "+globalOrLocal+id+"\n";
+            // content += "store i32 "+value+", i32* "+globalOrLocal+id+"\n";
+            content += "store i32 "+value+", i32* @"+id+"\n";
         }else{
             fun += "store i32 "+value+", i32* "+globalOrLocal+id+"\n";
+            // fun += "store i32 "+value+", i32* %"+id+"\n";
         }
     }
 
