@@ -40,7 +40,8 @@ ffun  nazwaFunkcjiNowa
 bb = 999.0
 print bb
 read real q
-while(q<10.22){
-    read real q
+while(q<10.0){
+    print q
+    q++
 }
 

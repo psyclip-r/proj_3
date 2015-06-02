@@ -317,36 +317,109 @@ class LLVMGenerator{
         register++;
     }
 
-    static void increaseInt(String id){
-        content += "%" + register + " = load i32* %" + id + ", align 4\n";
-        register++;
-        content += "%" + register + " = add nsw i32 %" + (register - 1) + ", 1\n" +
-                "  store i32 %" + register + ", i32* %" + id + ", align 4\n";
-        register++;
+    static void increaseInt(String id, boolean main, VarScope scope){
+        String varType;
+        if(scope == VarScope.GLOBAL){
+            varType = "@";
+        }else{
+            varType = "%";
+        }
+        if(main){
+            content += "%" + register + " = load i32* "+varType + id + ", align 4\n";
+            register++;
+            content += "%" + register + " = add nsw i32 %" + (register - 1) + ", 1\n" +
+                    "  store i32 %" + register + ", i32* " + varType+ id + ", align 4\n";
+            register++;
+        }else{
+            fun += "%" + fun_reg + " = load i32* "+ varType + id + ", align 4\n";
+            fun_reg++;
+            fun += "%" + fun_reg + " = add nsw i32 %" + (fun_reg - 1) + ", 1\n" +
+                    "  store i32 %" + fun_reg + ", i32* "+varType + id + ", align 4\n";
+            fun_reg++;
+        }
+
     }
 
-    static void increaseDouble(String id){
+    static void increaseDouble(String id, boolean main, VarScope scope){
+        String varType;
+        if(scope == VarScope.GLOBAL){
+            varType = "@";
+        }else{
+            varType = "%";
+        }
+        if(main){
+            content += "%" + register + " = load double* "+varType + id + ", align 8\n";
+            register++;
+            content += "%" + register + " = fadd double %" + (register - 1) + ", 1.000000e+00\n" +
+                    "  store double %" + register + ", double* " + varType+ id + ", align 8\n";
+            register++;
+        }else{
+            fun += "%" + fun_reg + " = load double* "+ varType + id + ", align 8\n";
+            fun_reg++;
+            fun += "%" + fun_reg + " = fadd double double %" + (fun_reg - 1) + ", 1\n" +
+                    "  store double %" + fun_reg + ", double* "+varType + id + ", align 8\n";
+            fun_reg++;
+        }
+
+        /*
         content += "%" + register + " = load double* %" + id + ", align 8\n";
         register++;
         content += "%" + register + " = fadd double %" + (register - 1) + ", 1.000000e+00\n" +
                 "  store double %" + register + ", double* %" + id + ", align 8\n";
         register++;
+        */
     }
 
-    static void decreaseInt(String id){
-        content += "%" + register + " = load i32* %" + id + ", align 4\n";
-        register++;
-        content += "%" + register + " = sub nsw i32 %" + (register - 1) + ", 1\n" +
-                "  store i32 %" + register + ", i32* %" + id + ", align 4\n";
-        register++;
+    static void decreaseInt(String id, boolean main, VarScope scope){
+        String varType;
+        if(scope == VarScope.GLOBAL){
+            varType = "@";
+        }else{
+            varType = "%";
+        }
+        if(main){
+            content += "%" + register + " = load i32* "+varType + id + ", align 4\n";
+            register++;
+            content += "%" + register + " = sub nsw i32 %" + (register - 1) + ", 1\n" +
+                    "  store i32 %" + register + ", double* " + varType+ id + ", align 4\n";
+            register++;
+        }else{
+            fun += "%" + fun_reg + " = load i32* "+ varType + id + ", align 4\n";
+            fun_reg++;
+            fun += "%" + fun_reg + " = sub nsw i32 %" + (fun_reg - 1) + ", 1\n" +
+                    "  store i32 %" + fun_reg + ", double* "+varType + id + ", align 4\n";
+            fun_reg++;
+        }
     }
 
-    static void decreaseDouble(String id){
+    static void decreaseDouble(String id, boolean main, VarScope scope){
+        String varType;
+        if(scope == VarScope.GLOBAL){
+            varType = "@";
+        }else{
+            varType = "%";
+        }
+        if(main){
+            content += "%" + register + " = load double* "+varType + id + ", align 8\n";
+            register++;
+            content += "%" + register + " = fsub double %" + (register - 1) + ", 1.000000e+00\n" +
+                    "  store double %" + register + ", double* " + varType+ id + ", align 8\n";
+            register++;
+        }else{
+            fun += "%" + fun_reg + " = load double* "+ varType + id + ", align 8\n";
+            fun_reg++;
+            fun += "%" + fun_reg + " = fsub double double %" + (fun_reg - 1) + ", 1\n" +
+                    "  store double %" + fun_reg + ", double* "+varType + id + ", align 8\n";
+            fun_reg++;
+        }
+
+        /*
         content += "%" + register + " = load double* %" + id + ", align 8\n";
         register++;
         content += "%" + register + " = fsub double %" + (register - 1) + ", 1.000000e+00\n" +
                 "  store double %" + register + ", double* %" + id + ", align 8\n";
         register++;
+        */
     }
 
     static void addDouble(String val1, String val2){

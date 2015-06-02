@@ -568,10 +568,10 @@ public class LLVMactions extends ProstyJezykBaseListener {
             printError(ctx.getStart().getLine(), "nie istnieje zmienna: " + ID);
         }
         if (varExists == VarType.INT) {
-            LLVMGenerator.increaseInt(ID);
+            LLVMGenerator.increaseInt(ID, main, checkVarScope(ID));
         }
         if (varExists == VarType.REAL) {
-            LLVMGenerator.increaseDouble(ID);
+            LLVMGenerator.increaseDouble(ID, main, checkVarScope(ID));
         }
     }
 
@@ -583,10 +583,10 @@ public class LLVMactions extends ProstyJezykBaseListener {
             printError(ctx.getStart().getLine(), "nie istnieje zmienna: " + ID);
         }
         if (varExists == VarType.INT) {
-            LLVMGenerator.decreaseInt(ID);
+            LLVMGenerator.decreaseInt(ID, main, checkVarScope(ID));
         }
         if (varExists == VarType.REAL) {
-            LLVMGenerator.decreaseDouble(ID);
+            LLVMGenerator.decreaseDouble(ID, main, checkVarScope(ID));
         }
     }
 
