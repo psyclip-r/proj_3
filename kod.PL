@@ -1,11 +1,12 @@
 
 x = 11
 fun void nazwaFunkcji{
-    read int i
-    if(i == 5){
-        while(i < 15){
-            read int i
-            if(i>10){
+    read real i
+    if(i == 5.0){
+        print i
+        while(i < 15.0){
+            read real i
+            if(i>10.0){
                 print i
             }
         }
@@ -38,8 +39,8 @@ ffun  nazwaFunkcji
 ffun  nazwaFunkcjiNowa
 bb = 999.0
 print bb
-read int q
-while(q<10){
-    read int q
+read real q
+while(q<10.22){
+    read real q
 }
 

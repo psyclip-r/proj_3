@@ -135,7 +135,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
             if (ctx.compare_sign().LESS() != null) {
                 sign = Sign.LESS;
             }
-            LLVMGenerator.declareWhileCondDouble(id, value, sign);
+            LLVMGenerator.declareWhileCondDouble(id, value, sign, main, checkVarScope(id));
         }
 
 
@@ -176,7 +176,7 @@ public class LLVMactions extends ProstyJezykBaseListener {
             if (ctx.compare_sign().LESS() != null) {
                 sign = Sign.MORE;
             }
-            LLVMGenerator.declareWhileCondDouble(id, value, sign);
+            LLVMGenerator.declareWhileCondDouble(id, value, sign, main, checkVarScope(id));
         }
 
 

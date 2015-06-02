@@ -84,22 +84,6 @@ class LLVMGenerator{
         }
 
 
-        /*
-        content += "br label %cond"+br+"\n";
-        content += "cond"+br+":\n";
-
-        content += "%"+register+" = load i32* %"+id+"\n";
-        register++;
-
-        content += "%"+register+" = icmp " + signType +  " i32 %"+(register-1)+", " + val + "\n";
-        register++;
-
-        content += "br i1 %"+(register-1)+", label %true"+br+", label %false"+br+"\n";
-        content += "true"+br+":\n";
-        brstack.push(br);
-        */
-
-
 
         if(main){
             content += "br label %cond"+br+"\n";
@@ -136,7 +120,8 @@ class LLVMGenerator{
 
     }
 
-    static void declareWhileCondDouble(String id, String val, Sign sign){
+    static void declareWhileCondDouble(String id, String val, Sign sign, boolean main, VarScope scope){
+        br++;
         String signType = "";
         if(sign == Sign.EQUAL){
             signType = "oeq";
@@ -148,6 +133,42 @@ class LLVMGenerator{
             signType = "olt";
         }
 
+        String varType;
+        if(scope == VarScope.GLOBAL){
+            varType = "@";
+        }else{
+            varType = "%";
+        }
+
+        if(main){
+            content += "br label %cond"+br+"\n";
+            content += "cond"+br+":\n";
+
+            content += "%"+register+" = load double* "+varType+id+"\n";
+            register++;
+
+            content += "%"+register+" = fcmp " + signType +  " double %"+(register-1)+", " + val + "\n";
+            register++;
+
+            content += "br i1 %"+(register-1)+", label %true"+br+", label %false"+br+"\n";
+            content += "true"+br+":\n";
+        }else{
+            fun += "br label %cond"+br+"\n";
+            fun += "cond"+br+":\n";
+
+            fun += "%"+fun_reg+" = load double* "+varType+id+"\n";
+            fun_reg++;
+
+            fun += "%"+fun_reg+" = fcmp " + signType +  " double %"+(fun_reg-1)+", " + val + "\n";
+            fun_reg++;
+
+            fun += "br i1 %"+(fun_reg-1)+", label %true"+br+", label %false"+br+"\n";
+            fun += "true"+br+":\n";
+
+        }
+        brstack.push(br);
+
+        /*
         content += "br label %cond"+br+"\n";
         content += "cond"+br+":\n";
 
@@ -159,7 +180,8 @@ class LLVMGenerator{
 
         content += "br i1 %"+(register-1)+", label %true"+br+", label %false"+br+"\n";
         content += "true"+br+":\n";
-        brstack.push(br);
+
+        */
     }
 
     static void declateWhileEnd(boolean main){
