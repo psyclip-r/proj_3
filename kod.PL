@@ -1,20 +1,26 @@
-x = 12
-print x
+x = 11
 read int y
-print y
-fun void nazwaFunkcji
-{
-u = 111
-print u
-read int y
-print y
-}
-fun void nazwaFunkcjiNowa
-{
-x = 222
-print x
+if(y>4){
+    r = 2
+    print r
+    if(y>8){
+        t = 111
+        print t
+    }
+    t = 312
+    print t
 }
 
+fun void nazwaFunkcji
+    {
+    u = 111
+    print u
+}
+fun void nazwaFunkcjiNowa
+    {
+    u = 222
+    print u
+}
 x = 323
 print x
 ffun  nazwaFunkcji

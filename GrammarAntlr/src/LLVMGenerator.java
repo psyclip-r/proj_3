@@ -147,6 +147,21 @@ class LLVMGenerator{
         }
     }
 
+    static void declareInt(String id, boolean main, boolean isGlobal){
+        String globalOrLocal;
+        if(isGlobal){
+            globalOrLocal = "@";
+        }else{
+            globalOrLocal = "%";
+        }
+        if(main == true && isGlobal == true){
+            header += globalOrLocal+id+" = common global i32 0, align 4\n";
+        }else if(main == true && isGlobal == false){
+            content += globalOrLocal+id+" = alloca i32\n";
+        }else{
+            fun += globalOrLocal+id+" = alloca i32\n";
+        }
+    }
 
     static void declareDOuble(String id){
         content += "%"+id+" = alloca double\n";
@@ -165,7 +180,7 @@ class LLVMGenerator{
         }
         if(main){
             // content += "store i32 "+value+", i32* "+globalOrLocal+id+"\n";
-            content += "store i32 "+value+", i32* @"+id+"\n";
+            content += "store i32 "+value+", i32* "+ globalOrLocal +id+"\n";
         }else{
             fun += "store i32 "+value+", i32* "+globalOrLocal+id+"\n";
             // fun += "store i32 "+value+", i32* %"+id+"\n";
