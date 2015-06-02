@@ -267,29 +267,20 @@ public class LLVMactions extends ProstyJezykBaseListener {
 
         // REAL  zmienna <znak> liczba
         if ((ctx.value(0).ID_NAME() != null) && (ctx.value(1).REAL() != null)) {
-            /*
-            System.out.println(ctx.value(0).ID_NAME());
-            System.out.println(ctx.value(1).INT() );
 
-            System.out.println(ctx.value(1).ID_NAME());
-            System.out.println(ctx.value(0).INT() );
-
-
-            System.out.println("Kolejność ok");
-            */
 
             String ID = ctx.value(0).ID_NAME().getText();
             String REAL = ctx.value(1).REAL().getText();
-            VarType varExistsCheck = variables.get(ID);
-            if (varExistsCheck != null) {
+            VarScope scope = checkVarScope(ID);
+            if (scope != VarScope.NOTEXISTS) {
                 if (sign == Sign.EQUAL) {
-                    LLVMGenerator.icmpRealEquall(ID, REAL);
+                    LLVMGenerator.icmpRealEquall(ID, REAL, scope, main);
                 }
                 if (sign == Sign.MORE) {
-                    LLVMGenerator.icmpRealMore(ID, REAL);
+                    LLVMGenerator.icmpRealMore(ID, REAL, scope, main);
                 }
                 if (sign == Sign.LESS) {
-                    LLVMGenerator.icmpRealLess(ID, REAL);
+                    LLVMGenerator.icmpRealLess(ID, REAL, scope, main);
                 }
             } else {
                 System.err.println("Line " + ctx.getStart().getLine() + ", unknown variable: " + ID);
@@ -298,35 +289,27 @@ public class LLVMactions extends ProstyJezykBaseListener {
 
         // REAL    liczba <znak> zmienna
         if ((ctx.value(1).ID_NAME() != null) && (ctx.value(0).REAL() != null)) {
-            /*
-            System.out.println(ctx.value(0).ID_NAME());
-            System.out.println(ctx.value(1).INT() );
 
-            System.out.println(ctx.value(1).ID_NAME());
-            System.out.println(ctx.value(0).INT() );
-
-
-            System.out.println("Kolejność ok");
-            */
 
             String ID = ctx.value(1).ID_NAME().getText();
             String REAL = ctx.value(0).REAL().getText();
-            VarType varExistsCheck = variables.get(ID);
-            if (varExistsCheck != null) {
+            VarScope scope = checkVarScope(ID);
+            if (scope != VarScope.NOTEXISTS) {
                 if (sign == Sign.EQUAL) {
-                    LLVMGenerator.icmpRealEquall(ID, REAL);
+                    LLVMGenerator.icmpRealEquall(ID, REAL, scope, main);
                 }
                 if (sign == Sign.LESS) {
-                    LLVMGenerator.icmpRealMore(ID, REAL);
+                    LLVMGenerator.icmpRealMore(ID, REAL, scope, main);
                 }
                 if (sign == Sign.MORE) {
-                    LLVMGenerator.icmpRealLess(ID, REAL);
+                    LLVMGenerator.icmpRealLess(ID, REAL, scope, main);
                 }
             } else {
                 System.err.println("Line " + ctx.getStart().getLine() + ", unknown variable: " + ID);
             }
         }
 
+        // ZMIENNA dowolny znak ZMIENNA
         if ((ctx.value(0).ID_NAME() != null) && (ctx.value(1).ID_NAME() != null)) {
             VarType var_1 = variables.get(ctx.value(0).ID_NAME().getText());
             VarType var_2 = variables.get(ctx.value(1).ID_NAME().getText());

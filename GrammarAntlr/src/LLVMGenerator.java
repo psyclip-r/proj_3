@@ -375,27 +375,69 @@ class LLVMGenerator{
     }
 
     // A == B REAL ID VAL
-    static void icmpRealEquall(String id, String value){
-        content += "%"+register+" = load double* %"+id+"\n";
-        register++;
-        content += "%"+register+" = fcmp oeq double %"+(register-1)+", "+value+"\n";
-        register++;
+    static void icmpRealEquall(String id, String value, VarScope scope, boolean main){
+        String varType;
+        if(scope == VarScope.GLOBAL){
+            varType = "@";
+        }else{
+            varType = "%";
+        }
+        if(main){
+            content += "%"+register+" = load double* "+varType+id+"\n";
+            register++;
+            content += "%"+register+" = fcmp oeq double %"+(register-1)+", "+value+"\n";
+            register++;
+        }else{
+            fun += "%"+fun_reg+" = load double* "+varType+id+"\n";
+            fun_reg++;
+            fun += "%"+fun_reg+" = fcmp oeq double %"+(fun_reg-1)+", "+value+"\n";
+            fun_reg++;
+        }
+
     }
 
     // A > B REAL ID VAL
-    static void icmpRealMore(String id, String value){
-        content += "%"+register+" = load double* %"+id+"\n";
-        register++;
-        content += "%"+register+" = fcmp ogt double %"+(register-1)+", "+value+"\n";
-        register++;
+    static void icmpRealMore(String id, String value, VarScope scope, boolean main){
+        String varType;
+        if(scope == VarScope.GLOBAL){
+            varType = "@";
+        }else{
+            varType = "%";
+        }
+        if(main){
+            content += "%"+register+" = load double* "+varType+id+"\n";
+            register++;
+            content += "%"+register+" = fcmp ogt double %"+(register-1)+", "+value+"\n";
+            register++;
+        }else{
+            fun += "%"+fun_reg+" = load double* "+varType+id+"\n";
+            fun_reg++;
+            fun += "%"+fun_reg+" = fcmp ogt double %"+(fun_reg-1)+", "+value+"\n";
+            fun_reg++;
+        }
+
     }
 
     // A < B REAL ID VAL
-    static void icmpRealLess(String id, String value){
-        content += "%"+register+" = load double* %"+id+"\n";
-        register++;
-        content += "%"+register+" = fcmp olt double %"+(register-1)+", "+value+"\n";
-        register++;
+    static void icmpRealLess(String id, String value, VarScope scope, boolean main){
+        String varType;
+        if(scope == VarScope.GLOBAL){
+            varType = "@";
+        }else{
+            varType = "%";
+        }
+        if(main){
+            content += "%"+register+" = load double* "+varType+id+"\n";
+            register++;
+            content += "%"+register+" = fcmp olt double %"+(register-1)+", "+value+"\n";
+            register++;
+        }else{
+            fun += "%"+fun_reg+" = load double* "+varType+id+"\n";
+            fun_reg++;
+            fun += "%"+fun_reg+" = fcmp olt double %"+(fun_reg-1)+", "+value+"\n";
+            fun_reg++;
+        }
+
     }
 
 
