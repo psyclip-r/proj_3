@@ -16,5 +16,5 @@ x = 323
 print x
 ffun  nazwaFunkcji
 ffun  nazwaFunkcjiNowa
-print u
+
 
