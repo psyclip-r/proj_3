@@ -20,6 +20,17 @@ fun void nazwaFunkcjiNowa{
     s = 10.1
     e = 11.1
     print e
+    read int i
+    if(i < 10){
+        print i
+        while(i < 300){
+            read int i
+            if(i > 150){
+                print i
+            }
+        }
+    }
+
 }
 x = 323
 print x
